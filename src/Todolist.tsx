@@ -1,84 +1,154 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from "react";
-import { FilterValuesType, TaskType } from "./App";
-import { Button } from "./components/button/Button";
+import { FilterValuesType } from "./App";
+
+type TaskType = {
+  id: string;
+  title: string;
+  isDone: boolean;
+};
 
 type PropsType = {
   title: string;
+  filter: FilterValuesType;
   tasks: Array<TaskType>;
   removeTask: (taskId: string) => void;
   changeFilter: (value: FilterValuesType) => void;
-  addTask: (text: string) => void;
+  addTask: (title: string) => void;
   changeIsDone: (id: string, isDone: boolean) => void;
-  changeIsDone2: (id: string, isDone: boolean) => void;
+  changeTitle: (id: string, newValue: string) => void;
 };
 
 export function Todolist(props: PropsType) {
-  const [inputValue, setInputValue] = useState<string>("");
+  const [title, setTitle] = useState("");
+  //----------------------------
+  const [editTaskFlag, setEditTaskFlag] = useState<boolean>(false);
+  const [currentTaskValue, setCurrentTaskValue] = useState<string>("");
+  const [currentIdEditTask, setCurrentIdEditTask] = useState<string>("");
+  const [editError, setEditError] = useState<string>("");
+  //----------------------------
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.currentTarget.value);
-  };
+  const [error, setError] = useState<string>("");
 
-  const addTaskHandler = () => {
-    props.addTask(inputValue);
-    setInputValue("");
-  };
-  const addTaskWithEnterHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      addTaskHandler();
+  const addTask = () => {
+    if (title.trim().length) {
+      props.addTask(title);
+      setTitle("");
+    } else {
+      setError("Value can't be empty");
     }
   };
 
-  const changeFilterCompletedHandler = () => props.changeFilter("completed");
-  const changeFilterActiveHandler = () => props.changeFilter("active");
-  const changeFilterAllHandler = () => props.changeFilter("all");
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.currentTarget.value);
+    setError("");
+  };
+  const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.charCode === 13) {
+      addTask();
+    }
+  };
+
+  //----------------------------
+  const activateEditTask = (id: string, value: string) => {
+    setEditTaskFlag(true);
+    setCurrentTaskValue(value);
+    setCurrentIdEditTask(id);
+  };
+  const editTaskHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setCurrentTaskValue(e.currentTarget.value);
+    setEditError("");
+  };
+  const saveNewTitle = () => {
+    if (currentTaskValue.trim().length) {
+      props.changeTitle(currentIdEditTask, currentTaskValue);
+      setCurrentTaskValue("");
+      setCurrentIdEditTask("");
+      setEditTaskFlag(false);
+    } else {
+      setEditError("Value can't be empty");
+    }
+  };
+  const cancelEditMode = () => {
+    setCurrentTaskValue("");
+    setCurrentIdEditTask("");
+    setEditTaskFlag(false);
+  };
+  //----------------------------
+  const onAllClickHandler = () => props.changeFilter("all");
+  const onActiveClickHandler = () => props.changeFilter("active");
+  const onCompletedClickHandler = () => props.changeFilter("completed");
+
+  const changeIsDoneHandler = (checked: boolean, id: string) => {
+    props.changeIsDone(id, checked);
+  };
 
   return (
     <div>
       <h3>{props.title}</h3>
       <div>
         <input
-          value={inputValue}
+          value={title}
           onChange={onChangeHandler}
-          onKeyDown={addTaskWithEnterHandler}
+          onKeyPress={onKeyPressHandler}
+          className={error ? "error-msg" : ""}
         />
-        <Button title={"+"} callback={addTaskHandler} type={"green"} />
+        <button onClick={addTask}>+</button>
+        {error && <span className="error-msg">{error}</span>}
       </div>
       <ul>
-        {props.tasks.map((t) => (
-          <li key={t.id}>
-            <input
-              type="checkbox"
-              checked={t.isDone}
-              onChange={(e) =>
-                props.changeIsDone(t.id, e.currentTarget.checked)
-              }
-            />
-            <span>{t.title}</span>
-            <Button
-              title={"x"}
-              callback={() => props.removeTask(t.id)}
-              type={"red"}
-            />
-          </li>
-        ))}
+        {props.tasks.map((t) => {
+          const onClickHandler = () => props.removeTask(t.id);
+          const onEditHandler = () => activateEditTask(t.id, t.title);
+          return (
+            <li key={t.id} className={t.isDone ? "is-done" : ""}>
+              <input
+                type="checkbox"
+                checked={t.isDone}
+                onChange={(e) =>
+                  changeIsDoneHandler(e.currentTarget.checked, t.id)
+                }
+              />
+              <span>{t.title}</span>
+              <button onClick={onClickHandler}>x</button>
+              <button onClick={onEditHandler}>edit task</button>
+            </li>
+          );
+        })}
       </ul>
       <div>
-        <Button
-          title={"All"}
-          callback={changeFilterAllHandler}
-          type={"aquamarine"}
-        />
-        <Button
-          title={"Active"}
-          callback={changeFilterActiveHandler}
-          type={"aquamarine"}
-        />
-        <Button
-          title={"Completed"}
-          callback={changeFilterCompletedHandler}
-          type={"aquamarine"}
-        />
+        <button
+          onClick={onAllClickHandler}
+          className={props.filter === "all" ? "active-btn" : ""}
+        >
+          All
+        </button>
+        <button
+          onClick={onActiveClickHandler}
+          className={props.filter === "active" ? "active-btn" : ""}
+        >
+          Active
+        </button>
+        <button
+          onClick={onCompletedClickHandler}
+          className={props.filter === "completed" ? "active-btn" : ""}
+        >
+          Completed
+        </button>
+      </div>
+      <div>
+        {editTaskFlag && (
+          <>
+            <button onClick={cancelEditMode}>close</button>
+            <input
+              type="text"
+              value={currentTaskValue}
+              onChange={editTaskHandler}
+              className={error ? "error-msg" : ""}
+            />
+            <button onClick={saveNewTitle}>save</button>
+            {editError && <span className="error-msg">{editError}</span>}
+          </>
+        )}
       </div>
     </div>
   );
