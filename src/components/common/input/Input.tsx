@@ -1,8 +1,8 @@
-import React, { ChangeEvent, KeyboardEvent, useState } from "react";
+import React, { ChangeEvent, KeyboardEvent } from "react";
 
-type EditableInputProps = {
+type EditableInputPT = {
   initialValue: string;
-  onChange: (value: string) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: () => void;
   onKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
   error: string;
@@ -16,21 +16,13 @@ export function EditableInput({
   onKeyDown,
   error,
   autoFocus,
-}: EditableInputProps) {
-  const [value, setValue] = useState(initialValue);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.currentTarget.value;
-    setValue(newValue);
-    onChange(newValue);
-  };
-
+}: EditableInputPT) {
   return (
     <>
       <input
         type="text"
-        value={value}
-        onChange={handleChange}
+        value={initialValue}
+        onChange={onChange}
         onBlur={onBlur}
         onKeyDown={onKeyDown}
         autoFocus={autoFocus}

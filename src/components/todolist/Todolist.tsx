@@ -1,120 +1,105 @@
-import React, { KeyboardEvent, useState } from "react";
-import { v1 } from "uuid";
+import React, { ChangeEvent, KeyboardEvent, useState } from "react";
 import { Button } from "../common/button/Button";
 import { Todo } from "../todo/Todo";
 import { EditableInput } from "../common/input/Input";
-
-type TaskT = {
-  id: string;
-  title: string;
-  isDone: boolean;
-};
-
-type FilterT = "all" | "active" | "completed";
+import { FilterT, TaskT } from "../../App";
+import { S } from "./Todolist.styled";
 
 type TodolistPT = {
+  id: string;
   title: string;
-  tasks: TaskT[];
+  tasksArr: TaskT[];
+  filterValue: FilterT;
+  changeFilter: (filter: FilterT, todolistId: string) => void;
+  addTask: (title: string, todolistId: string) => void;
+  removeTask: (taskId: string, todolistId: string) => void;
+  changeIsDone: (taskId: string, isDone: boolean, todolistId: string) => void;
+  changeTitle: (taskId: string, title: string, todolistId: string) => void;
+  removeTodolist: (todolistId: string) => void;
 };
 
-export function Todolist(props: TodolistPT) {
-  const [tasks, setTasks] = useState<TaskT[]>(props.tasks);
-  const [filter, setFilter] = useState<FilterT>("all");
-  const [taskValue, setTaskValue] = useState<string>("");
-
+export function Todolist({
+  id,
+  title,
+  tasksArr,
+  filterValue,
+  changeFilter,
+  addTask,
+  removeTask,
+  changeIsDone,
+  changeTitle,
+  removeTodolist,
+}: TodolistPT) {
+  const [titleValue, setTitleValue] = useState<string>("");
   const [error, setError] = useState<string>("");
 
   //! ---------- handler for input with title new task
-  const changeTaskValue = (value: string) => {
-    setTaskValue(value);
+  const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setTitleValue(e.currentTarget.value);
     setError("");
   };
   //! ---------- handler for input with title new task
 
   //! ---------- change array tasks
-  const addTask = (title: string) => {
-    const newTitle = title.trim();
-    if (newTitle.length) {
-      const newTask = { id: v1(), title: newTitle, isDone: false };
-      setTasks([newTask, ...tasks]);
-    } else {
+  const addTaskHandler = () => {
+    const newTitle = titleValue.trim();
+    if (!newTitle.length) {
       setError("Value can't be empty");
+    } else {
+      setTitleValue("");
+      addTask(newTitle, id);
     }
   };
-  const removeTask = (id: string) => {
-    const filteredTasks = tasks.filter((t) => t.id !== id);
-    setTasks(filteredTasks);
-  };
-  const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+  const addTaskKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      addTask(e.currentTarget.value);
-      setTaskValue("");
+      console.log(titleValue);
+      const newTitle = e.currentTarget.value.trim();
+      if (!newTitle.length) {
+        setError("Value can't be empty");
+      } else {
+        setTitleValue("");
+        addTask(newTitle, id);
+      }
     }
-  };
-  const onClickHandler = () => {
-    addTask(taskValue);
-    setTaskValue("");
   };
   //! ---------- change array tasks
 
-  //! ---------- filtered tasks
-  const changeFilter = (filter: FilterT) => {
-    setFilter(filter);
+  //! ---------- change error msg
+  const onBlurTitleHandler = () => {
+    setError("");
   };
-  const filteredTasks = () => {
-    switch (filter) {
-      case "completed": {
-        return tasks.filter((el) => el.isDone);
-      }
-      case "active": {
-        return tasks.filter((el) => !el.isDone);
-      }
-      default: {
-        return tasks;
-      }
-    }
-  };
-  //! ---------- filtered tasks
+  //! ---------- change error msg
 
-  //! ---------- change specific task
-  const changeIsDone = (id: string, isDone: boolean) => {
-    const newTasks = tasks.map((el) =>
-      el.id === id
-        ? {
-            ...el,
-            isDone,
-          }
-        : el,
-    );
-    setTasks(newTasks);
+  //! ---------- remove current todolist
+  const remove = () => {
+    removeTodolist(id);
   };
-  const changeTitle = (id: string, newTitle: string) => {
-    const newTasks = tasks.map((el) =>
-      el.id === id ? { ...el, title: newTitle } : el,
-    );
-    setTasks(newTasks);
-  };
-  //! ---------- change specific task
+  //! ---------- remove current todolist
 
   return (
-    <div>
-      <h3>{props.title}</h3>
+    <S.Todolist>
+      <h3>{title}</h3>
+      <div>
+        <Button title={"remove todolist"} callback={remove} />
+      </div>
       <div>
         <EditableInput
-          initialValue={taskValue}
-          onChange={changeTaskValue}
-          onKeyDown={onKeyDownHandler}
+          initialValue={titleValue}
+          onChange={onChangeTitleHandler}
+          onKeyDown={addTaskKeyDownHandler}
+          onBlur={onBlurTitleHandler}
           error={error}
         />
-        <Button title={"add"} callback={onClickHandler} />
+        <Button title={"add"} callback={addTaskHandler} />
       </div>
       <ul>
-        {filteredTasks().map((t) => {
-          const remove = () => removeTask(t.id);
+        {tasksArr.map((t) => {
+          const remove = () => removeTask(t.id, id);
           return (
             <Todo
               key={t.id}
               id={t.id}
+              todolistId={id}
               title={t.title}
               isDone={t.isDone}
               changeIsDone={changeIsDone}
@@ -127,20 +112,20 @@ export function Todolist(props: TodolistPT) {
       <div>
         <Button
           title={"All"}
-          callback={() => changeFilter("all")}
-          styledClass={filter === "all" ? "active-btn" : ""}
+          callback={() => changeFilter("all", id)}
+          styledClass={filterValue === "all" ? "active-btn" : ""}
         />
         <Button
           title={"Active"}
-          callback={() => changeFilter("active")}
-          styledClass={filter === "active" ? "active-btn" : ""}
+          callback={() => changeFilter("active", id)}
+          styledClass={filterValue === "active" ? "active-btn" : ""}
         />
         <Button
           title={"Completed"}
-          callback={() => changeFilter("completed")}
-          styledClass={filter === "completed" ? "active-btn" : ""}
+          callback={() => changeFilter("completed", id)}
+          styledClass={filterValue === "completed" ? "active-btn" : ""}
         />
       </div>
-    </div>
+    </S.Todolist>
   );
 }
