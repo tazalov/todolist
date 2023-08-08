@@ -1,5 +1,9 @@
 import { css } from "styled-components";
 
+const Shadow = css`
+  box-shadow: ${(props) => props.theme.colors.shadowPrimary};
+`;
+
 const Scroll = css`
   &::-webkit-scrollbar {
     width: 4px;
@@ -31,6 +35,7 @@ const Subtitle = css`
 `;
 
 export const F = {
+  Shadow,
   Scroll,
   ScrollBody,
   Subtitle,

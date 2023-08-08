@@ -4,6 +4,9 @@ import { Todo } from "../todo/Todo";
 import { EditableInput } from "../common/input/Input";
 import { FilterT, TaskT } from "../../App";
 import { S } from "./Todolist.styled";
+import { ButtonIcon } from "../common/button/ButtonIcon";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 type TodolistPT = {
   id: string;
@@ -77,12 +80,20 @@ export function Todolist({
   //! ---------- remove current todolist
 
   return (
-    <S.Todolist>
-      <h3>{title}</h3>
-      <div>
-        <Button title={"remove todolist"} callback={remove} />
-      </div>
-      <div>
+    <S.Todolist
+      direction={"column"}
+      gap={"10px"}
+      align={"center"}
+      justify={"center"}
+    >
+      <S.Title>{title}</S.Title>
+      <S.Close>
+        <ButtonIcon
+          title={<FontAwesomeIcon icon={faXmark} />}
+          callback={remove}
+        />
+      </S.Close>
+      <S.Form gap={"5px"}>
         <EditableInput
           initialValue={titleValue}
           onChange={onChangeTitleHandler}
@@ -90,9 +101,12 @@ export function Todolist({
           onBlur={onBlurTitleHandler}
           error={error}
         />
-        <Button title={"add"} callback={addTaskHandler} />
-      </div>
-      <ul>
+        <ButtonIcon
+          title={<FontAwesomeIcon icon={faPlus} />}
+          callback={addTaskHandler}
+        />
+      </S.Form>
+      <S.List as={"ul"} direction={"column"} align={"flex-start"}>
         {tasksArr.map((t) => {
           const remove = () => removeTask(t.id, id);
           return (
@@ -108,24 +122,24 @@ export function Todolist({
             />
           );
         })}
-      </ul>
-      <div>
+      </S.List>
+      <S.Buttons gap={"10px"}>
         <Button
           title={"All"}
           callback={() => changeFilter("all", id)}
-          styledClass={filterValue === "all" ? "active-btn" : ""}
+          active={filterValue === "all" ? "true" : "false"}
         />
         <Button
           title={"Active"}
           callback={() => changeFilter("active", id)}
-          styledClass={filterValue === "active" ? "active-btn" : ""}
+          active={filterValue === "active" ? "true" : "false"}
         />
         <Button
           title={"Completed"}
           callback={() => changeFilter("completed", id)}
-          styledClass={filterValue === "completed" ? "active-btn" : ""}
+          active={filterValue === "completed" ? "true" : "false"}
         />
-      </div>
+      </S.Buttons>
     </S.Todolist>
   );
 }

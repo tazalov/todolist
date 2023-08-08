@@ -1,6 +1,8 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from "react";
-import { EditableInput } from "../common/input/Input";
-import { Button } from "../common/button/Button";
+import { S } from "./Todo.styled";
+import { ButtonIcon } from "../common/button/ButtonIcon";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type TodoPT = {
   id: string;
@@ -66,7 +68,12 @@ export const Todo = React.memo(function ({
   //! ---------- change isDone current task
 
   return (
-    <li className={isDone ? "is-done" : ""}>
+    <S.Todo
+      as={"li"}
+      className={isDone ? "is-done" : ""}
+      gap={"10px"}
+      align={"center"}
+    >
       <input
         type="checkbox"
         checked={isDone}
@@ -74,20 +81,25 @@ export const Todo = React.memo(function ({
         disabled={editMode}
       />
       {editMode ? (
-        <>
-          <EditableInput
-            initialValue={currentTitle}
+        <S.Form>
+          <input
+            type={"text"}
+            value={currentTitle}
             onChange={onChangeTitleHandler}
             onBlur={addTitleBlurHandler}
             onKeyDown={addTitleKeyDownHandler}
-            error={error}
             autoFocus={true}
           />
-        </>
+          {error && <S.Error>{error}</S.Error>}
+        </S.Form>
       ) : (
         <span onClick={toggleEditMode}>{title}</span>
       )}
-      <Button title={"x"} callback={remove} disable={editMode} />
-    </li>
+      <ButtonIcon
+        title={<FontAwesomeIcon icon={faXmark} />}
+        callback={remove}
+        disable={editMode}
+      />
+    </S.Todo>
   );
 });

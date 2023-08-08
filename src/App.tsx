@@ -1,7 +1,8 @@
-import "./App.css";
 import { Todolist } from "./components/todolist/Todolist";
 import { v1 } from "uuid";
 import { useState } from "react";
+import { C } from "./components/styled/Common.styled";
+import styled from "styled-components";
 
 export type FilterT = "all" | "active" | "completed";
 
@@ -99,7 +100,7 @@ function App() {
   //! ---------- change specific task
 
   return (
-    <div className="App">
+    <StyledApp gap={"30px"} align={"flex-start"} justify={"center"}>
       {todoLists.map((el) => {
         const filteredTasks = filterOptions[el.filter](tasks[el.id]);
         return (
@@ -118,8 +119,12 @@ function App() {
           />
         );
       })}
-    </div>
+    </StyledApp>
   );
 }
+
+const StyledApp = styled(C.FlexWrapper)`
+  padding: 100px;
+`;
 
 export default App;
