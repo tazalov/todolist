@@ -1,7 +1,8 @@
-import React, { ChangeEvent, KeyboardEvent, useState } from "react";
+import React, { KeyboardEvent, useState } from "react";
 import { v1 } from "uuid";
 import { Button } from "../common/button/Button";
 import { Todo } from "../todo/Todo";
+import { EditableInput } from "../common/input/Input";
 
 type TaskT = {
   id: string;
@@ -24,8 +25,8 @@ export function Todolist(props: TodolistPT) {
   const [error, setError] = useState<string>("");
 
   //! ---------- handler for input with title new task
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setTaskValue(e.currentTarget.value);
+  const changeTaskValue = (value: string) => {
+    setTaskValue(value);
     setError("");
   };
   //! ---------- handler for input with title new task
@@ -99,13 +100,13 @@ export function Todolist(props: TodolistPT) {
     <div>
       <h3>{props.title}</h3>
       <div>
-        <input
-          value={taskValue}
-          onChange={onChangeHandler}
+        <EditableInput
+          initialValue={taskValue}
+          onChange={changeTaskValue}
           onKeyDown={onKeyDownHandler}
+          error={error}
         />
         <Button title={"add"} callback={onClickHandler} />
-        {error && <span className="error-msg">{error}</span>}
       </div>
       <ul>
         {filteredTasks().map((t) => {
@@ -124,24 +125,21 @@ export function Todolist(props: TodolistPT) {
         })}
       </ul>
       <div>
-        <button
-          onClick={() => changeFilter("all")}
-          className={filter === "all" ? "active-btn" : ""}
-        >
-          All
-        </button>
-        <button
-          onClick={() => changeFilter("active")}
-          className={filter === "active" ? "active-btn" : ""}
-        >
-          Active
-        </button>
-        <button
-          onClick={() => changeFilter("completed")}
-          className={filter === "completed" ? "active-btn" : ""}
-        >
-          Completed
-        </button>
+        <Button
+          title={"All"}
+          callback={() => changeFilter("all")}
+          styledClass={filter === "all" ? "active-btn" : ""}
+        />
+        <Button
+          title={"Active"}
+          callback={() => changeFilter("active")}
+          styledClass={filter === "active" ? "active-btn" : ""}
+        />
+        <Button
+          title={"Completed"}
+          callback={() => changeFilter("completed")}
+          styledClass={filter === "completed" ? "active-btn" : ""}
+        />
       </div>
     </div>
   );

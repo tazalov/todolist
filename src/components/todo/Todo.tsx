@@ -1,4 +1,6 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from "react";
+import { EditableInput } from "../common/input/Input";
+import { Button } from "../common/button/Button";
 
 type TodoPT = {
   id: string;
@@ -33,11 +35,11 @@ export const Todo = React.memo(function ({
     if (newTitle !== title) {
       if (newTitle.length) {
         changeTitle(id, currentTitle);
+        setEditMode(false);
       } else {
         setError("Value can't be empty");
       }
     }
-    setEditMode(false);
   };
   const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -50,8 +52,8 @@ export const Todo = React.memo(function ({
   //! ---------- change title current task
 
   //! ---------- handler for input with title current task
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setCurrentTitle(e.currentTarget.value);
+  const changeCurrentTitle = (value: string) => {
+    setCurrentTitle(value);
     setError("");
   };
   //! ---------- handler for input with title current task
@@ -68,20 +70,19 @@ export const Todo = React.memo(function ({
       <input type="checkbox" checked={isDone} onChange={setNewDone} />
       {editMode ? (
         <>
-          <input
-            type={"text"}
-            value={currentTitle}
-            onChange={onChangeHandler}
+          <EditableInput
+            initialValue={currentTitle}
+            onChange={changeCurrentTitle}
             onBlur={onBlurHandler}
             onKeyDown={onKeyDownHandler}
+            error={error}
             autoFocus={true}
           />
-          {error && <span className="error-msg">{error}</span>}
         </>
       ) : (
         <span onClick={toggleEditMode}>{title}</span>
       )}
-      <button onClick={remove}>x</button>
+      <Button title={"x"} callback={remove} />
     </li>
   );
 });
