@@ -1,10 +1,7 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from "react";
 import { Button } from "../common/button/Button";
 import { Todo } from "../todo/Todo";
-import { EditableInput } from "../common/input/Input";
 import { FilterT, TaskT } from "../../App";
-import { S } from "./Todolist.styled";
-import { ButtonIcon } from "../common/button/ButtonIcon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 
@@ -80,33 +77,30 @@ export function Todolist({
   //! ---------- remove current todolist
 
   return (
-    <S.Todolist
-      direction={"column"}
-      gap={"10px"}
-      align={"center"}
-      justify={"center"}
-    >
-      <S.Title>{title}</S.Title>
-      <S.Close>
-        <ButtonIcon
+    <div>
+      <h2>
+        {title}{" "}
+        <Button
           title={<FontAwesomeIcon icon={faXmark} />}
           callback={remove}
+          styledClass={""}
         />
-      </S.Close>
-      <S.Form gap={"5px"}>
-        <EditableInput
-          initialValue={titleValue}
-          onChange={onChangeTitleHandler}
-          onKeyDown={addTaskKeyDownHandler}
-          onBlur={onBlurTitleHandler}
-          error={error}
-        />
-        <ButtonIcon
-          title={<FontAwesomeIcon icon={faPlus} />}
-          callback={addTaskHandler}
-        />
-      </S.Form>
-      <S.List as={"ul"} direction={"column"} align={"flex-start"}>
+      </h2>
+
+      <input
+        type={"text"}
+        value={titleValue}
+        onChange={onChangeTitleHandler}
+        onKeyDown={addTaskKeyDownHandler}
+        onBlur={onBlurTitleHandler}
+      />
+      <Button
+        title={<FontAwesomeIcon icon={faPlus} />}
+        callback={addTaskHandler}
+        styledClass={""}
+      />
+      {error && <div className={"error-msg"}>{error}</div>}
+      <ul>
         {tasksArr.map((t) => {
           const remove = () => removeTask(t.id, id);
           return (
@@ -122,24 +116,24 @@ export function Todolist({
             />
           );
         })}
-      </S.List>
-      <S.Buttons gap={"10px"}>
+      </ul>
+      <div>
         <Button
           title={"All"}
           callback={() => changeFilter("all", id)}
-          active={filterValue === "all" ? "true" : "false"}
+          styledClass={filterValue === "all" ? "active-btn" : ""}
         />
         <Button
           title={"Active"}
           callback={() => changeFilter("active", id)}
-          active={filterValue === "active" ? "true" : "false"}
+          styledClass={filterValue === "active" ? "active-btn" : ""}
         />
         <Button
           title={"Completed"}
           callback={() => changeFilter("completed", id)}
-          active={filterValue === "completed" ? "true" : "false"}
+          styledClass={filterValue === "completed" ? "active-btn" : ""}
         />
-      </S.Buttons>
-    </S.Todolist>
+      </div>
+    </div>
   );
 }

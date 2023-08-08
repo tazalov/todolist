@@ -1,8 +1,7 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from "react";
-import { S } from "./Todo.styled";
-import { ButtonIcon } from "../common/button/ButtonIcon";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button } from "../common/button/Button";
 
 type TodoPT = {
   id: string;
@@ -68,12 +67,7 @@ export const Todo = React.memo(function ({
   //! ---------- change isDone current task
 
   return (
-    <S.Todo
-      as={"li"}
-      className={isDone ? "is-done" : ""}
-      gap={"10px"}
-      align={"center"}
-    >
+    <div className={isDone ? "is-done" : ""}>
       <input
         type="checkbox"
         checked={isDone}
@@ -81,7 +75,7 @@ export const Todo = React.memo(function ({
         disabled={editMode}
       />
       {editMode ? (
-        <S.Form>
+        <>
           <input
             type={"text"}
             value={currentTitle}
@@ -90,16 +84,17 @@ export const Todo = React.memo(function ({
             onKeyDown={addTitleKeyDownHandler}
             autoFocus={true}
           />
-          {error && <S.Error>{error}</S.Error>}
-        </S.Form>
+          {error && <div className={"error-msg"}>{error}</div>}
+        </>
       ) : (
         <span onClick={toggleEditMode}>{title}</span>
       )}
-      <ButtonIcon
+      <Button
         title={<FontAwesomeIcon icon={faXmark} />}
         callback={remove}
         disable={editMode}
+        styledClass={""}
       />
-    </S.Todo>
+    </div>
   );
 });
