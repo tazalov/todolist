@@ -19,17 +19,16 @@ code {
 }
 
 .error-msg {
-  border: 1px solid red;
   color: red;
-  padding: 5px;
-  margin: 5px;
+  font-size: 10px;
+  text-align: center;
 }
 
 input {
   border: 1px solid black;
   color: black;
   padding: 5px;
-  margin: 5px;
+  margin: 2px 5px;
 }
 
 .active-btn {

@@ -7,21 +7,21 @@ import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 type TodolistPT = {
   id: string;
-  title: string;
-  tasksArr: TaskT[];
+  name: string;
+  tasks: TaskT[];
   filterValue: FilterT;
-  changeFilter: (filter: FilterT, todolistId: string) => void;
-  addTask: (title: string, todolistId: string) => void;
-  removeTask: (taskId: string, todolistId: string) => void;
-  changeIsDone: (taskId: string, isDone: boolean, todolistId: string) => void;
-  changeTitle: (taskId: string, title: string, todolistId: string) => void;
+  changeFilter: (todolistId: string, filter: FilterT) => void;
+  addTask: (todolistId: string, title: string) => void;
+  removeTask: (todolistId: string, taskId: string) => void;
+  changeIsDone: (todolistId: string, taskId: string, isDone: boolean) => void;
+  changeTitle: (todolistId: string, taskId: string, title: string) => void;
   removeTodolist: (todolistId: string) => void;
 };
 
 export function Todolist({
   id,
-  title,
-  tasksArr,
+  name,
+  tasks,
   filterValue,
   changeFilter,
   addTask,
@@ -30,36 +30,32 @@ export function Todolist({
   changeTitle,
   removeTodolist,
 }: TodolistPT) {
-  const [titleValue, setTitleValue] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
   const [error, setError] = useState<string>("");
 
   //! ---------- handler for input with title new task
-  const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitleValue(e.currentTarget.value);
+  const changeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.currentTarget.value);
     setError("");
   };
   //! ---------- handler for input with title new task
 
   //! ---------- change array tasks
-  const addTaskHandler = () => {
-    const newTitle = titleValue.trim();
+  const addNewTask = () => {
+    const newTitle = title.trim();
     if (!newTitle.length) {
       setError("Value can't be empty");
     } else {
-      setTitleValue("");
-      addTask(newTitle, id);
+      setTitle("");
+      addTask(id, newTitle);
     }
+  };
+  const addTaskHandler = () => {
+    addNewTask();
   };
   const addTaskKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      console.log(titleValue);
-      const newTitle = e.currentTarget.value.trim();
-      if (!newTitle.length) {
-        setError("Value can't be empty");
-      } else {
-        setTitleValue("");
-        addTask(newTitle, id);
-      }
+      addNewTask();
     }
   };
   //! ---------- change array tasks
@@ -79,7 +75,7 @@ export function Todolist({
   return (
     <div>
       <h2>
-        {title}{" "}
+        {name}
         <Button
           title={<FontAwesomeIcon icon={faXmark} />}
           callback={remove}
@@ -89,8 +85,8 @@ export function Todolist({
 
       <input
         type={"text"}
-        value={titleValue}
-        onChange={onChangeTitleHandler}
+        value={title}
+        onChange={changeTitleHandler}
         onKeyDown={addTaskKeyDownHandler}
         onBlur={onBlurTitleHandler}
       />
@@ -101,18 +97,18 @@ export function Todolist({
       />
       {error && <div className={"error-msg"}>{error}</div>}
       <ul>
-        {tasksArr.map((t) => {
-          const remove = () => removeTask(t.id, id);
+        {tasks.map((el) => {
+          const removeCurrentTask = () => removeTask(id, el.id);
           return (
             <Todo
-              key={t.id}
-              id={t.id}
+              key={el.id}
+              id={el.id}
               todolistId={id}
-              title={t.title}
-              isDone={t.isDone}
+              title={el.title}
+              isDone={el.isDone}
               changeIsDone={changeIsDone}
-              remove={remove}
               changeTitle={changeTitle}
+              remove={removeCurrentTask}
             />
           );
         })}
@@ -120,17 +116,17 @@ export function Todolist({
       <div>
         <Button
           title={"All"}
-          callback={() => changeFilter("all", id)}
+          callback={() => changeFilter(id, "all")}
           styledClass={filterValue === "all" ? "active-btn" : ""}
         />
         <Button
           title={"Active"}
-          callback={() => changeFilter("active", id)}
+          callback={() => changeFilter(id, "active")}
           styledClass={filterValue === "active" ? "active-btn" : ""}
         />
         <Button
           title={"Completed"}
-          callback={() => changeFilter("completed", id)}
+          callback={() => changeFilter(id, "completed")}
           styledClass={filterValue === "completed" ? "active-btn" : ""}
         />
       </div>

@@ -8,20 +8,19 @@ type TodoPT = {
   todolistId: string;
   title: string;
   isDone: boolean;
-  changeIsDone: (taskId: string, isDone: boolean, todolistId: string) => void;
+  changeIsDone: (todolistId: string, taskId: string, isDone: boolean) => void;
+  changeTitle: (todolistId: string, taskId: string, title: string) => void;
   remove: () => void;
-  changeTitle: (taskId: string, title: string, todolistId: string) => void;
 };
 
-//? u can use React.memo
-export const Todo = React.memo(function ({
+export function Todo({
   id,
   todolistId,
   title,
   isDone,
   changeIsDone,
-  remove,
   changeTitle,
+  remove,
 }: TodoPT) {
   const [currentTitle, setCurrentTitle] = useState<string>(title);
   const [editMode, setEditMode] = useState<boolean>(false);
@@ -32,24 +31,24 @@ export const Todo = React.memo(function ({
   //! ---------- (de)activate edit mode for change title current task
 
   //! ---------- change title current task
-  const addTitle = () => {
+  const updateTitle = () => {
     const newTitle = currentTitle.trim();
     if (newTitle.length === 0) {
       setError("Value can't be empty");
     } else if (newTitle !== title) {
-      changeTitle(id, currentTitle, todolistId);
+      changeTitle(todolistId, id, currentTitle);
       setEditMode(false);
     } else {
       setEditMode(false);
     }
   };
-  const addTitleKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+  const updateTitleKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      addTitle();
+      updateTitle();
     }
   };
-  const addTitleBlurHandler = () => {
-    addTitle();
+  const updateTitleBlurHandler = () => {
+    updateTitle();
   };
   //! ---------- change title current task
 
@@ -62,7 +61,7 @@ export const Todo = React.memo(function ({
 
   //! ---------- change isDone current task
   const onChangeDoneHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    changeIsDone(id, e.currentTarget.checked, todolistId);
+    changeIsDone(todolistId, id, e.currentTarget.checked);
   };
   //! ---------- change isDone current task
 
@@ -80,21 +79,23 @@ export const Todo = React.memo(function ({
             type={"text"}
             value={currentTitle}
             onChange={onChangeTitleHandler}
-            onBlur={addTitleBlurHandler}
-            onKeyDown={addTitleKeyDownHandler}
+            onBlur={updateTitleBlurHandler}
+            onKeyDown={updateTitleKeyDownHandler}
             autoFocus={true}
           />
           {error && <div className={"error-msg"}>{error}</div>}
         </>
       ) : (
-        <span onClick={toggleEditMode}>{title}</span>
+        <>
+          <span onClick={toggleEditMode}>{title}</span>
+          <Button
+            title={<FontAwesomeIcon icon={faXmark} />}
+            callback={remove}
+            disable={editMode}
+            styledClass={""}
+          />
+        </>
       )}
-      <Button
-        title={<FontAwesomeIcon icon={faXmark} />}
-        callback={remove}
-        disable={editMode}
-        styledClass={""}
-      />
     </div>
   );
-});
+}
