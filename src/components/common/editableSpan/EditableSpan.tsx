@@ -7,11 +7,15 @@ type EditableSpanPT = {
 
 export function EditableSpan({ title, changeTitle }: EditableSpanPT) {
   const [editMode, setEditMode] = useState<boolean>(false);
-  const [currentTitle, setCurrentTitle] = useState<string>(title);
+  const [currentTitle, setCurrentTitle] = useState<string>("");
   const [error, setError] = useState<string>("");
 
   //! ---------- (de)activate edit mode for current title
-  const toggleEditMode = () => setEditMode((prev) => !prev);
+  const activateEditMode = () => {
+    setEditMode(true);
+    setCurrentTitle(title);
+  };
+  const deactivateEditMode = () => setEditMode(false);
   //! ---------- (de)activate edit mode for current title
 
   //! ---------- update current title
@@ -21,15 +25,18 @@ export function EditableSpan({ title, changeTitle }: EditableSpanPT) {
       setError("Value can't be empty");
     } else if (newTitle !== title) {
       changeTitle(currentTitle);
-      setEditMode(false);
+      deactivateEditMode();
     } else {
-      setEditMode(false);
+      deactivateEditMode();
     }
   };
   const updateTitleKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       updateTitle();
     }
+  };
+  const updateTitleBlurHandler = () => {
+    if (!error) updateTitle();
   };
   //! ---------- update current title
 
@@ -40,17 +47,13 @@ export function EditableSpan({ title, changeTitle }: EditableSpanPT) {
   };
   //! ---------- handler for input with current title
 
-  const onBlurHandler = () => {
-    if (!error) updateTitle();
-  };
-
   return editMode ? (
     <>
       <input
         type={"text"}
         value={currentTitle}
         onChange={onChangeTitleHandler}
-        onBlur={onBlurHandler}
+        onBlur={updateTitleBlurHandler}
         onKeyDown={updateTitleKeyDownHandler}
         autoFocus={true}
         style={{ fontSize: "inherit", fontWeight: "inherit" }}
@@ -58,6 +61,6 @@ export function EditableSpan({ title, changeTitle }: EditableSpanPT) {
       {error && <div className={"error-msg"}>{error}</div>}
     </>
   ) : (
-    <span onDoubleClick={toggleEditMode}>{title}</span>
+    <span onDoubleClick={activateEditMode}>{title}</span>
   );
 }
