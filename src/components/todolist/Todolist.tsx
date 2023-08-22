@@ -52,6 +52,24 @@ export const Todolist: FC<TodolistPT> = ({
   //! ---------- change filter for tasks
   const changeFilterForTasks = (filter: FilterT) => () => changeFilter(id, filter)
 
+  //! ---------- array Todo components
+  const tasksList = tasks.map(el => {
+    const changeIsDoneCurrentTask = (isDone: boolean) => changeTaskIsDone(id, el.id, isDone)
+    const changeTitleCurrentTask = (title: string) => changeTaskTitle(id, el.id, title)
+    const removeCurrentTask = () => removeTask(id, el.id)
+
+    return (
+      <Todo
+        key={el.id}
+        title={el.title}
+        isDone={el.isDone}
+        changeIsDone={changeIsDoneCurrentTask}
+        changeTitle={changeTitleCurrentTask}
+        remove={removeCurrentTask}
+      />
+    )
+  })
+
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -65,26 +83,7 @@ export const Todolist: FC<TodolistPT> = ({
         />
       </div>
       <AddItemForm addItem={addNewTask} />
-      <ul>
-        {tasks.map(el => {
-          const changeIsDoneCurrentTask = (isDone: boolean) => changeTaskIsDone(id, el.id, isDone)
-          const changeTitleCurrentTask = (title: string) => changeTaskTitle(id, el.id, title)
-          const removeCurrentTask = () => removeTask(id, el.id)
-
-          return (
-            <Todo
-              key={el.id}
-              id={el.id}
-              todolistId={id}
-              title={el.title}
-              isDone={el.isDone}
-              changeIsDone={changeIsDoneCurrentTask}
-              changeTitle={changeTitleCurrentTask}
-              remove={removeCurrentTask}
-            />
-          )
-        })}
-      </ul>
+      <ul>{tasksList}</ul>
       <div>
         <Button
           title={'All'}

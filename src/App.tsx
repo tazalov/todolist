@@ -97,30 +97,31 @@ export const App = () => {
     setTasks({ ...tasks, [todolistId]: newTasks })
   }
 
+  //! ---------- array Todolist components
+  const todoListsArr = todoLists.map(el => {
+    const currentTasks = filterOptions[el.filter](tasks[el.id])
+    return (
+      <Todolist
+        key={el.id}
+        id={el.id}
+        name={el.name}
+        tasks={currentTasks}
+        filterValue={el.filter}
+        addTask={addTask}
+        removeTask={removeTask}
+        changeTaskIsDone={changeTaskIsDone}
+        changeTaskTitle={changeTaskTitle}
+        changeFilter={changeFilterTodoList}
+        removeTodolist={removeTodoList}
+        changeTitle={changeTitleTodolist}
+      />
+    )
+  })
+
   return (
     <>
       <AddItemForm addItem={addTodoList} />
-      <div className={'App'}>
-        {todoLists.map(el => {
-          const currentTasks = filterOptions[el.filter](tasks[el.id])
-          return (
-            <Todolist
-              key={el.id}
-              id={el.id}
-              name={el.name}
-              tasks={currentTasks}
-              filterValue={el.filter}
-              addTask={addTask}
-              removeTask={removeTask}
-              changeTaskIsDone={changeTaskIsDone}
-              changeTaskTitle={changeTaskTitle}
-              changeFilter={changeFilterTodoList}
-              removeTodolist={removeTodoList}
-              changeTitle={changeTitleTodolist}
-            />
-          )
-        })}
-      </div>
+      <div className={'App'}>{todoListsArr}</div>
     </>
   )
 }
