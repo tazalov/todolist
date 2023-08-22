@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { v1 } from 'uuid'
-import { AddItemForm } from './components/common/addItemForm/AddItemFormPT'
+import { AddItemForm } from './components/common/addItemForm/AddItemForm'
 import { Todolist } from './components/todolist/Todolist'
 import './style.css'
 
@@ -32,7 +32,6 @@ export const App = () => {
     completed: (tasks: TaskT[]) => tasks.filter(el => el.isDone),
     active: (tasks: TaskT[]) => tasks.filter(el => !el.isDone),
   }
-  //! ---------- additional data
 
   //! ---------- state
   const [todoLists, setTodoLists] = useState<TodoListT[]>([
@@ -51,7 +50,6 @@ export const App = () => {
       { id: v1(), title: 'Butter', isDone: false },
     ],
   })
-  //! ---------- state
 
   //! ---------- change array todoLists
   const addTodoList = (name: string) => {
@@ -77,7 +75,6 @@ export const App = () => {
     const newTodoLists = todoLists.map(el => (el.id === todoListId ? { ...el, name } : el))
     setTodoLists(newTodoLists)
   }
-  //! ---------- change array todoLists
 
   //! ---------- change array tasks
   const addTask = (todolistId: string, title: string) => {
@@ -89,7 +86,6 @@ export const App = () => {
     const newTasks = tasks[todolistId].filter(el => el.id !== taskId)
     setTasks({ ...tasks, [todolistId]: newTasks })
   }
-  //! ---------- change array tasks
 
   //! ---------- change specific task
   const changeTaskIsDone = (todolistId: string, taskId: string, isDone: boolean) => {
@@ -100,7 +96,6 @@ export const App = () => {
     const newTasks = tasks[todolistId].map(el => (el.id === taskId ? { ...el, title } : el))
     setTasks({ ...tasks, [todolistId]: newTasks })
   }
-  //! ---------- change specific task
 
   return (
     <>

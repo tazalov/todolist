@@ -16,7 +16,6 @@ export const EditableSpan: FC<EditableSpanPT> = ({ title, changeTitle }) => {
     setCurrentTitle(title)
   }
   const deactivateEditMode = () => setEditMode(false)
-  //! ---------- (de)activate edit mode for current title
 
   //! ---------- update current title
   const updateTitle = () => {
@@ -38,14 +37,12 @@ export const EditableSpan: FC<EditableSpanPT> = ({ title, changeTitle }) => {
   const updateTitleBlurHandler = () => {
     if (!error) updateTitle()
   }
-  //! ---------- update current title
 
   //! ---------- handler for input with current title
   const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setCurrentTitle(e.currentTarget.value)
     setError('')
   }
-  //! ---------- handler for input with current title
 
   return editMode ? (
     <>

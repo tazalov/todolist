@@ -5,35 +5,23 @@ import { Button } from '../common/button/Button'
 import { EditableSpan } from '../common/editableSpan/EditableSpan'
 
 type TodoPT = {
-  id: string
-  todolistId: string
   title: string
   isDone: boolean
-  changeIsDone: (todolistId: string, taskId: string, isDone: boolean) => void
-  changeTitle: (todolistId: string, taskId: string, title: string) => void
+  changeIsDone: (isDone: boolean) => void
+  changeTitle: (title: string) => void
   remove: () => void
 }
 
-export const Todo: FC<TodoPT> = ({
-  id,
-  todolistId,
-  title,
-  isDone,
-  changeIsDone,
-  changeTitle,
-  remove,
-}) => {
+export const Todo: FC<TodoPT> = ({ title, isDone, changeIsDone, changeTitle, remove }) => {
   //! ---------- change isDone current task
   const onChangeDoneHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    changeIsDone(todolistId, id, e.currentTarget.checked)
+    changeIsDone(e.currentTarget.checked)
   }
-  //! ---------- change isDone current task
 
   //! ---------- change title current task
   const changeCurrentTitle = (newTitle: string) => {
-    changeTitle(todolistId, id, newTitle)
+    changeTitle(newTitle)
   }
-  //! ---------- change title current task
 
   return (
     <div className={isDone ? 'is-done' : ''}>

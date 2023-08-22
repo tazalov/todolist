@@ -16,7 +16,6 @@ export const AddItemForm: FC<AddItemFormPT> = ({ addItem }) => {
     setTitle(e.currentTarget.value)
     setError('')
   }
-  //! ---------- handler for input value
 
   //! ---------- add item with validate
   const addNewItem = () => {
@@ -28,7 +27,6 @@ export const AddItemForm: FC<AddItemFormPT> = ({ addItem }) => {
       addItem(newTitle)
     }
   }
-  //! ---------- add item with validate
 
   //! ---------- handlers for add item
   const addItemHandler = () => {
@@ -39,13 +37,11 @@ export const AddItemForm: FC<AddItemFormPT> = ({ addItem }) => {
       addNewItem()
     }
   }
-  //! ---------- handlers for add item
 
   //! ---------- change error msg
   const onBlurTitleHandler = () => {
     setError('')
   }
-  //! ---------- change error msg
 
   return (
     <div>

@@ -2,7 +2,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { FC } from 'react'
 import { FilterT, TaskT } from '../../App'
-import { AddItemForm } from '../common/addItemForm/AddItemFormPT'
+import { AddItemForm } from '../common/addItemForm/AddItemForm'
 import { Button } from '../common/button/Button'
 import { EditableSpan } from '../common/editableSpan/EditableSpan'
 import { Todo } from '../todo/Todo'
@@ -38,19 +38,19 @@ export const Todolist: FC<TodolistPT> = ({
   const addNewTask = (title: string) => {
     addTask(id, title)
   }
-  //! ---------- callback for addItemForm
 
   //! ---------- callback for editableSpan
   const changeCurrentTitle = (title: string) => {
     changeTitle(id, title)
   }
-  //! ---------- callback for editableSpan
 
   //! ---------- remove current todolist
-  const remove = () => {
+  const removeCurrent = () => {
     removeTodolist(id)
   }
-  //! ---------- remove current todolist
+
+  //! ---------- change filter for tasks
+  const changeFilterForTasks = (filter: FilterT) => () => changeFilter(id, filter)
 
   return (
     <div>
@@ -58,12 +58,19 @@ export const Todolist: FC<TodolistPT> = ({
         <h2>
           <EditableSpan title={name} changeTitle={changeCurrentTitle} />
         </h2>
-        <Button title={<FontAwesomeIcon icon={faXmark} />} callback={remove} styledClass={''} />
+        <Button
+          title={<FontAwesomeIcon icon={faXmark} />}
+          callback={removeCurrent}
+          styledClass={''}
+        />
       </div>
       <AddItemForm addItem={addNewTask} />
       <ul>
         {tasks.map(el => {
+          const changeIsDoneCurrentTask = (isDone: boolean) => changeTaskIsDone(id, el.id, isDone)
+          const changeTitleCurrentTask = (title: string) => changeTaskTitle(id, el.id, title)
           const removeCurrentTask = () => removeTask(id, el.id)
+
           return (
             <Todo
               key={el.id}
@@ -71,8 +78,8 @@ export const Todolist: FC<TodolistPT> = ({
               todolistId={id}
               title={el.title}
               isDone={el.isDone}
-              changeIsDone={changeTaskIsDone}
-              changeTitle={changeTaskTitle}
+              changeIsDone={changeIsDoneCurrentTask}
+              changeTitle={changeTitleCurrentTask}
               remove={removeCurrentTask}
             />
           )
@@ -81,17 +88,17 @@ export const Todolist: FC<TodolistPT> = ({
       <div>
         <Button
           title={'All'}
-          callback={() => changeFilter(id, 'all')}
+          callback={changeFilterForTasks('all')}
           styledClass={filterValue === 'all' ? 'active-btn' : ''}
         />
         <Button
           title={'Active'}
-          callback={() => changeFilter(id, 'active')}
+          callback={changeFilterForTasks('active')}
           styledClass={filterValue === 'active' ? 'active-btn' : ''}
         />
         <Button
           title={'Completed'}
-          callback={() => changeFilter(id, 'completed')}
+          callback={changeFilterForTasks('completed')}
           styledClass={filterValue === 'completed' ? 'active-btn' : ''}
         />
       </div>
