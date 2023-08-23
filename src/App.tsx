@@ -1,3 +1,11 @@
+import MenuIcon from '@mui/icons-material/Menu'
+import { Grid } from '@mui/material'
+import AppBar from '@mui/material/AppBar'
+import Button from '@mui/material/Button'
+import Container from '@mui/material/Container'
+import IconButton from '@mui/material/IconButton'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
 import { useState } from 'react'
 import { v1 } from 'uuid'
 import { AddItemForm } from './components/common/addItemForm/AddItemForm'
@@ -36,7 +44,7 @@ export const App = () => {
   //! ---------- state
   const [todoLists, setTodoLists] = useState<TodoListT[]>([
     { id: todoListId1, name: 'What to learn', filter: 'all' },
-    { id: todoListId2, name: 'What to byu', filter: 'active' },
+    { id: todoListId2, name: 'What to byu', filter: 'all' },
   ])
   const [tasks, setTasks] = useState<TasksT>({
     [todoListId1]: [
@@ -47,6 +55,8 @@ export const App = () => {
     [todoListId2]: [
       { id: v1(), title: 'Milk', isDone: true },
       { id: v1(), title: 'Bread', isDone: true },
+      { id: v1(), title: 'Butter', isDone: false },
+      { id: v1(), title: 'Butter', isDone: false },
       { id: v1(), title: 'Butter', isDone: false },
     ],
   })
@@ -101,27 +111,46 @@ export const App = () => {
   const todoListsArr = todoLists.map(el => {
     const currentTasks = filterOptions[el.filter](tasks[el.id])
     return (
-      <Todolist
-        key={el.id}
-        id={el.id}
-        name={el.name}
-        tasks={currentTasks}
-        filterValue={el.filter}
-        addTask={addTask}
-        removeTask={removeTask}
-        changeTaskIsDone={changeTaskIsDone}
-        changeTaskTitle={changeTaskTitle}
-        changeFilter={changeFilterTodoList}
-        removeTodolist={removeTodoList}
-        changeTitle={changeTitleTodolist}
-      />
+      <Grid item>
+        <Todolist
+          key={el.id}
+          id={el.id}
+          name={el.name}
+          tasks={currentTasks}
+          filterValue={el.filter}
+          addTask={addTask}
+          removeTask={removeTask}
+          changeTaskIsDone={changeTaskIsDone}
+          changeTaskTitle={changeTaskTitle}
+          changeFilter={changeFilterTodoList}
+          removeTodolist={removeTodoList}
+          changeTitle={changeTitleTodolist}
+        />
+      </Grid>
     )
   })
 
   return (
     <>
-      <AddItemForm addItem={addTodoList} />
-      <div className={'App'}>{todoListsArr}</div>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            DODOLIST
+          </Typography>
+          <Button color="inherit">Login</Button>
+        </Toolbar>
+      </AppBar>
+      <Container fixed>
+        <Grid container sx={{ mt: 2, mb: 2 }}>
+          <AddItemForm addItem={addTodoList} />
+        </Grid>
+        <Grid spacing={5} container>
+          {todoListsArr}
+        </Grid>
+      </Container>
     </>
   )
 }

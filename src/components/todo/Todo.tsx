@@ -1,7 +1,7 @@
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import DeleteIcon from '@mui/icons-material/Delete'
+import { IconButton, ListItem, ListItemButton, ListItemText } from '@mui/material'
+import Checkbox from '@mui/material/Checkbox'
 import { ChangeEvent, FC } from 'react'
-import { Button } from '../common/button/Button'
 import { EditableSpan } from '../common/editableSpan/EditableSpan'
 
 type TodoPT = {
@@ -24,10 +24,21 @@ export const Todo: FC<TodoPT> = ({ title, isDone, changeIsDone, changeTitle, rem
   }
 
   return (
-    <div className={isDone ? 'is-done' : ''}>
-      <input type="checkbox" checked={isDone} onChange={onChangeDoneHandler} />
-      <EditableSpan title={title} changeTitle={changeCurrentTitle} />
-      <Button title={<FontAwesomeIcon icon={faXmark} />} callback={remove} styledClass={''} />
-    </div>
+    <ListItem
+      role="listitem"
+      secondaryAction={
+        <IconButton size={'medium'} aria-label="delete" color="primary" onClick={remove}>
+          <DeleteIcon fontSize="medium" />
+        </IconButton>
+      }
+      disablePadding
+    >
+      <ListItemButton>
+        <Checkbox color="success" checked={isDone} onChange={onChangeDoneHandler} />
+        <ListItemText>
+          <EditableSpan title={title} changeTitle={changeCurrentTitle} />
+        </ListItemText>
+      </ListItemButton>
+    </ListItem>
   )
 }

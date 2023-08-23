@@ -1,9 +1,12 @@
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import CloseIcon from '@mui/icons-material/Close'
+import { IconButton, List, Typography } from '@mui/material'
+import Button from '@mui/material/Button'
+import ButtonGroup from '@mui/material/ButtonGroup'
+import Paper from '@mui/material/Paper'
+import Stack from '@mui/material/Stack'
 import { FC } from 'react'
 import { FilterT, TaskT } from '../../App'
 import { AddItemForm } from '../common/addItemForm/AddItemForm'
-import { Button } from '../common/button/Button'
 import { EditableSpan } from '../common/editableSpan/EditableSpan'
 import { Todo } from '../todo/Todo'
 
@@ -71,36 +74,46 @@ export const Todolist: FC<TodolistPT> = ({
   })
 
   return (
-    <div>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <h2>
-          <EditableSpan title={name} changeTitle={changeCurrentTitle} />
-        </h2>
-        <Button
-          title={<FontAwesomeIcon icon={faXmark} />}
-          callback={removeCurrent}
-          styledClass={''}
-        />
-      </div>
-      <AddItemForm addItem={addNewTask} />
-      <ul>{tasksList}</ul>
-      <div>
-        <Button
-          title={'All'}
-          callback={changeFilterForTasks('all')}
-          styledClass={filterValue === 'all' ? 'active-btn' : ''}
-        />
-        <Button
-          title={'Active'}
-          callback={changeFilterForTasks('active')}
-          styledClass={filterValue === 'active' ? 'active-btn' : ''}
-        />
-        <Button
-          title={'Completed'}
-          callback={changeFilterForTasks('completed')}
-          styledClass={filterValue === 'completed' ? 'active-btn' : ''}
-        />
-      </div>
-    </div>
+    <Paper elevation={3}>
+      <Stack spacing={2} justifyContent="center" alignItems="center" sx={{ p: 1, width: '100%' }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+            <EditableSpan title={name} changeTitle={changeCurrentTitle} />
+          </Typography>
+          <IconButton size={'medium'} aria-label="delete" color="primary" onClick={removeCurrent}>
+            <CloseIcon fontSize="medium" />
+          </IconButton>
+        </div>
+        <AddItemForm addItem={addNewTask} />
+        <List dense component="div" role="list">
+          {tasksList}
+        </List>
+        <ButtonGroup
+          size="small"
+          variant="contained"
+          aria-label="outlined primary button group"
+          disableElevation
+        >
+          <Button
+            color={filterValue === 'all' ? 'success' : 'primary'}
+            onClick={changeFilterForTasks('all')}
+          >
+            ALL
+          </Button>
+          <Button
+            color={filterValue === 'active' ? 'success' : 'primary'}
+            onClick={changeFilterForTasks('active')}
+          >
+            ACTIVE
+          </Button>
+          <Button
+            color={filterValue === 'completed' ? 'success' : 'primary'}
+            onClick={changeFilterForTasks('completed')}
+          >
+            COMPLETED
+          </Button>
+        </ButtonGroup>
+      </Stack>
+    </Paper>
   )
 }

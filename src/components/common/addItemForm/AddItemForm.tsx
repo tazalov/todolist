@@ -1,7 +1,8 @@
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import AddBoxIcon from '@mui/icons-material/AddBox'
+import { IconButton } from '@mui/material'
+import Stack from '@mui/material/Stack'
+import TextField from '@mui/material/TextField'
 import { ChangeEvent, FC, KeyboardEvent, useState } from 'react'
-import { Button } from '../button/Button'
 
 type AddItemFormPT = {
   addItem: (title: string) => void
@@ -44,22 +45,22 @@ export const AddItemForm: FC<AddItemFormPT> = ({ addItem }) => {
   }
 
   return (
-    <div>
-      <div>
-        <input
-          type={'text'}
-          value={title}
-          onChange={changeTitleHandler}
-          onKeyDown={addItemKeyDownHandler}
-          onBlur={onBlurTitleHandler}
-        />
-        <Button
-          title={<FontAwesomeIcon icon={faPlus} />}
-          callback={addItemHandler}
-          styledClass={''}
-        />
-      </div>
-      {error && <div className={'error-msg'}>{error}</div>}
-    </div>
+    <Stack direction="row" justifyContent="center" alignItems="center" spacing={0.5}>
+      <TextField
+        id="outlined-basic"
+        label={error ? 'Error' : 'New task'}
+        variant="outlined"
+        size="small"
+        error={!!error}
+        helperText={error}
+        value={title}
+        onChange={changeTitleHandler}
+        onKeyDown={addItemKeyDownHandler}
+        onBlur={onBlurTitleHandler}
+      />
+      <IconButton color="success" onClick={addItemHandler} disabled={!!error}>
+        <AddBoxIcon />
+      </IconButton>
+    </Stack>
   )
 }
