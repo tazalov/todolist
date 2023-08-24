@@ -104,21 +104,21 @@ export const Todolist: FC<TodolistPT> = ({
         <ButtonGroup size="small" variant="contained" disableElevation>
           <Button
             aria-label="change filter"
-            sx={{ backgroundColor: filterValue === 'all' ? 'primary.dark' : 'primary.light' }}
+            sx={{ backgroundColor: filterValue === 'all' ? 'primary.dark' : 'primary.main' }}
             onClick={changeFilterForTasks('all')}
           >
             ALL
           </Button>
           <Button
             aria-label="change filter"
-            sx={{ backgroundColor: filterValue === 'active' ? 'primary.dark' : 'primary.light' }}
+            sx={{ backgroundColor: filterValue === 'active' ? 'primary.dark' : 'primary.main' }}
             onClick={changeFilterForTasks('active')}
           >
             ACTIVE
           </Button>
           <Button
             aria-label="change filter"
-            sx={{ backgroundColor: filterValue === 'completed' ? 'primary.dark' : 'primary.light' }}
+            sx={{ backgroundColor: filterValue === 'completed' ? 'primary.dark' : 'primary.main' }}
             onClick={changeFilterForTasks('completed')}
           >
             COMPLETED

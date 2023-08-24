@@ -60,7 +60,7 @@ export const AddItemForm: FC<AddItemFormPT> = ({ addItem }) => {
       <IconButton
         aria-label="add item"
         size={'medium'}
-        color="success"
+        color="secondary"
         onClick={addItemHandler}
         disabled={!!error}
         style={{ display: 'inline-flex', alignItems: 'center' }}

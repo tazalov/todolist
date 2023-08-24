@@ -138,7 +138,7 @@ export const App = () => {
 
   return (
     <>
-      <AppBar position="static">
+      <AppBar position="static" color={'primary'} enableColorOnDark>
         <Toolbar>
           <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
             <MenuIcon />
@@ -155,7 +155,15 @@ export const App = () => {
         </Toolbar>
       </AppBar>
       <Container fixed>
-        <Grid container sx={{ mt: 2, mb: 2 }}>
+        <Grid
+          container
+          sx={{
+            gap: '20px',
+            alignItems: 'baseline',
+            display: 'inline-block',
+            verticalAlign: 'top',
+          }}
+        >
           <AddItemForm addItem={addTodoList} aria-label="create new todolist" />
         </Grid>
         <Grid spacing={5} container>

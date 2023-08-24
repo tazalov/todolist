@@ -1,13 +1,40 @@
-import { createTheme } from '@mui/material/styles'
-import { green, purple } from '@mui/material/colors'
+import { PaletteMode } from '@mui/material'
 
-const theme = createTheme({
+export const theme = {
+  primary: {
+    main: '#6e4738',
+  },
+  secondary: {
+    main: '#FFC107',
+  },
+  success: {
+    main: '#CDDC39',
+  },
+  background: {
+    paper: '#fff',
+    default: '#fff',
+  },
+}
+
+export const darkTheme = {
+  primary: {
+    main: '#ffe4da',
+  },
+  secondary: {
+    main: '#FFC107',
+  },
+  success: {
+    main: '#CDDC39',
+  },
+  background: {
+    paper: 'transparent',
+    default: '#6e4738',
+  },
+}
+
+export const getDesignTokens = (mode: PaletteMode) => ({
   palette: {
-    primary: {
-      main: purple[500],
-    },
-    secondary: {
-      main: green[500],
-    },
+    mode,
+    ...(mode === 'light' ? theme : darkTheme),
   },
 })
