@@ -74,7 +74,7 @@ export const Todolist: FC<TodolistPT> = ({
   })
 
   return (
-    <Paper elevation={3} style={{ width: '300px', position: 'relative' }}>
+    <Paper elevation={3} style={{ position: 'relative' }}>
       <IconButton
         size={'medium'}
         color="primary"

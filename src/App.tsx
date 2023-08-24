@@ -6,6 +6,7 @@ import AppBar from '@mui/material/AppBar'
 import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
 import IconButton from '@mui/material/IconButton'
+import Paper from '@mui/material/Paper'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import { useContext, useState } from 'react'
@@ -118,7 +119,7 @@ export const App = () => {
   const todoListsArr = todoLists.map(el => {
     const currentTasks = filterOptions[el.filter](tasks[el.id])
     return (
-      <Grid item key={el.id}>
+      <Grid item key={el.id} xs={4}>
         <Todolist
           id={el.id}
           name={el.name}
@@ -155,16 +156,21 @@ export const App = () => {
         </Toolbar>
       </AppBar>
       <Container fixed>
-        <Grid
-          container
-          sx={{
-            gap: '20px',
-            alignItems: 'baseline',
-            display: 'inline-block',
-            verticalAlign: 'top',
-          }}
-        >
-          <AddItemForm addItem={addTodoList} aria-label="create new todolist" />
+        <Grid container sx={{ pt: '40px', pb: '40px' }}>
+          <Paper
+            elevation={3}
+            sx={{
+              p: 1,
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '10px',
+            }}
+          >
+            <Typography variant="h6">CREATE NEW TODOLIST</Typography>
+            <AddItemForm addItem={addTodoList} aria-label="create new todolist" />
+          </Paper>
         </Grid>
         <Grid spacing={5} container>
           {todoListsArr}
