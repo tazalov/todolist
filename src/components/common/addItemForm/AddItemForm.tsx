@@ -48,18 +48,24 @@ export const AddItemForm: FC<AddItemFormPT> = ({ addItem }) => {
     <Stack direction="row" justifyContent="center" alignItems="center" spacing={0.5}>
       <TextField
         id="outlined-basic"
-        label={error ? 'Error' : 'New task'}
+        label={error || 'New title'}
         variant="outlined"
         size="small"
         error={!!error}
-        helperText={error}
         value={title}
         onChange={changeTitleHandler}
         onKeyDown={addItemKeyDownHandler}
         onBlur={onBlurTitleHandler}
       />
-      <IconButton color="success" onClick={addItemHandler} disabled={!!error}>
-        <AddBoxIcon />
+      <IconButton
+        aria-label="add item"
+        size={'medium'}
+        color="success"
+        onClick={addItemHandler}
+        disabled={!!error}
+        style={{ display: 'inline-flex', alignItems: 'center' }}
+      >
+        <AddBoxIcon fontSize="large" />
       </IconButton>
     </Stack>
   )

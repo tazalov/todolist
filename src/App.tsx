@@ -1,16 +1,19 @@
+import Brightness4Icon from '@mui/icons-material/Brightness4'
+import Brightness7Icon from '@mui/icons-material/Brightness7'
 import MenuIcon from '@mui/icons-material/Menu'
-import { Grid } from '@mui/material'
+import { Grid, useTheme } from '@mui/material'
 import AppBar from '@mui/material/AppBar'
 import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
 import IconButton from '@mui/material/IconButton'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { v1 } from 'uuid'
 import { AddItemForm } from './components/common/addItemForm/AddItemForm'
 import { Todolist } from './components/todolist/Todolist'
 import './style.css'
+import { ColorModeContext } from './styles/ThemeContext'
 
 export type FilterT = 'all' | 'active' | 'completed'
 
@@ -31,6 +34,10 @@ type TasksT = {
 }
 
 export const App = () => {
+  //! ---------- work with theme
+  const theme = useTheme()
+  const colorMode = useContext(ColorModeContext)
+
   //! ---------- additional data
   const todoListId1 = v1()
   const todoListId2 = v1()
@@ -111,9 +118,8 @@ export const App = () => {
   const todoListsArr = todoLists.map(el => {
     const currentTasks = filterOptions[el.filter](tasks[el.id])
     return (
-      <Grid item>
+      <Grid item key={el.id}>
         <Todolist
-          key={el.id}
           id={el.id}
           name={el.name}
           tasks={currentTasks}
@@ -140,12 +146,17 @@ export const App = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             DODOLIST
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit" aria-label="ligin">
+            Login
+          </Button>
+          <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
+            {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+          </IconButton>
         </Toolbar>
       </AppBar>
       <Container fixed>
         <Grid container sx={{ mt: 2, mb: 2 }}>
-          <AddItemForm addItem={addTodoList} />
+          <AddItemForm addItem={addTodoList} aria-label="create new todolist" />
         </Grid>
         <Grid spacing={5} container>
           {todoListsArr}

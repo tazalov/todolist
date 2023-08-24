@@ -74,40 +74,46 @@ export const Todolist: FC<TodolistPT> = ({
   })
 
   return (
-    <Paper elevation={3}>
-      <Stack spacing={2} justifyContent="center" alignItems="center" sx={{ p: 1, width: '100%' }}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
-            <EditableSpan title={name} changeTitle={changeCurrentTitle} />
-          </Typography>
-          <IconButton size={'medium'} aria-label="delete" color="primary" onClick={removeCurrent}>
-            <CloseIcon fontSize="medium" />
-          </IconButton>
-        </div>
+    <Paper elevation={3} style={{ width: '300px', position: 'relative' }}>
+      <IconButton
+        size={'medium'}
+        color="primary"
+        aria-label="remove todolist"
+        style={{ position: 'absolute', right: '0', top: '0', display: 'inline-block' }}
+        onClick={removeCurrent}
+      >
+        <CloseIcon fontSize="medium" />
+      </IconButton>
+      <Stack spacing={2} alignItems="center" style={{ padding: '1.5em 0.5em 1em' }}>
+        <Typography
+          variant="h4"
+          style={{ height: '1.5em', display: 'inline-flex', alignItems: 'center', width: '100%' }}
+          aria-label="edit title todolist"
+        >
+          <EditableSpan title={name} changeTitle={changeCurrentTitle} />
+        </Typography>
         <AddItemForm addItem={addNewTask} />
-        <List dense component="div" role="list">
+        <List dense component="div" role="list" sx={{ width: '100%' }}>
           {tasksList}
         </List>
-        <ButtonGroup
-          size="small"
-          variant="contained"
-          aria-label="outlined primary button group"
-          disableElevation
-        >
+        <ButtonGroup size="small" variant="contained" disableElevation>
           <Button
-            color={filterValue === 'all' ? 'success' : 'primary'}
+            aria-label="change filter"
+            sx={{ backgroundColor: filterValue === 'all' ? 'primary.dark' : 'primary.light' }}
             onClick={changeFilterForTasks('all')}
           >
             ALL
           </Button>
           <Button
-            color={filterValue === 'active' ? 'success' : 'primary'}
+            aria-label="change filter"
+            sx={{ backgroundColor: filterValue === 'active' ? 'primary.dark' : 'primary.light' }}
             onClick={changeFilterForTasks('active')}
           >
             ACTIVE
           </Button>
           <Button
-            color={filterValue === 'completed' ? 'success' : 'primary'}
+            aria-label="change filter"
+            sx={{ backgroundColor: filterValue === 'completed' ? 'primary.dark' : 'primary.light' }}
             onClick={changeFilterForTasks('completed')}
           >
             COMPLETED

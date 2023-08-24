@@ -1,7 +1,9 @@
+import TextField from '@mui/material/TextField'
 import { ChangeEvent, FC, KeyboardEvent, useState } from 'react'
 
 type EditableSpanPT = {
   title: string
+  //titleType: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'subtitle1' | 'subtitle2' | 'body1' | 'body2'
   changeTitle: (newTitle: string) => void
 }
 
@@ -25,8 +27,6 @@ export const EditableSpan: FC<EditableSpanPT> = ({ title, changeTitle }) => {
     } else if (newTitle !== title) {
       changeTitle(currentTitle)
       deactivateEditMode()
-    } else {
-      deactivateEditMode()
     }
   }
   const updateTitleKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -35,7 +35,8 @@ export const EditableSpan: FC<EditableSpanPT> = ({ title, changeTitle }) => {
     }
   }
   const updateTitleBlurHandler = () => {
-    if (!error) updateTitle()
+    deactivateEditMode()
+    setError('')
   }
 
   //! ---------- handler for input with current title
@@ -45,19 +46,38 @@ export const EditableSpan: FC<EditableSpanPT> = ({ title, changeTitle }) => {
   }
 
   return editMode ? (
-    <>
-      <input
-        type={'text'}
-        value={currentTitle}
-        onChange={onChangeTitleHandler}
-        onBlur={updateTitleBlurHandler}
-        onKeyDown={updateTitleKeyDownHandler}
-        autoFocus={true}
-        style={{ fontSize: 'inherit', fontWeight: 'inherit' }}
-      />
-      {error && <div className={'error-msg'}>{error}</div>}
-    </>
+    <TextField
+      fullWidth
+      variant="standard"
+      error={!!error}
+      helperText={error}
+      value={currentTitle}
+      onChange={onChangeTitleHandler}
+      onBlur={updateTitleBlurHandler}
+      onKeyDown={updateTitleKeyDownHandler}
+      autoFocus
+      InputProps={{
+        classes: {
+          root: 'inherit', // Apply the 'inherit' class to the root element of TextField
+          input: 'inherit', // Apply the 'inherit' class to the input element of TextField
+        },
+        style: {
+          fontSize: 'inherit',
+          fontWeight: 'inherit',
+        },
+      }}
+    />
   ) : (
-    <span onDoubleClick={activateEditMode}>{title}</span>
+    <span
+      style={{
+        borderBottom: '1px solid transparent',
+        width: '100%',
+        display: 'block',
+        cursor: 'pointer',
+      }}
+      onDoubleClick={activateEditMode}
+    >
+      {title}
+    </span>
   )
 }

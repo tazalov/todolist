@@ -1,6 +1,7 @@
 import DeleteIcon from '@mui/icons-material/Delete'
-import { IconButton, ListItem, ListItemButton, ListItemText } from '@mui/material'
+import { IconButton, ListItem } from '@mui/material'
 import Checkbox from '@mui/material/Checkbox'
+import Typography from '@mui/material/Typography'
 import { ChangeEvent, FC } from 'react'
 import { EditableSpan } from '../common/editableSpan/EditableSpan'
 
@@ -24,21 +25,22 @@ export const Todo: FC<TodoPT> = ({ title, isDone, changeIsDone, changeTitle, rem
   }
 
   return (
-    <ListItem
-      role="listitem"
-      secondaryAction={
-        <IconButton size={'medium'} aria-label="delete" color="primary" onClick={remove}>
-          <DeleteIcon fontSize="medium" />
-        </IconButton>
-      }
-      disablePadding
-    >
-      <ListItemButton>
-        <Checkbox color="success" checked={isDone} onChange={onChangeDoneHandler} />
-        <ListItemText>
-          <EditableSpan title={title} changeTitle={changeCurrentTitle} />
-        </ListItemText>
-      </ListItemButton>
+    <ListItem role="listitem" disablePadding>
+      <Checkbox color="success" checked={isDone} onChange={onChangeDoneHandler} />
+      <Typography
+        variant={'h6'}
+        style={{
+          height: '1.5em',
+          display: 'inline-flex',
+          width: '100%',
+          alignItems: 'center',
+        }}
+      >
+        <EditableSpan title={title} changeTitle={changeCurrentTitle} />
+      </Typography>
+      <IconButton aria-label="delete todo" size={'medium'} color="default" onClick={remove}>
+        <DeleteIcon fontSize="medium" />
+      </IconButton>
     </ListItem>
   )
 }
