@@ -3,11 +3,11 @@ import { ChangeEvent, FC, KeyboardEvent, useState } from 'react'
 
 type EditableSpanPT = {
   title: string
-  //titleType: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'subtitle1' | 'subtitle2' | 'body1' | 'body2'
+  titleAlign?: 'left' | 'center' | 'right'
   changeTitle: (newTitle: string) => void
 }
-
-export const EditableSpan: FC<EditableSpanPT> = ({ title, changeTitle }) => {
+//          textAlign: titleAlign,
+export const EditableSpan: FC<EditableSpanPT> = ({ title, titleAlign = 'left', changeTitle }) => {
   const [editMode, setEditMode] = useState<boolean>(false)
   const [currentTitle, setCurrentTitle] = useState<string>('')
   const [error, setError] = useState<string>('')
@@ -55,17 +55,23 @@ export const EditableSpan: FC<EditableSpanPT> = ({ title, changeTitle }) => {
       onChange={onChangeTitleHandler}
       onBlur={updateTitleBlurHandler}
       onKeyDown={updateTitleKeyDownHandler}
-      autoFocus
       InputProps={{
         classes: {
-          root: 'inherit', // Apply the 'inherit' class to the root element of TextField
-          input: 'inherit', // Apply the 'inherit' class to the input element of TextField
+          root: 'inherit',
+          input: 'inherit',
         },
         style: {
           fontSize: 'inherit',
           fontWeight: 'inherit',
+          letterSpacing: 'inherit',
         },
       }}
+      inputProps={{
+        style: {
+          textAlign: titleAlign,
+        },
+      }}
+      autoFocus
     />
   ) : (
     <span
@@ -74,6 +80,7 @@ export const EditableSpan: FC<EditableSpanPT> = ({ title, changeTitle }) => {
         width: '100%',
         display: 'block',
         cursor: 'pointer',
+        textAlign: titleAlign,
       }}
       onDoubleClick={activateEditMode}
     >

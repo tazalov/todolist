@@ -87,10 +87,15 @@ export const Todolist: FC<TodolistPT> = ({
       <Stack spacing={2} alignItems="center" style={{ padding: '1.5em 0.5em 1em' }}>
         <Typography
           variant="h4"
-          style={{ height: '1.5em', display: 'inline-flex', alignItems: 'center', width: '100%' }}
+          style={{
+            height: '1.5em',
+            display: 'inline-flex',
+            alignItems: 'center',
+            width: '100%',
+          }}
           aria-label="edit title todolist"
         >
-          <EditableSpan title={name} changeTitle={changeCurrentTitle} />
+          <EditableSpan title={name} titleAlign={'center'} changeTitle={changeCurrentTitle} />
         </Typography>
         <AddItemForm addItem={addNewTask} />
         <List dense component="div" role="list" sx={{ width: '100%' }}>
