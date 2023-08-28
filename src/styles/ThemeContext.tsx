@@ -1,6 +1,6 @@
 import CssBaseline from '@mui/material/CssBaseline'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import React, { createContext, FC, ReactNode, useMemo, useState } from 'react'
+import { createContext, FC, ReactNode, useMemo, useState } from 'react'
 import { getDesignTokens } from './Theme'
 
 export const ColorModeContext = createContext({ toggleColorMode: () => {} })

@@ -1,14 +1,12 @@
 import CloseIcon from '@mui/icons-material/Close'
-import { IconButton, List, Typography } from '@mui/material'
+import { Box, IconButton, List, Typography } from '@mui/material'
 import Button from '@mui/material/Button'
 import ButtonGroup from '@mui/material/ButtonGroup'
-import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import { FC } from 'react'
-import { FilterT, TaskT } from '../../App'
-import { AddItemForm } from '../common/addItemForm/AddItemForm'
-import { EditableSpan } from '../common/editableSpan/EditableSpan'
-import { Todo } from '../todo/Todo'
+import { FilterT, TaskT } from '../../app/App'
+import { AddItemForm, EditableSpan } from '../common'
+import { Todo } from '../todo'
 
 type TodolistPT = {
   id: string
@@ -37,12 +35,12 @@ export const Todolist: FC<TodolistPT> = ({
   removeTodolist,
   changeTitle,
 }) => {
-  //! ---------- callback for addItemForm
+  //! ---------- callback for add-item-form
   const addNewTask = (title: string) => {
     addTask(id, title)
   }
 
-  //! ---------- callback for editableSpan
+  //! ---------- callback for editable-span
   const changeCurrentTitle = (title: string) => {
     changeTitle(id, title)
   }
@@ -55,7 +53,7 @@ export const Todolist: FC<TodolistPT> = ({
   //! ---------- change filter for tasks
   const changeFilterForTasks = (filter: FilterT) => () => changeFilter(id, filter)
 
-  //! ---------- array Todo components
+  //! ---------- array Index components
   const tasksList = tasks.map(el => {
     const changeIsDoneCurrentTask = (isDone: boolean) => changeTaskIsDone(id, el.id, isDone)
     const changeTitleCurrentTask = (title: string) => changeTaskTitle(id, el.id, title)
@@ -74,26 +72,23 @@ export const Todolist: FC<TodolistPT> = ({
   })
 
   return (
-    <Paper elevation={3} style={{ position: 'relative' }}>
+    <Box sx={{ bgcolor: 'background.blocks', position: 'relative', boxShadow: 5 }}>
       <IconButton
-        size={'medium'}
         color="primary"
-        aria-label="remove todolist"
         style={{ position: 'absolute', right: '0', top: '0', display: 'inline-block' }}
         onClick={removeCurrent}
       >
         <CloseIcon fontSize="medium" />
       </IconButton>
-      <Stack spacing={2} alignItems="center" style={{ padding: '1.5em 0.5em 1em' }}>
+      <Stack spacing={2} alignItems="center" sx={{ p: '1.5em 0.5em 1em' }}>
         <Typography
           variant="h4"
           style={{
-            height: '1.5em',
+            height: '1.6em',
             display: 'inline-flex',
             alignItems: 'center',
             width: '100%',
           }}
-          aria-label="edit title todolist"
         >
           <EditableSpan title={name} titleAlign={'center'} changeTitle={changeCurrentTitle} />
         </Typography>
@@ -103,28 +98,34 @@ export const Todolist: FC<TodolistPT> = ({
         </List>
         <ButtonGroup size="small" variant="contained" disableElevation>
           <Button
-            aria-label="change filter"
-            sx={{ backgroundColor: filterValue === 'all' ? 'primary.dark' : 'primary.main' }}
+            sx={{
+              backgroundColor: filterValue === 'all' ? 'primary.dark' : 'primary.main',
+              color: 'secondary.contrastText',
+            }}
             onClick={changeFilterForTasks('all')}
           >
             ALL
           </Button>
           <Button
-            aria-label="change filter"
-            sx={{ backgroundColor: filterValue === 'active' ? 'primary.dark' : 'primary.main' }}
+            sx={{
+              backgroundColor: filterValue === 'active' ? 'primary.dark' : 'primary.main',
+              color: 'secondary.contrastText',
+            }}
             onClick={changeFilterForTasks('active')}
           >
             ACTIVE
           </Button>
           <Button
-            aria-label="change filter"
-            sx={{ backgroundColor: filterValue === 'completed' ? 'primary.dark' : 'primary.main' }}
+            sx={{
+              backgroundColor: filterValue === 'completed' ? 'primary.dark' : 'primary.main',
+              color: 'secondary.contrastText',
+            }}
             onClick={changeFilterForTasks('completed')}
           >
             COMPLETED
           </Button>
         </ButtonGroup>
       </Stack>
-    </Paper>
+    </Box>
   )
 }

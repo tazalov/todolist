@@ -1,9 +1,9 @@
-import DeleteIcon from '@mui/icons-material/Delete'
-import { IconButton, ListItem } from '@mui/material'
+import { ListItem } from '@mui/material'
 import Checkbox from '@mui/material/Checkbox'
 import Typography from '@mui/material/Typography'
 import { ChangeEvent, FC } from 'react'
-import { EditableSpan } from '../common/editableSpan/EditableSpan'
+import { EditableSpan } from '../common'
+import { TodoMenu } from './todo-menu'
 
 type TodoPT = {
   title: string
@@ -26,7 +26,7 @@ export const Todo: FC<TodoPT> = ({ title, isDone, changeIsDone, changeTitle, rem
 
   return (
     <ListItem role="listitem" disablePadding>
-      <Checkbox color="success" checked={isDone} onChange={onChangeDoneHandler} />
+      <Checkbox color="secondary" checked={isDone} onChange={onChangeDoneHandler} />
       <Typography
         variant={'h6'}
         style={{
@@ -38,9 +38,7 @@ export const Todo: FC<TodoPT> = ({ title, isDone, changeIsDone, changeTitle, rem
       >
         <EditableSpan title={title} changeTitle={changeCurrentTitle} />
       </Typography>
-      <IconButton aria-label="delete todo" size={'medium'} color="default" onClick={remove}>
-        <DeleteIcon fontSize="medium" />
-      </IconButton>
+      <TodoMenu remove={remove} />
     </ListItem>
   )
 }

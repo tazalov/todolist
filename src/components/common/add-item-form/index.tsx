@@ -47,7 +47,6 @@ export const AddItemForm: FC<AddItemFormPT> = ({ addItem }) => {
   return (
     <Stack direction="row" justifyContent="center" alignItems="center" spacing={0.5}>
       <TextField
-        id="outlined-basic"
         label={error || 'New title'}
         variant="outlined"
         size="small"
@@ -58,9 +57,8 @@ export const AddItemForm: FC<AddItemFormPT> = ({ addItem }) => {
         onBlur={onBlurTitleHandler}
       />
       <IconButton
-        aria-label="add item"
         size={'medium'}
-        color="secondary"
+        color="success"
         onClick={addItemHandler}
         disabled={!!error}
         style={{ display: 'inline-flex', alignItems: 'center' }}

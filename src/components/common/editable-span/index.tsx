@@ -76,7 +76,6 @@ export const EditableSpan: FC<EditableSpanPT> = ({ title, titleAlign = 'left', c
   ) : (
     <span
       style={{
-        borderBottom: '1px solid transparent',
         width: '100%',
         display: 'block',
         cursor: 'pointer',

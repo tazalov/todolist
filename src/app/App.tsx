@@ -1,20 +1,11 @@
-import Brightness4Icon from '@mui/icons-material/Brightness4'
-import Brightness7Icon from '@mui/icons-material/Brightness7'
-import MenuIcon from '@mui/icons-material/Menu'
-import { Grid, useTheme } from '@mui/material'
-import AppBar from '@mui/material/AppBar'
-import Button from '@mui/material/Button'
+import { Box, Grid } from '@mui/material'
 import Container from '@mui/material/Container'
-import IconButton from '@mui/material/IconButton'
-import Paper from '@mui/material/Paper'
-import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { v1 } from 'uuid'
-import { AddItemForm } from './components/common/addItemForm/AddItemForm'
-import { Todolist } from './components/todolist/Todolist'
-import './style.css'
-import { ColorModeContext } from './styles/ThemeContext'
+import { AddItemForm } from '../components/common'
+import { Todolist } from '../components/todolist/Todolist'
+import { Header } from '../layout/header'
 
 export type FilterT = 'all' | 'active' | 'completed'
 
@@ -35,10 +26,6 @@ type TasksT = {
 }
 
 export const App = () => {
-  //! ---------- work with theme
-  const theme = useTheme()
-  const colorMode = useContext(ColorModeContext)
-
   //! ---------- additional data
   const todoListId1 = v1()
   const todoListId2 = v1()
@@ -119,7 +106,7 @@ export const App = () => {
   const todoListsArr = todoLists.map(el => {
     const currentTasks = filterOptions[el.filter](tasks[el.id])
     return (
-      <Grid item key={el.id} xs={4}>
+      <Grid item key={el.id} xs={3}>
         <Todolist
           id={el.id}
           name={el.name}
@@ -139,26 +126,10 @@ export const App = () => {
 
   return (
     <>
-      <AppBar position="static" color={'primary'} enableColorOnDark>
-        <Toolbar>
-          <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            DODOLIST
-          </Typography>
-          <Button color="inherit" aria-label="ligin">
-            Login
-          </Button>
-          <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
-            {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+      <Header />
       <Container fixed>
         <Grid container sx={{ pt: '40px', pb: '40px' }}>
-          <Paper
-            elevation={3}
+          <Box
             sx={{
               p: 1,
               width: '100%',
@@ -166,11 +137,13 @@ export const App = () => {
               justifyContent: 'center',
               alignItems: 'center',
               gap: '10px',
+              boxShadow: 5,
+              bgcolor: 'background.blocks',
             }}
           >
             <Typography variant="h6">CREATE NEW TODOLIST</Typography>
-            <AddItemForm addItem={addTodoList} aria-label="create new todolist" />
-          </Paper>
+            <AddItemForm addItem={addTodoList} />
+          </Box>
         </Grid>
         <Grid spacing={5} container>
           {todoListsArr}
