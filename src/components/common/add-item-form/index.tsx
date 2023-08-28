@@ -1,9 +1,15 @@
 import AddIcon from '@mui/icons-material/Add'
-import { Tooltip } from '@mui/material'
+import { Snackbar } from '@mui/material'
+import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import Fab from '@mui/material/Fab'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
-import { ChangeEvent, FC, KeyboardEvent, useState } from 'react'
+import Tooltip from '@mui/material/Tooltip'
+import { ChangeEvent, FC, forwardRef, KeyboardEvent, SyntheticEvent, useState } from 'react'
+
+const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+})
 
 type AddItemFormPT = {
   addItem: (title: string) => void
@@ -12,6 +18,15 @@ type AddItemFormPT = {
 export const AddItemForm: FC<AddItemFormPT> = ({ addItem }) => {
   const [title, setTitle] = useState<string>('')
   const [error, setError] = useState<string>('')
+  const [successNotification, setSuccessNotification] = useState<boolean>(true)
+
+  //! ---------- work with notification
+  const handleClose = (event?: SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return
+    }
+    setSuccessNotification(false)
+  }
 
   //! ---------- handler for input value
   const changeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -25,6 +40,7 @@ export const AddItemForm: FC<AddItemFormPT> = ({ addItem }) => {
     if (!newTitle.length) {
       setError("Value can't be empty")
     } else {
+      setSuccessNotification(true)
       setTitle('')
       addItem(newTitle)
     }
@@ -62,6 +78,11 @@ export const AddItemForm: FC<AddItemFormPT> = ({ addItem }) => {
           <AddIcon fontSize="large" />
         </Fab>
       </Tooltip>
+      <Snackbar open={successNotification} autoHideDuration={3000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          Success creating
+        </Alert>
+      </Snackbar>
     </Stack>
   )
 }
