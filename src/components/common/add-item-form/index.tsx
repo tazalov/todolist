@@ -1,5 +1,6 @@
-import AddBoxIcon from '@mui/icons-material/AddBox'
-import { IconButton } from '@mui/material'
+import AddIcon from '@mui/icons-material/Add'
+import { Tooltip } from '@mui/material'
+import Fab from '@mui/material/Fab'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
 import { ChangeEvent, FC, KeyboardEvent, useState } from 'react'
@@ -45,26 +46,22 @@ export const AddItemForm: FC<AddItemFormPT> = ({ addItem }) => {
   }
 
   return (
-    <Stack direction="row" justifyContent="center" alignItems="center" spacing={0.5}>
+    <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
       <TextField
         label={error || 'New title'}
         variant="outlined"
-        size="small"
+        size="medium"
         error={!!error}
         value={title}
         onChange={changeTitleHandler}
         onKeyDown={addItemKeyDownHandler}
         onBlur={onBlurTitleHandler}
       />
-      <IconButton
-        size={'medium'}
-        color="success"
-        onClick={addItemHandler}
-        disabled={!!error}
-        style={{ display: 'inline-flex', alignItems: 'center' }}
-      >
-        <AddBoxIcon fontSize="large" />
-      </IconButton>
+      <Tooltip title="Click to create new item">
+        <Fab size={'small'} color="success" onClick={addItemHandler} disabled={!!error}>
+          <AddIcon fontSize="large" />
+        </Fab>
+      </Tooltip>
     </Stack>
   )
 }

@@ -1,4 +1,5 @@
 import TextField from '@mui/material/TextField'
+import Tooltip from '@mui/material/Tooltip'
 import { ChangeEvent, FC, KeyboardEvent, useState } from 'react'
 
 type EditableSpanPT = {
@@ -74,16 +75,18 @@ export const EditableSpan: FC<EditableSpanPT> = ({ title, titleAlign = 'left', c
       autoFocus
     />
   ) : (
-    <span
-      style={{
-        width: '100%',
-        display: 'block',
-        cursor: 'pointer',
-        textAlign: titleAlign,
-      }}
-      onDoubleClick={activateEditMode}
-    >
-      {title}
-    </span>
+    <Tooltip title="Double click for edit">
+      <span
+        style={{
+          width: '100%',
+          display: 'block',
+          cursor: 'pointer',
+          textAlign: titleAlign,
+        }}
+        onDoubleClick={activateEditMode}
+      >
+        {title}
+      </span>
+    </Tooltip>
   )
 }

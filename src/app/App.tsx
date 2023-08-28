@@ -1,11 +1,19 @@
-import { Box, Grid } from '@mui/material'
+import { Stack, styled } from '@mui/material'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Unstable_Grid2'
 import { useState } from 'react'
 import { v1 } from 'uuid'
 import { AddItemForm } from '../components/common'
 import { Todolist } from '../components/todolist/Todolist'
 import { Header } from '../layout/header'
+
+const ResponsiveContainer = styled(Container)(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+}))
 
 export type FilterT = 'all' | 'active' | 'completed'
 
@@ -106,7 +114,7 @@ export const App = () => {
   const todoListsArr = todoLists.map(el => {
     const currentTasks = filterOptions[el.filter](tasks[el.id])
     return (
-      <Grid item key={el.id} xs={3}>
+      <Grid key={el.id} xl={3} lg={3} md={4} sm={6} xs={12}>
         <Todolist
           id={el.id}
           name={el.name}
@@ -127,28 +135,23 @@ export const App = () => {
   return (
     <>
       <Header />
-      <Container fixed>
+      <ResponsiveContainer fixed>
         <Grid container sx={{ pt: '40px', pb: '40px' }}>
-          <Box
-            sx={{
-              p: 1,
-              width: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: '10px',
-              boxShadow: 5,
-              bgcolor: 'background.blocks',
-            }}
+          <Stack
+            direction={{ xs: 'column', sm: 'row' }}
+            justifyContent="center"
+            alignItems="center"
+            spacing={2}
+            sx={{ bgcolor: 'background.blocks', boxShadow: 5, p: 1, width: '100%' }}
           >
             <Typography variant="h6">CREATE NEW TODOLIST</Typography>
             <AddItemForm addItem={addTodoList} />
-          </Box>
+          </Stack>
         </Grid>
-        <Grid spacing={5} container>
+        <Grid container spacing={2}>
           {todoListsArr}
         </Grid>
-      </Container>
+      </ResponsiveContainer>
     </>
   )
 }

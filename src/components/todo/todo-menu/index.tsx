@@ -1,7 +1,6 @@
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-import PriorityHighIcon from '@mui/icons-material/PriorityHigh'
 import { ListItemIcon } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import Menu from '@mui/material/Menu'
@@ -54,12 +53,6 @@ export const TodoMenu: FC<TodoMenuPT> = ({ edit, remove, priority }) => {
             <DeleteIcon fontSize={'small'} />
           </ListItemIcon>
           Remove
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple color="default">
-          <ListItemIcon>
-            <PriorityHighIcon fontSize={'small'} />
-          </ListItemIcon>
-          Priority
         </MenuItem>
       </Menu>
     </div>

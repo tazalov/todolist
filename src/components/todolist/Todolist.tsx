@@ -75,7 +75,7 @@ export const Todolist: FC<TodolistPT> = ({
     <Box sx={{ bgcolor: 'background.blocks', position: 'relative', boxShadow: 5 }}>
       <IconButton
         color="primary"
-        style={{ position: 'absolute', right: '0', top: '0', display: 'inline-block' }}
+        style={{ position: 'absolute', right: '0', top: '0', display: 'inline-flex' }}
         onClick={removeCurrent}
       >
         <CloseIcon fontSize="medium" />
