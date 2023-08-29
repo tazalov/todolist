@@ -1,6 +1,4 @@
-import { ListItem } from '@mui/material'
-import Checkbox from '@mui/material/Checkbox'
-import Typography from '@mui/material/Typography'
+import { Checkbox, ListItem, Typography } from '@mui/material'
 import { ChangeEvent, FC } from 'react'
 import { EditableSpan } from '../common'
 import { TodoMenu } from './todo-menu'

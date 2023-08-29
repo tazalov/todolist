@@ -1,10 +1,7 @@
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-import { ListItemIcon } from '@mui/material'
-import IconButton from '@mui/material/IconButton'
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
+import { IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material'
 import { FC, MouseEvent, useState } from 'react'
 
 type TodoMenuPT = {

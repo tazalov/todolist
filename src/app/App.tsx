@@ -1,11 +1,9 @@
-import { Stack, styled } from '@mui/material'
-import Container from '@mui/material/Container'
-import Typography from '@mui/material/Typography'
+import { Container, Stack, styled, Typography } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 import { useState } from 'react'
 import { v1 } from 'uuid'
 import { AddItemForm } from '../components/common'
-import { Todolist } from '../components/todolist/Todolist'
+import { Todolist } from '../components/todolist/'
 import { Header } from '../layout/header'
 
 const ResponsiveContainer = styled(Container)(({ theme }) => ({

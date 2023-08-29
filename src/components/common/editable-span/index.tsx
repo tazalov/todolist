@@ -1,5 +1,4 @@
-import TextField from '@mui/material/TextField'
-import Tooltip from '@mui/material/Tooltip'
+import { TextField, Tooltip } from '@mui/material'
 import { ChangeEvent, FC, KeyboardEvent, useState } from 'react'
 
 type EditableSpanPT = {
