@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/incubator_todolist/static/js/main.850c2c07.js",
+    "index.html": "/incubator_todolist/index.html",
+    "main.850c2c07.js.map": "/incubator_todolist/static/js/main.850c2c07.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.850c2c07.js"
+  ]
+}
