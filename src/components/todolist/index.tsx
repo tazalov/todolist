@@ -7,7 +7,7 @@ import { Todo } from '../todo'
 
 type TodolistPT = {
   id: string
-  name: string
+  title: string
   tasks: TaskT[]
   filterValue: FilterT
   addTask: (todolistId: string, title: string) => void
@@ -21,7 +21,7 @@ type TodolistPT = {
 
 export const Todolist: FC<TodolistPT> = ({
   id,
-  name,
+  title,
   tasks,
   filterValue,
   addTask,
@@ -69,10 +69,10 @@ export const Todolist: FC<TodolistPT> = ({
   })
 
   return (
-    <Box sx={{ bgcolor: 'background.blocks', position: 'relative', boxShadow: 5 }}>
+    <Box sx={{ bgcolor: 'background.blocks', position: 'relative', boxShadow: 5, p: 1 }}>
       <IconButton
         color="primary"
-        style={{ position: 'absolute', right: '0', top: '0', display: 'inline-flex' }}
+        sx={{ position: 'absolute', right: '0', top: '0', display: 'inline-flex' }}
         onClick={removeCurrent}
       >
         <CloseIcon fontSize="medium" />
@@ -80,19 +80,17 @@ export const Todolist: FC<TodolistPT> = ({
       <Stack spacing={2} alignItems="center" sx={{ p: '1.5em 0.5em 1em' }}>
         <Typography
           variant="h4"
-          style={{
+          sx={{
             height: '1.6em',
             display: 'inline-flex',
             alignItems: 'center',
             width: '100%',
           }}
         >
-          <EditableSpan title={name} titleAlign={'center'} changeTitle={changeCurrentTitle} />
+          <EditableSpan title={title} titleAlign={'center'} changeTitle={changeCurrentTitle} />
         </Typography>
         <AddItemForm addItem={addNewTask} />
-        <List dense component="div" role="list" sx={{ width: '100%' }}>
-          {tasksList}
-        </List>
+        <List sx={{ width: '100%' }}>{tasksList}</List>
         <ButtonGroup size="small" variant="contained" disableElevation>
           <Button
             sx={{

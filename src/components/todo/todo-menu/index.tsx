@@ -3,6 +3,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material'
 import { FC, MouseEvent, useState } from 'react'
+import { EditMenu } from '../edit-menu'
 
 type TodoMenuPT = {
   edit?: () => {}
@@ -13,6 +14,17 @@ type TodoMenuPT = {
 export const TodoMenu: FC<TodoMenuPT> = ({ edit, remove, priority }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
+
+  const [openEditMenu, setOpenEditMenu] = useState(false)
+
+  const handleOpenEditMenu = () => {
+    setAnchorEl(null)
+    setOpenEditMenu(true)
+  }
+
+  const handleCloseEditMenu = () => {
+    setOpenEditMenu(false)
+  }
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -39,7 +51,7 @@ export const TodoMenu: FC<TodoMenuPT> = ({ edit, remove, priority }) => {
         <MoreVertIcon />
       </IconButton>
       <Menu id="long-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <MenuItem onClick={handleClose} disableRipple color="default">
+        <MenuItem onClick={handleOpenEditMenu} disableRipple color="default">
           <ListItemIcon>
             <EditIcon fontSize={'small'} />
           </ListItemIcon>
@@ -52,6 +64,7 @@ export const TodoMenu: FC<TodoMenuPT> = ({ edit, remove, priority }) => {
           Remove
         </MenuItem>
       </Menu>
+      <EditMenu open={openEditMenu} onClose={handleCloseEditMenu} />
     </div>
   )
 }

@@ -23,11 +23,22 @@ export const Todo: FC<TodoPT> = ({ title, isDone, changeIsDone, changeTitle, rem
   }
 
   return (
-    <ListItem role="listitem" disablePadding>
+    <ListItem
+      role="listitem"
+      disablePadding
+      sx={{
+        borderWidth: '2px',
+        borderColor: 'error.main',
+        borderStyle: 'solid',
+        borderRadius: '5px',
+        mt: 1,
+        p: 0.5,
+      }}
+    >
       <Checkbox color="secondary" checked={isDone} onChange={onChangeDoneHandler} />
       <Typography
         variant={'h6'}
-        style={{
+        sx={{
           height: '1.5em',
           display: 'inline-flex',
           width: '100%',

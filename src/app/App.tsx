@@ -17,7 +17,7 @@ export type FilterT = 'all' | 'active' | 'completed'
 
 type TodoListT = {
   id: string
-  name: string
+  title: string
   filter: FilterT
 }
 
@@ -44,8 +44,8 @@ export const App = () => {
 
   //! ---------- state
   const [todoLists, setTodoLists] = useState<TodoListT[]>([
-    { id: todoListId1, name: 'What to learn', filter: 'all' },
-    { id: todoListId2, name: 'What to byu', filter: 'all' },
+    { id: todoListId1, title: 'What to learn', filter: 'all' },
+    { id: todoListId2, title: 'What to byu', filter: 'all' },
   ])
   const [tasks, setTasks] = useState<TasksT>({
     [todoListId1]: [
@@ -57,16 +57,15 @@ export const App = () => {
       { id: v1(), title: 'Milk', isDone: true },
       { id: v1(), title: 'Bread', isDone: true },
       { id: v1(), title: 'Butter', isDone: false },
-      { id: v1(), title: 'Butter', isDone: false },
-      { id: v1(), title: 'Butter', isDone: false },
+      { id: v1(), title: 'Coffee', isDone: false },
     ],
   })
 
   //! ---------- change array todoLists
-  const addTodoList = (name: string) => {
+  const addTodoList = (title: string) => {
     const newTodoList: TodoListT = {
       id: v1(),
-      name,
+      title,
       filter: 'all',
     }
     const newTasks: TaskT[] = [{ id: v1(), title: 'New Task', isDone: false }]
@@ -82,8 +81,8 @@ export const App = () => {
     const newTodoLists = todoLists.map(el => (el.id === todolistId ? { ...el, filter } : el))
     setTodoLists(newTodoLists)
   }
-  const changeTitleTodolist = (todoListId: string, name: string) => {
-    const newTodoLists = todoLists.map(el => (el.id === todoListId ? { ...el, name } : el))
+  const changeTitleTodolist = (todoListId: string, title: string) => {
+    const newTodoLists = todoLists.map(el => (el.id === todoListId ? { ...el, title } : el))
     setTodoLists(newTodoLists)
   }
 
@@ -115,7 +114,7 @@ export const App = () => {
       <Grid key={el.id} xl={3} lg={3} md={4} sm={6} xs={12}>
         <Todolist
           id={el.id}
-          name={el.name}
+          title={el.title}
           tasks={currentTasks}
           filterValue={el.filter}
           addTask={addTask}
