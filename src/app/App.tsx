@@ -1,11 +1,11 @@
 import { Container, Stack, styled, Typography } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
+import { AddItemForm } from 'components'
+import { TasksST, TaskT } from 'entities/task'
+import { FilterT, Todolist, TodoListST, TodoListT } from 'entities/todolist'
+import { Header } from 'layout/header'
 import { useState } from 'react'
 import { v1 } from 'uuid'
-import { AddItemForm } from '../components'
-import { TasksST, TaskT } from '../entities/task'
-import { FilterT, Todolist, TodoListST, TodoListT } from '../entities/todolist'
-import { Header } from '../layout/header'
 
 const ResponsiveContainer = styled(Container)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {

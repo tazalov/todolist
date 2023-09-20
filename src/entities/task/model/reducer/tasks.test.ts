@@ -1,4 +1,4 @@
-import { AddTodoList, RemoveTodolist } from '../../../todolist'
+import { AddTodoList, RemoveTodolist } from 'entities/todolist'
 import { AddTask, ChangeStatusTask, ChangeTitleTask, RemoveTask } from '../actions/tasks.actions'
 import { tasksReducer } from './tasks.reducer'
 import { TasksST } from '../types/tasks.reducer'

@@ -1,2 +1,2 @@
-export { AddItemForm } from './add-item-form'
-export { EditableSpan } from './editable-span'
+export { AddItemForm } from './add-item-form/AddItemForm'
+export { EditableSpan } from './editable-span/EditableSpan'

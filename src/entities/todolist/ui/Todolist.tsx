@@ -1,9 +1,8 @@
 import CloseIcon from '@mui/icons-material/Close'
-import { Box, IconButton, List, Typography, Button, ButtonGroup, Stack } from '@mui/material'
+import { Box, Button, ButtonGroup, IconButton, List, Stack, Typography } from '@mui/material'
+import { AddItemForm, EditableSpan } from 'components'
+import { Task, TaskT } from 'entities/task'
 import { FC } from 'react'
-import { AddItemForm, EditableSpan } from '../../../components'
-import { Task } from '../../task'
-import { TaskT } from '../../task'
 import { FilterT } from '../model/types/todolist.reducer'
 
 type TodolistPT = {

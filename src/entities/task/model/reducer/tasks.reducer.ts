@@ -1,5 +1,5 @@
 import { v1 } from 'uuid'
-import { todoListId1, todoListId2 } from '../../../todolist/model/reducer/todolist.reducer'
+import { todoListId1, todoListId2 } from 'entities/todolist'
 import { ActionsT } from '../types/tasks.actions'
 import { TasksST } from '../types/tasks.reducer'
 

@@ -3,7 +3,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material'
 import { FC, MouseEvent, useState } from 'react'
-import { EditMenu } from '../edit-menu'
+import { EditMenu } from '../edit-menu/EditMenu'
 
 type TodoMenuPT = {
   edit?: () => {}

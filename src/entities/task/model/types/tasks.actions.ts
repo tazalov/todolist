@@ -1,4 +1,4 @@
-import { AddTodolistAT, RemoveTodolistAT } from '../../../todolist'
+import { AddTodolistAT, RemoveTodolistAT } from 'entities/todolist'
 import { AddTask, ChangeStatusTask, ChangeTitleTask, RemoveTask } from '../actions/tasks.actions'
 
 export type ActionsT =

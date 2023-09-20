@@ -1,7 +1,7 @@
 import { Checkbox, ListItem, Typography } from '@mui/material'
 import { ChangeEvent, FC } from 'react'
-import { EditableSpan } from '../../../components'
-import { TodoMenu } from './todo-menu'
+import { EditableSpan } from 'components'
+import { TodoMenu } from './todo-menu/TodoMenu'
 
 type TodoPT = {
   title: string
