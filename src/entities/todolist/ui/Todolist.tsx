@@ -1,9 +1,10 @@
 import CloseIcon from '@mui/icons-material/Close'
 import { Box, IconButton, List, Typography, Button, ButtonGroup, Stack } from '@mui/material'
 import { FC } from 'react'
-import { FilterT, TaskT } from '../../app/App'
-import { AddItemForm, EditableSpan } from '../common'
-import { Todo } from '../todo'
+import { AddItemForm, EditableSpan } from '../../../components'
+import { Task } from '../../task'
+import { TaskT } from '../../task'
+import { FilterT } from '../model/types/todolist.reducer'
 
 type TodolistPT = {
   id: string
@@ -57,7 +58,7 @@ export const Todolist: FC<TodolistPT> = ({
     const removeCurrentTask = () => removeTask(id, el.id)
 
     return (
-      <Todo
+      <Task
         key={el.id}
         title={el.title}
         isDone={el.isDone}

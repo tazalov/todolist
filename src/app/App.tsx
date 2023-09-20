@@ -2,8 +2,9 @@ import { Container, Stack, styled, Typography } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 import { useState } from 'react'
 import { v1 } from 'uuid'
-import { AddItemForm } from '../components/common'
-import { Todolist } from '../components/todolist/'
+import { AddItemForm } from '../components'
+import { TasksST, TaskT } from '../entities/task'
+import { FilterT, Todolist, TodoListST, TodoListT } from '../entities/todolist'
 import { Header } from '../layout/header'
 
 const ResponsiveContainer = styled(Container)(({ theme }) => ({
@@ -12,24 +13,6 @@ const ResponsiveContainer = styled(Container)(({ theme }) => ({
     paddingRight: 10,
   },
 }))
-
-export type FilterT = 'all' | 'active' | 'completed'
-
-type TodoListT = {
-  id: string
-  title: string
-  filter: FilterT
-}
-
-export type TaskT = {
-  id: string
-  title: string
-  isDone: boolean
-}
-
-type TasksT = {
-  [todolistId: string]: TaskT[]
-}
 
 export const App = () => {
   //! ---------- additional data
@@ -43,11 +26,11 @@ export const App = () => {
   }
 
   //! ---------- state
-  const [todoLists, setTodoLists] = useState<TodoListT[]>([
+  const [todoLists, setTodoLists] = useState<TodoListST>([
     { id: todoListId1, title: 'What to learn', filter: 'all' },
     { id: todoListId2, title: 'What to byu', filter: 'all' },
   ])
-  const [tasks, setTasks] = useState<TasksT>({
+  const [tasks, setTasks] = useState<TasksST>({
     [todoListId1]: [
       { id: v1(), title: 'HTML&CSS', isDone: true },
       { id: v1(), title: 'JS', isDone: true },

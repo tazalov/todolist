@@ -1,6 +1,6 @@
 import { Checkbox, ListItem, Typography } from '@mui/material'
 import { ChangeEvent, FC } from 'react'
-import { EditableSpan } from '../common'
+import { EditableSpan } from '../../../components'
 import { TodoMenu } from './todo-menu'
 
 type TodoPT = {
@@ -11,7 +11,7 @@ type TodoPT = {
   remove: () => void
 }
 
-export const Todo: FC<TodoPT> = ({ title, isDone, changeIsDone, changeTitle, remove }) => {
+export const Task: FC<TodoPT> = ({ title, isDone, changeIsDone, changeTitle, remove }) => {
   //! ---------- change isDone current task
   const onChangeDoneHandler = (e: ChangeEvent<HTMLInputElement>) => {
     changeIsDone(e.currentTarget.checked)
