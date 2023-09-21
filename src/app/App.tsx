@@ -1,11 +1,10 @@
 import { Container, Stack, styled, Typography } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 import { AddItemForm } from 'components'
-import { TasksST, TaskT } from 'entities/task'
-import { FilterT, Todolist, TodoListST, TodoListT } from 'entities/todolist'
+import { AddTodoList, getTodoListsState, Todolist } from 'entities/todolist'
 import { Header } from 'layout/header'
-import { useState } from 'react'
-import { v1 } from 'uuid'
+import { useSelector } from 'react-redux'
+import { useAppDispatch } from './providers'
 
 const ResponsiveContainer = styled(Container)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
@@ -15,99 +14,18 @@ const ResponsiveContainer = styled(Container)(({ theme }) => ({
 }))
 
 export const App = () => {
-  //! ---------- additional data
-  const todoListId1 = v1()
-  const todoListId2 = v1()
+  const todoLists = useSelector(getTodoListsState)
 
-  const filterOptions = {
-    all: (tasks: TaskT[]) => tasks,
-    completed: (tasks: TaskT[]) => tasks.filter(el => el.isDone),
-    active: (tasks: TaskT[]) => tasks.filter(el => !el.isDone),
-  }
+  const dispatch = useAppDispatch()
 
-  //! ---------- state
-  const [todoLists, setTodoLists] = useState<TodoListST>([
-    { id: todoListId1, title: 'What to learn', filter: 'all' },
-    { id: todoListId2, title: 'What to byu', filter: 'all' },
-  ])
-  const [tasks, setTasks] = useState<TasksST>({
-    [todoListId1]: [
-      { id: v1(), title: 'HTML&CSS', isDone: true },
-      { id: v1(), title: 'JS', isDone: true },
-      { id: v1(), title: 'ReactJS', isDone: false },
-    ],
-    [todoListId2]: [
-      { id: v1(), title: 'Milk', isDone: true },
-      { id: v1(), title: 'Bread', isDone: true },
-      { id: v1(), title: 'Butter', isDone: false },
-      { id: v1(), title: 'Coffee', isDone: false },
-    ],
-  })
-
-  //! ---------- change array todoLists
   const addTodoList = (title: string) => {
-    const newTodoList: TodoListT = {
-      id: v1(),
-      title,
-      filter: 'all',
-    }
-    const newTasks: TaskT[] = [{ id: v1(), title: 'New Task', isDone: false }]
-    setTodoLists([...todoLists, newTodoList])
-    setTasks({ ...tasks, [newTodoList.id]: newTasks })
-  }
-  const removeTodoList = (todolistId: string) => {
-    const newTodoLists = todoLists.filter(el => el.id !== todolistId)
-    setTodoLists(newTodoLists)
-    delete tasks[todolistId]
-  }
-  const changeFilterTodoList = (todolistId: string, filter: FilterT) => {
-    const newTodoLists = todoLists.map(el => (el.id === todolistId ? { ...el, filter } : el))
-    setTodoLists(newTodoLists)
-  }
-  const changeTitleTodolist = (todoListId: string, title: string) => {
-    const newTodoLists = todoLists.map(el => (el.id === todoListId ? { ...el, title } : el))
-    setTodoLists(newTodoLists)
+    dispatch(AddTodoList(title))
   }
 
-  //! ---------- change array tasks
-  const addTask = (todolistId: string, title: string) => {
-    const newTask = { id: v1(), title, isDone: false }
-    const newTasks = [newTask, ...tasks[todolistId]]
-    setTasks({ ...tasks, [todolistId]: newTasks })
-  }
-  const removeTask = (todolistId: string, taskId: string) => {
-    const newTasks = tasks[todolistId].filter(el => el.id !== taskId)
-    setTasks({ ...tasks, [todolistId]: newTasks })
-  }
-
-  //! ---------- change specific task
-  const changeTaskIsDone = (todolistId: string, taskId: string, isDone: boolean) => {
-    const newTasks = tasks[todolistId].map(el => (el.id === taskId ? { ...el, isDone } : el))
-    setTasks({ ...tasks, [todolistId]: newTasks })
-  }
-  const changeTaskTitle = (todolistId: string, taskId: string, title: string) => {
-    const newTasks = tasks[todolistId].map(el => (el.id === taskId ? { ...el, title } : el))
-    setTasks({ ...tasks, [todolistId]: newTasks })
-  }
-
-  //! ---------- array Todolist components
-  const todoListsArr = todoLists.map(el => {
-    const currentTasks = filterOptions[el.filter](tasks[el.id])
+  const todoListsArray = todoLists.map(el => {
     return (
       <Grid key={el.id} xl={3} lg={3} md={4} sm={6} xs={12}>
-        <Todolist
-          id={el.id}
-          title={el.title}
-          tasks={currentTasks}
-          filterValue={el.filter}
-          addTask={addTask}
-          removeTask={removeTask}
-          changeTaskIsDone={changeTaskIsDone}
-          changeTaskTitle={changeTaskTitle}
-          changeFilter={changeFilterTodoList}
-          removeTodolist={removeTodoList}
-          changeTitle={changeTitleTodolist}
-        />
+        <Todolist todolist={el} />
       </Grid>
     )
   })
@@ -129,7 +47,7 @@ export const App = () => {
           </Stack>
         </Grid>
         <Grid container spacing={2}>
-          {todoListsArr}
+          {todoListsArray}
         </Grid>
       </ResponsiveContainer>
     </>

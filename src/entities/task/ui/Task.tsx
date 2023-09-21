@@ -1,25 +1,31 @@
 import { Checkbox, ListItem, Typography } from '@mui/material'
 import { ChangeEvent, FC } from 'react'
 import { EditableSpan } from 'components'
+import { useAppDispatch } from '../../../app/providers'
+import { ChangeStatusTask, ChangeTitleTask, RemoveTask } from '../model/actions/tasks.actions'
+import { TaskT } from '../model/types/tasks.reducer'
 import { TodoMenu } from './todo-menu/TodoMenu'
 
 type TodoPT = {
-  title: string
-  isDone: boolean
-  changeIsDone: (isDone: boolean) => void
-  changeTitle: (title: string) => void
-  remove: () => void
+  todoListId: string
+  task: TaskT
 }
 
-export const Task: FC<TodoPT> = ({ title, isDone, changeIsDone, changeTitle, remove }) => {
-  //! ---------- change isDone current task
-  const onChangeDoneHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    changeIsDone(e.currentTarget.checked)
+export const Task: FC<TodoPT> = ({ todoListId, task }) => {
+  const { id, title, isDone } = task
+
+  const dispatch = useAppDispatch()
+
+  const remove = () => {
+    dispatch(RemoveTask(todoListId, id))
   }
 
-  //! ---------- change title current task
+  const onChangeDoneHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(ChangeStatusTask(todoListId, id, e.currentTarget.checked))
+  }
+
   const changeCurrentTitle = (newTitle: string) => {
-    changeTitle(newTitle)
+    dispatch(ChangeTitleTask(todoListId, id, newTitle))
   }
 
   return (

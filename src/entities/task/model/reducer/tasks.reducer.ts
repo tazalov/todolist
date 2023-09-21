@@ -1,24 +1,10 @@
 import { v1 } from 'uuid'
-import { todoListId1, todoListId2 } from 'entities/todolist'
-import { ActionsT } from '../types/tasks.actions'
+import { TasksAT } from '../types/tasks.actions'
 import { TasksST } from '../types/tasks.reducer'
 
-export const initialState: TasksST = {
-  [todoListId1]: [
-    { id: v1(), title: 'HTML&CSS', isDone: true },
-    { id: v1(), title: 'JS', isDone: true },
-    { id: v1(), title: 'ReactJS', isDone: false },
-  ],
-  [todoListId2]: [
-    { id: v1(), title: 'Milk', isDone: true },
-    { id: v1(), title: 'Bread', isDone: true },
-    { id: v1(), title: 'Butter', isDone: false },
-    { id: v1(), title: 'Butter', isDone: false },
-    { id: v1(), title: 'Butter', isDone: false },
-  ],
-}
+export const tasksInitialState: TasksST = {}
 
-export const tasksReducer = (state = initialState, action: ActionsT) => {
+export const tasksReducer = (state = tasksInitialState, action: TasksAT): TasksST => {
   switch (action.type) {
     case 'todolist/tasks/add': {
       const { todolistId, title } = action.payload

@@ -5,7 +5,7 @@ import {
   RemoveTodolist,
 } from '../actions/todolist.actions'
 
-export type ActionsT =
+export type TodoListAT =
   | AddTodolistAT
   | RemoveTodolistAT
   | ChangeFilterTodolistAT
