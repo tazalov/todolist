@@ -1,7 +1,7 @@
 import AddIcon from '@mui/icons-material/Add'
 import { Fab, Snackbar, Stack, TextField, Tooltip } from '@mui/material'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
-import { ChangeEvent, FC, forwardRef, KeyboardEvent, SyntheticEvent, useState } from 'react'
+import { ChangeEvent, FC, forwardRef, KeyboardEvent, memo, SyntheticEvent, useState } from 'react'
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
@@ -11,7 +11,7 @@ type AddItemFormPT = {
   addItem: (title: string) => void
 }
 
-export const AddItemForm: FC<AddItemFormPT> = ({ addItem }) => {
+export const AddItemForm: FC<AddItemFormPT> = memo(({ addItem }) => {
   const [title, setTitle] = useState<string>('')
   const [error, setError] = useState<string>('')
   const [successNotification, setSuccessNotification] = useState<boolean>(true)
@@ -81,4 +81,4 @@ export const AddItemForm: FC<AddItemFormPT> = ({ addItem }) => {
       </Snackbar>
     </Stack>
   )
-}
+})

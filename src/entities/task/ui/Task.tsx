@@ -1,5 +1,5 @@
 import { Checkbox, ListItem, Typography } from '@mui/material'
-import { ChangeEvent, FC } from 'react'
+import { ChangeEvent, FC, memo, useCallback } from 'react'
 import { EditableSpan } from 'components'
 import { useAppDispatch } from '../../../app/providers'
 import { ChangeStatusTask, ChangeTitleTask, RemoveTask } from '../model/actions/tasks.actions'
@@ -11,7 +11,7 @@ type TodoPT = {
   task: TaskT
 }
 
-export const Task: FC<TodoPT> = ({ todoListId, task }) => {
+export const Task: FC<TodoPT> = memo(({ todoListId, task }) => {
   const { id, title, isDone } = task
 
   const dispatch = useAppDispatch()
@@ -24,9 +24,12 @@ export const Task: FC<TodoPT> = ({ todoListId, task }) => {
     dispatch(ChangeStatusTask(todoListId, id, e.currentTarget.checked))
   }
 
-  const changeCurrentTitle = (newTitle: string) => {
-    dispatch(ChangeTitleTask(todoListId, id, newTitle))
-  }
+  const changeCurrentTitle = useCallback(
+    (newTitle: string) => {
+      dispatch(ChangeTitleTask(todoListId, id, newTitle))
+    },
+    [dispatch, todoListId, id],
+  )
 
   return (
     <ListItem
@@ -56,4 +59,4 @@ export const Task: FC<TodoPT> = ({ todoListId, task }) => {
       <TodoMenu remove={remove} />
     </ListItem>
   )
-}
+})

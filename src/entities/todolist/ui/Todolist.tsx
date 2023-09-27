@@ -1,10 +1,11 @@
 import CloseIcon from '@mui/icons-material/Close'
-import { Box, Button, ButtonGroup, IconButton, List, Stack, Typography } from '@mui/material'
+import { Box, ButtonGroup, IconButton, List, Stack, Typography } from '@mui/material'
 import { AddItemForm, EditableSpan } from 'components'
-import { Task, TaskT } from 'entities/task'
-import { FC } from 'react'
+import { Task } from 'entities/task'
+import { FC, memo, useCallback, useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from '../../../app/providers'
+import { FilterButton } from '../../../components/button/FilterButton'
 import { AddTask } from '../../task/model/actions/tasks.actions'
 import { getSpecificTasks } from '../../task/model/selectors/getSpecificTasks'
 import {
@@ -12,13 +13,13 @@ import {
   ChangeTitleTodolist,
   RemoveTodolist,
 } from '../model/actions/todolist.actions'
-import { FilterT, TodoListT } from '../model/types/todolist.reducer'
+import { TodoListT } from '../model/types/todolist.reducer'
 
 type TodolistPT = {
   todolist: TodoListT
 }
 
-export const Todolist: FC<TodolistPT> = ({ todolist }) => {
+export const Todolist: FC<TodolistPT> = memo(({ todolist }) => {
   const { id, title, filter } = todolist
 
   const tasks = useSelector(getSpecificTasks(id))
@@ -28,24 +29,48 @@ export const Todolist: FC<TodolistPT> = ({ todolist }) => {
   const remove = () => {
     dispatch(RemoveTodolist(id))
   }
-  const changeTitle = (title: string) => {
-    dispatch(ChangeTitleTodolist(id, title))
-  }
-  const changeFilter = (filter: FilterT) => () => {
-    dispatch(ChangeFilterTodolist(id, filter))
-  }
-  const addTask = (title: string) => {
-    dispatch(AddTask(id, title))
-  }
+  const changeTitle = useCallback(
+    (title: string) => {
+      dispatch(ChangeTitleTodolist(id, title))
+    },
+    [id, dispatch],
+  )
+
+  const changeFilterAll = useCallback(() => {
+    dispatch(ChangeFilterTodolist(id, 'all'))
+  }, [id, dispatch])
+
+  const changeFilterActive = useCallback(() => {
+    dispatch(ChangeFilterTodolist(id, 'active'))
+  }, [id, dispatch])
+
+  const changeFilterCompleted = useCallback(() => {
+    dispatch(ChangeFilterTodolist(id, 'completed'))
+  }, [id, dispatch])
+
+  const addTask = useCallback(
+    (title: string) => {
+      dispatch(AddTask(id, title))
+    },
+    [id, dispatch],
+  )
 
   //! ---------- array Task components
-  const filterOptions = {
-    all: (tasks: TaskT[]) => tasks,
-    completed: (tasks: TaskT[]) => tasks.filter(el => el.isDone),
-    active: (tasks: TaskT[]) => tasks.filter(el => !el.isDone),
-  }
-
-  const tasksList = filterOptions[filter](tasks).map(el => (
+  const tasksArray = useMemo(() => {
+    switch (filter) {
+      case 'active': {
+        return tasks.filter(el => !el.isDone)
+      }
+      case 'completed': {
+        return tasks.filter(el => el.isDone)
+      }
+      default: {
+        return tasks
+      }
+    }
+  },[tasks, filter])
+  
+  const tasksList = tasksArray.map(el => (
     <Task key={el.id} todoListId={id} task={el} />
   ))
 
@@ -73,35 +98,26 @@ export const Todolist: FC<TodolistPT> = ({ todolist }) => {
         <AddItemForm addItem={addTask} />
         <List sx={{ width: '100%' }}>{tasksList}</List>
         <ButtonGroup size="small" variant="contained" disableElevation>
-          <Button
-            sx={{
-              backgroundColor: filter === 'all' ? 'primary.dark' : 'primary.main',
-              color: 'secondary.contrastText',
-            }}
-            onClick={changeFilter('all')}
+          <FilterButton
+            activeBg={filter === 'all' ? 'primary.dark' : 'primary.main'}
+            onClick={changeFilterAll}
           >
             ALL
-          </Button>
-          <Button
-            sx={{
-              backgroundColor: filter === 'active' ? 'primary.dark' : 'primary.main',
-              color: 'secondary.contrastText',
-            }}
-            onClick={changeFilter('active')}
+          </FilterButton>
+          <FilterButton
+            activeBg={filter === 'active' ? 'primary.dark' : 'primary.main'}
+            onClick={changeFilterActive}
           >
             ACTIVE
-          </Button>
-          <Button
-            sx={{
-              backgroundColor: filter === 'completed' ? 'primary.dark' : 'primary.main',
-              color: 'secondary.contrastText',
-            }}
-            onClick={changeFilter('completed')}
+          </FilterButton>
+          <FilterButton
+            activeBg={filter === 'completed' ? 'primary.dark' : 'primary.main'}
+            onClick={changeFilterCompleted}
           >
             COMPLETED
-          </Button>
+          </FilterButton>
         </ButtonGroup>
       </Stack>
     </Box>
   )
-}
+})

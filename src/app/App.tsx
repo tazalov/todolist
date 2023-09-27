@@ -3,6 +3,7 @@ import Grid from '@mui/material/Unstable_Grid2'
 import { AddItemForm } from 'components'
 import { AddTodoList, getTodoListsState, Todolist } from 'entities/todolist'
 import { Header } from 'layout/header'
+import { useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from './providers'
 
@@ -18,9 +19,12 @@ export const App = () => {
 
   const dispatch = useAppDispatch()
 
-  const addTodoList = (title: string) => {
-    dispatch(AddTodoList(title))
-  }
+  const addTodoList = useCallback(
+    (title: string) => {
+      dispatch(AddTodoList(title))
+    },
+    [dispatch],
+  )
 
   const todoListsArray = todoLists.map(el => {
     return (
