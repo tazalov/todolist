@@ -3,7 +3,7 @@ import { applyMiddleware, combineReducers, compose, legacy_createStore } from 'r
 import { todoListReducer } from 'entities/todolist/model/reducer/todolist.reducer'
 import { tasksReducer } from 'entities/task/model/reducer/tasks.reducer'
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   todoList: todoListReducer,
   tasks: tasksReducer,
 })

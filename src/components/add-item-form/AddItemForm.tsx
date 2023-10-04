@@ -1,11 +1,6 @@
 import AddIcon from '@mui/icons-material/Add'
-import { Fab, Snackbar, Stack, TextField, Tooltip } from '@mui/material'
-import MuiAlert, { AlertProps } from '@mui/material/Alert'
-import { ChangeEvent, FC, forwardRef, KeyboardEvent, memo, SyntheticEvent, useState } from 'react'
-
-const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
-})
+import { Fab, Stack, TextField, Tooltip } from '@mui/material'
+import { ChangeEvent, FC, KeyboardEvent, memo, useState } from 'react'
 
 type AddItemFormPT = {
   addItem: (title: string) => void
@@ -14,15 +9,6 @@ type AddItemFormPT = {
 export const AddItemForm: FC<AddItemFormPT> = memo(({ addItem }) => {
   const [title, setTitle] = useState<string>('')
   const [error, setError] = useState<string>('')
-  const [successNotification, setSuccessNotification] = useState<boolean>(true)
-
-  //! ---------- work with notification
-  const handleClose = (event?: SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return
-    }
-    setSuccessNotification(false)
-  }
 
   //! ---------- handler for input value
   const changeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +22,6 @@ export const AddItemForm: FC<AddItemFormPT> = memo(({ addItem }) => {
     if (!newTitle.length) {
       setError("Value can't be empty")
     } else {
-      setSuccessNotification(true)
       setTitle('')
       addItem(newTitle)
     }
@@ -74,11 +59,6 @@ export const AddItemForm: FC<AddItemFormPT> = memo(({ addItem }) => {
           <AddIcon fontSize="large" />
         </Fab>
       </Tooltip>
-      <Snackbar open={successNotification} autoHideDuration={3000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-          Success creating
-        </Alert>
-      </Snackbar>
     </Stack>
   )
 })
