@@ -24,5 +24,4 @@ yarn-error.log*
 
 .idea
 .prettierignore
-.prettierrc.json
 storybook-static

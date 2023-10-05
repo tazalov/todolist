@@ -1,6 +1,8 @@
-import { TextField, Tooltip, Typography } from '@mui/material'
-import { ChangeEvent, FC, KeyboardEvent, memo, useState } from 'react'
+import { TextField, Tooltip, Typography, InputAdornment } from '@mui/material'
+import ErrorIcon from '@mui/icons-material/Error'
+import { FC, memo } from 'react'
 import { TypographyOwnProps } from '@mui/material/Typography/Typography'
+import { useEditableSpan } from '../../utils/hooks/useEditableSpan/useEditableSpan'
 
 const inheritStyleInput: any = {
   height: 'inherit',
@@ -17,42 +19,15 @@ interface EditableSpanPT extends TypographyOwnProps {
 }
 
 export const EditableSpan: FC<EditableSpanPT> = memo(({ title, changeTitle, ...rest }) => {
-  const [editMode, setEditMode] = useState<boolean>(false)
-  const [currentTitle, setCurrentTitle] = useState<string>('')
-  const [error, setError] = useState<string>('')
-
-  //! ---------- (de)activate edit mode for current title
-  const activateEditMode = () => {
-    setEditMode(true)
-    setCurrentTitle(title)
-  }
-  const deactivateEditMode = () => setEditMode(false)
-
-  //! ---------- update current title
-  const updateTitle = () => {
-    const newTitle = currentTitle.trim()
-    if (newTitle.length === 0) {
-      setError("Value can't be empty")
-    } else if (newTitle !== title) {
-      changeTitle(currentTitle)
-      deactivateEditMode()
-    }
-  }
-  const updateTitleKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      updateTitle()
-    }
-  }
-  const updateTitleBlurHandler = () => {
-    deactivateEditMode()
-    setError('')
-  }
-
-  //! ---------- handler for input with current title
-  const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setCurrentTitle(e.currentTarget.value)
-    setError('')
-  }
+  const {
+    currentTitle,
+    editMode,
+    error,
+    activateEditMode,
+    handleChange,
+    handleKeyDownUpdateTitle,
+    handleBlurUpdateTitle,
+  } = useEditableSpan(title, changeTitle)
 
   return (
     <Tooltip title="Double click for edit">
@@ -65,15 +40,20 @@ export const EditableSpan: FC<EditableSpanPT> = memo(({ title, changeTitle, ...r
       >
         {editMode ? (
           <TextField
-            fullWidth
             variant="standard"
-            error={!!error}
-            helperText={error}
+            error={error}
             value={currentTitle}
-            onChange={onChangeTitleHandler}
-            onBlur={updateTitleBlurHandler}
-            onKeyDown={updateTitleKeyDownHandler}
-            InputProps={{ style: inheritStyleInput }}
+            onChange={handleChange}
+            onBlur={handleBlurUpdateTitle}
+            onKeyDown={handleKeyDownUpdateTitle}
+            InputProps={{
+              style: inheritStyleInput,
+              endAdornment: error && (
+                <InputAdornment position="start">
+                  <ErrorIcon color={'error'} />
+                </InputAdornment>
+              ),
+            }}
             inputProps={{ style: inheritStyleInput }}
             autoFocus
           />

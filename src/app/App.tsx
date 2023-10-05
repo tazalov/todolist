@@ -1,11 +1,8 @@
 import { Container, Stack, styled, Typography } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 import { AddItemForm } from 'components'
-import { AddTodoList, getTodoListsState, Todolist } from 'entities/todolist'
 import { Header } from 'layout/header'
-import { useCallback } from 'react'
-import { useSelector } from 'react-redux'
-import { useAppDispatch } from './providers'
+import { useApp } from '../utils/hooks/useApp/useApp'
 
 const ResponsiveContainer = styled(Container)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
@@ -15,24 +12,7 @@ const ResponsiveContainer = styled(Container)(({ theme }) => ({
 }))
 
 export const App = () => {
-  const todoLists = useSelector(getTodoListsState)
-
-  const dispatch = useAppDispatch()
-
-  const addTodoList = useCallback(
-    (title: string) => {
-      dispatch(AddTodoList(title))
-    },
-    [dispatch],
-  )
-
-  const todoListsArray = todoLists.map(el => {
-    return (
-      <Grid key={el.id} xl={3} lg={3} md={4} sm={6} xs={12}>
-        <Todolist todolist={el} />
-      </Grid>
-    )
-  })
+  const { todoListsArray, addTodoList } = useApp()
 
   return (
     <>

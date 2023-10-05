@@ -16,10 +16,12 @@ export const Task: FC<TodoPT> = memo(({ todoListId, task }) => {
   const { remove, changeStatus, changeTitle } = useTask(todoListId, id)
 
   const styleItem = {
-    borderWidth: '2px',
     borderColor: 'error.main',
     borderStyle: 'solid',
-    borderRadius: '5px',
+    borderLeftWidth: '5px',
+    borderRightWidth: 0,
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
     mt: 1,
     p: 0.5,
   }
