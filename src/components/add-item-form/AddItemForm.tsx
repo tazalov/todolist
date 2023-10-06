@@ -1,7 +1,7 @@
 import AddBoxIcon from '@mui/icons-material/AddBox'
 import { Stack, TextField, Tooltip, IconButton } from '@mui/material'
 import { FC, memo } from 'react'
-import { useAddItem } from '../../utils/hooks/useAddItem/useAddItem'
+import { useAddItem } from '../../utils/hooks'
 
 interface AddItemFormPT {
   addItem: (title: string) => void

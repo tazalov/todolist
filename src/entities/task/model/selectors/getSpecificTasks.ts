@@ -1,4 +1,4 @@
-import { RootStateT } from 'app/providers'
+import { RootStateT } from 'app/providers/store'
 import { TaskT } from '../types/tasks.reducer'
 
 export const getSpecificTasks =

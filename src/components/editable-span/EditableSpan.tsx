@@ -2,7 +2,7 @@ import { TextField, Tooltip, Typography, InputAdornment } from '@mui/material'
 import ErrorIcon from '@mui/icons-material/Error'
 import { FC, memo } from 'react'
 import { TypographyOwnProps } from '@mui/material/Typography/Typography'
-import { useEditableSpan } from '../../utils/hooks/useEditableSpan/useEditableSpan'
+import { useEditableSpan } from '../../utils/hooks'
 
 const inheritStyleInput: any = {
   height: 'inherit',

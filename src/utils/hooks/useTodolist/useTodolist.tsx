@@ -1,7 +1,7 @@
 import { FilterT, RemoveTodolist } from '../../../entities/todolist'
 import { useSelector } from 'react-redux'
 import { getSpecificTasks } from '../../../entities/task/model/selectors/getSpecificTasks'
-import { useAppDispatch } from '../../../app/providers'
+import { useAppDispatch } from '../../../app/providers/store'
 import { useCallback, useMemo } from 'react'
 import {
   ChangeTitleTodolist,

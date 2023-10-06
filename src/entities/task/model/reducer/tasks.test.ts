@@ -78,7 +78,8 @@ describe('tasks reducer', () => {
     }
 
     expect(keys.length).toBe(3)
-    expect(newState[newKey]).toEqual([])
+    expect(newState[newKey][0].title).toBe('new task1')
+    expect(newState[newKey][0].id).toBeDefined()
   })
 
   it('property with todolistId should be deleted', () => {

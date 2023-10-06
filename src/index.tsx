@@ -1,5 +1,5 @@
 import { App } from 'app/App'
-import { StoreProvider } from 'app/providers'
+import { StoreProvider } from 'app/providers/store'
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import * as serviceWorker from './serviceWorker'

@@ -32,6 +32,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:ci": "react-scripts test --watchAll=false",
     "eject": "react-scripts eject",
     "storybook": "storybook dev -p 9009",
     "build-storybook": "storybook build",
@@ -40,7 +41,7 @@
     "test:integ": "start-server-and-test storybook http-get://localhost:9009 jest:integ",
     "sb:static": "storybook build",
     "sb:static:serve": "npx http-server storybook-static",
-    "test:integ:sb:static": "storybook build && start-server-and-test sb:static:serve 8080 jest:integ"
+    "test:integ:sb:static": "start-server-and-test sb:static:serve 8080 jest:integ"
   },
   "eslintConfig": {
     "extends": [

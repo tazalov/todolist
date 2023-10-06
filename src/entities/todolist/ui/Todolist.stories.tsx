@@ -1,11 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react'
 
-import { Todolist } from './Todolist';
-import {useSelector} from 'react-redux';
-import {getTodoListsState} from '../model/selectors/getTodoListsState';
-import {useAppDispatch} from '../../../app/providers';
-import {AddTodoList} from '../model/actions/todolist.actions';
-import {useLayoutEffect} from 'react';
+import { Todolist } from './Todolist'
+import { useSelector } from 'react-redux'
+import { getTodoListsState } from '../model/selectors/getTodoListsState'
+import { useAppDispatch } from '../../../app/providers/store'
+import { AddTodoList } from '../model/actions/todolist.actions'
+import { useLayoutEffect } from 'react'
 
 const meta: Meta<typeof Todolist> = {
   title: 'entities/Todolist',
@@ -17,46 +17,45 @@ const meta: Meta<typeof Todolist> = {
   argTypes: {
     todolist: {
       description: 'Object with todolist info',
-      control: 'object'
+      control: 'object',
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof Todolist>;
+export default meta
+type Story = StoryObj<typeof Todolist>
 
 const TodolistRedux = () => {
   let todoLists = useSelector(getTodoListsState)
   const dispatch = useAppDispatch()
-  
+
   useLayoutEffect(() => {
     if (!todoLists.length) {
       dispatch(AddTodoList('new todolist'))
     }
-  });
-  
-  return !todoLists[0] ? <>Loading...</> : <Todolist todolist={todoLists[0]}/>
+  })
+
+  return !todoLists[0] ? <>Loading...</> : <Todolist todolist={todoLists[0]} />
 }
 
 export const Demo: Story = {
-  render: () => <TodolistRedux/>
-};
+  render: () => <TodolistRedux />,
+}
 
 export const FilterAll: Story = {
   args: {
-    todolist: {id: '1', title: 'New todolist', filter: 'all'},
+    todolist: { id: '1', title: 'New todolist', filter: 'all' },
   },
-};
+}
 
 export const FilterActive: Story = {
   args: {
-    todolist: {id: '1', title: 'New todolist', filter: 'active'},
+    todolist: { id: '1', title: 'New todolist', filter: 'active' },
   },
-};
+}
 
 export const FilterCompleted: Story = {
   args: {
-    todolist: {id: '1', title: 'New todolist', filter: 'completed'},
+    todolist: { id: '1', title: 'New todolist', filter: 'completed' },
   },
-};
-
+}

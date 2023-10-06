@@ -2,7 +2,7 @@ import { Container, Stack, styled, Typography } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 import { AddItemForm } from 'components'
 import { Header } from 'layout/header'
-import { useApp } from '../utils/hooks/useApp/useApp'
+import { useApp } from '../utils/hooks'
 
 const ResponsiveContainer = styled(Container)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {

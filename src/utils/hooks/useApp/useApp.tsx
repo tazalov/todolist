@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 import { getTodoListsState, AddTodoList, Todolist } from '../../../entities/todolist'
-import { useAppDispatch } from '../../../app/providers'
+import { useAppDispatch } from '../../../app/providers/store'
 import { useCallback } from 'react'
 import Grid from '@mui/material/Unstable_Grid2'
 

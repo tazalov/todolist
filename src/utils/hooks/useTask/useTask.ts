@@ -1,4 +1,4 @@
-import { useAppDispatch } from '../../../app/providers'
+import { useAppDispatch } from '../../../app/providers/store'
 import {
   RemoveTask,
   ChangeStatusTask,

@@ -3,7 +3,7 @@ import { FC, memo } from 'react'
 import { EditableSpan } from 'components'
 import { TaskT } from '../model/types/tasks.reducer'
 import { TodoMenu } from './todo-menu/TodoMenu'
-import { useTask } from '../../../utils/hooks/useTask/useTask'
+import { useTask } from '../../../utils/hooks'
 
 interface TodoPT {
   todoListId: string
