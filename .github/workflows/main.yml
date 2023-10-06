@@ -27,7 +27,7 @@ jobs:
         run: yarn sb:static
         if: always()
       - name: testing snapshots
-        run: yarn est:integ:sb:static
+        run: yarn test:integ:sb:static
         if: always()
       - name: testing unit
         run: yarn test:ci
