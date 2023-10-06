@@ -21,7 +21,7 @@ jobs:
       - name: install modules
         run: yarn
       - name: building production
-        run: yarn build
+        run: yarn build:ci
         if: always()
       - name: building storybook
         run: yarn sb:static
