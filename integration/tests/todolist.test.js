@@ -1,7 +1,7 @@
 describe('addItemForm', () => {
   it('base example, visually looks correct', async () => {
     await page.goto(
-      'http://localhost:8080/iframe.html?args=&id=components-additemform--demo&viewMode=story',
+      'http://localhost:8080/iframe.html?args=&id=entities-todolist--demo&viewMode=story',
       { waitUntil: 'networkidle2' },
     )
 

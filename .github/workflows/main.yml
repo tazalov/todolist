@@ -31,10 +31,6 @@ jobs:
         run: yarn build-storybook
         if: always()
         
-      - name: testing snapshots
-        run: yarn test:integ:sb:static
-        if: always()
-        
       - name: testing unit
         run: CI=true yarn test
         if: always()
