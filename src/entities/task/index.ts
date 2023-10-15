@@ -1,3 +1,6 @@
 export { Task } from './ui/Task'
-export { getTasksState } from './model/selectors/getTasksState'
-export type { TaskT, TasksST } from './model/types/tasks.reducer'
+export { getTasks, getSpecificTasks } from './model/selectors/tasks'
+export type { TaskT, TasksSchema } from './model/types/TasksSchema'
+export { TaskStatus, TaskPriority } from './model/types/TasksSchema'
+export { AddTask } from './model/actions/tasks.actions'
+export { tasksReducer } from './model/reducer/tasks.reducer'

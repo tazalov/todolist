@@ -1,14 +1,13 @@
-import { FilterT, RemoveTodolist } from '../../../entities/todolist'
 import { useSelector } from 'react-redux'
-import { getSpecificTasks } from '../../../entities/task/model/selectors/getSpecificTasks'
-import { useAppDispatch } from '../../../app/providers/store'
+import { useAppDispatch } from 'app/providers/store'
 import { useCallback, useMemo } from 'react'
 import {
   ChangeTitleTodolist,
   ChangeFilterTodolist,
-} from '../../../entities/todolist/model/actions/todolist.actions'
-import { AddTask } from '../../../entities/task/model/actions/tasks.actions'
-import { Task } from '../../../entities/task'
+  RemoveTodolist,
+} from '../../actions/todolist.actions'
+import { FilterT } from '../../types/TodolistsSchema'
+import { getSpecificTasks, AddTask, TaskStatus, Task } from 'entities/task'
 
 export const useTodolist = (todoListId: string, filter: FilterT) => {
   const tasks = useSelector(getSpecificTasks(todoListId))
@@ -42,10 +41,10 @@ export const useTodolist = (todoListId: string, filter: FilterT) => {
   const tasksArray = useMemo(() => {
     switch (filter) {
       case 'active': {
-        return tasks.filter(el => !el.isDone)
+        return tasks.filter(el => el.status === TaskStatus.NEW)
       }
       case 'completed': {
-        return tasks.filter(el => el.isDone)
+        return tasks.filter(el => el.status === TaskStatus.COMPLETED)
       }
       default: {
         return tasks

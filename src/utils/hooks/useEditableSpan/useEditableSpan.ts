@@ -1,4 +1,4 @@
-import { useState, KeyboardEvent, ChangeEvent } from 'react'
+import { useState, ChangeEvent } from 'react'
 
 export const useEditableSpan = (title: string, changeTitle: (newTitle: string) => void) => {
   const [editMode, setEditMode] = useState<boolean>(false)
@@ -23,19 +23,10 @@ export const useEditableSpan = (title: string, changeTitle: (newTitle: string) =
     const newTitle = currentTitle.trim()
     if (newTitle.length === 0) {
       setError(true)
-    } else if (newTitle !== title) {
+    } else {
       changeTitle(currentTitle)
       deactivateEditMode()
     }
-  }
-  const handleKeyDownUpdateTitle = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      updateTitle()
-    }
-  }
-  const handleBlurUpdateTitle = () => {
-    deactivateEditMode()
-    setError(false)
   }
 
   return {
@@ -44,7 +35,6 @@ export const useEditableSpan = (title: string, changeTitle: (newTitle: string) =
     error,
     activateEditMode,
     handleChange,
-    handleKeyDownUpdateTitle,
-    handleBlurUpdateTitle,
+    updateTitle,
   }
 }

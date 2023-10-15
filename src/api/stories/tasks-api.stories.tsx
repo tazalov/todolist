@@ -1,7 +1,7 @@
 import React, { useEffect, useState, ChangeEvent } from 'react'
 import { tasksAPI } from '../config/tasks.api'
-import { TaskT } from '../types/todolist'
 import { TextField, Button } from '@mui/material'
+import { TaskT } from 'entities/task'
 
 export default {
   title: 'API TASKS',

@@ -5,18 +5,18 @@ import {
   ChangeTitleTodolist,
   RemoveTodolist,
 } from '../actions/todolist.actions'
-import { TodoListST } from '../types/todolist.reducer'
+import { TodoListsSchema } from '../types/TodolistsSchema'
 import { todoListReducer } from './todolist.reducer'
 
 describe('todolist reducer', () => {
   const todoListId1 = v1()
   const todoListId2 = v1()
-  let initialState: TodoListST = []
+  let initialState: TodoListsSchema = []
 
   beforeEach(() => {
     initialState = [
-      { id: todoListId1, title: 'What to learn', filter: 'all' },
-      { id: todoListId2, title: 'What to byu', filter: 'active' },
+      { id: todoListId1, title: 'What to learn', filter: 'all', order: 0, addedDate: new Date() },
+      { id: todoListId2, title: 'What to byu', filter: 'active', order: 0, addedDate: new Date() },
     ]
   })
 

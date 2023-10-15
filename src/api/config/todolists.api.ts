@@ -1,17 +1,18 @@
+import { TodoListT } from 'entities/todolist'
 import { todolist } from '../todolist'
-import { TodolistT, BaseResponseT } from '../types/todolist'
+import { BaseResponseT } from '../types/todolist'
 
 export const todolistAPI = {
   updateTodolist(todolistId: string, title: string) {
     return todolist.put<BaseResponseT>(`todo-lists/${todolistId}`, { title })
   },
   getTodolists() {
-    return todolist.get<TodolistT[]>(`todo-lists/`)
+    return todolist.get<TodoListT[]>(`todo-lists/`)
   },
   deleteTodolist(todolistId: string) {
     return todolist.delete<BaseResponseT>(`todo-lists/${todolistId}`)
   },
   createTodolist(title: string) {
-    return todolist.post<BaseResponseT<{ item: TodolistT }>>(`todo-lists/`, { title })
+    return todolist.post<BaseResponseT<{ item: TodoListT }>>(`todo-lists/`, { title })
   },
 }

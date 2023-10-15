@@ -1,3 +1,5 @@
+import { TaskStatus } from '../types/TasksSchema'
+
 export const AddTask = (todolistId: string, title: string) =>
   ({
     type: 'todolist/tasks/add',
@@ -10,10 +12,10 @@ export const RemoveTask = (todolistId: string, taskId: string) =>
     payload: { todolistId, taskId },
   }) as const
 
-export const ChangeStatusTask = (todolistId: string, taskId: string, isDone: boolean) =>
+export const ChangeStatusTask = (todolistId: string, taskId: string, status: TaskStatus) =>
   ({
     type: 'todolist/tasks/changeStatus',
-    payload: { todolistId, taskId, isDone },
+    payload: { todolistId, taskId, status },
   }) as const
 
 export const ChangeTitleTask = (todolistId: string, taskId: string, title: string) =>

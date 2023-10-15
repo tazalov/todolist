@@ -25,6 +25,21 @@ export const theme = {
     blocks: '#F5F8FF',
     header: '#018786',
   },
+  LOW: {
+    main: '#008000',
+  },
+  MIDDLE: {
+    main: '#0000FF',
+  },
+  HIGH: {
+    main: '#FFA500',
+  },
+  URGENTLY: {
+    main: '#FF0000',
+  },
+  LATER: {
+    main: '#808080',
+  },
 }
 
 export const darkTheme = {
@@ -52,6 +67,21 @@ export const darkTheme = {
     default: '#14212A',
     blocks: '#2c3f50',
     header: '#2c3f50',
+  },
+  LOW: {
+    main: '#147914',
+  },
+  MIDDLE: {
+    main: '#1e1e9b',
+  },
+  HIGH: {
+    main: '#966712',
+  },
+  URGENTLY: {
+    main: '#a81010',
+  },
+  LATER: {
+    main: '#808080',
   },
 }
 

@@ -1,19 +1,20 @@
-import { v1 } from 'uuid'
-import { TodoListAT } from '../types/todolist.actions'
-import { TodoListST, TodoListT } from '../types/todolist.reducer'
+import { TodoListAT } from '../types/TodolistsActions'
+import { UpdatedTodoListT, TodoListsSchema } from '../types/TodolistsSchema'
 
-export const todoListId1 = v1()
-export const todoListId2 = v1()
+export const initialTodolistState: TodoListsSchema = []
 
-export const initialTodolistState: TodoListST = []
-
-export const todoListReducer = (state = initialTodolistState, action: TodoListAT): TodoListST => {
+export const todoListReducer = (
+  state = initialTodolistState,
+  action: TodoListAT,
+): TodoListsSchema => {
   switch (action.type) {
     case 'todolist/list/add': {
       const { newTodolistId, title } = action.payload
-      const newTodoList: TodoListT = {
+      const newTodoList: UpdatedTodoListT = {
         id: newTodolistId,
         title,
+        addedDate: new Date(),
+        order: 0,
         filter: 'all',
       }
       return [...state, newTodoList]

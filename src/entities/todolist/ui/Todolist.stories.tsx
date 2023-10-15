@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { Todolist } from './Todolist'
 import { useSelector } from 'react-redux'
-import { getTodoListsState } from '../model/selectors/getTodoListsState'
+import { getTodolists } from '../model/selectors/todolists'
 import { useAppDispatch } from '../../../app/providers/store'
 import { AddTodoList } from '../model/actions/todolist.actions'
 import { useLayoutEffect } from 'react'
@@ -26,7 +26,7 @@ export default meta
 type Story = StoryObj<typeof Todolist>
 
 const TodolistRedux = () => {
-  const todoLists = useSelector(getTodoListsState)
+  const todoLists = useSelector(getTodolists)
   const dispatch = useAppDispatch()
 
   useLayoutEffect(() => {
@@ -44,18 +44,24 @@ export const Demo: Story = {
 
 export const FilterAll: Story = {
   args: {
-    todolist: { id: '1', title: 'New todolist', filter: 'all' },
+    todolist: { id: '1', title: 'New todolist', filter: 'all', order: 0, addedDate: new Date() },
   },
 }
 
 export const FilterActive: Story = {
   args: {
-    todolist: { id: '1', title: 'New todolist', filter: 'active' },
+    todolist: { id: '1', title: 'New todolist', filter: 'active', order: 0, addedDate: new Date() },
   },
 }
 
 export const FilterCompleted: Story = {
   args: {
-    todolist: { id: '1', title: 'New todolist', filter: 'completed' },
+    todolist: {
+      id: '1',
+      title: 'New todolist',
+      filter: 'completed',
+      order: 0,
+      addedDate: new Date(),
+    },
   },
 }

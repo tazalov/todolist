@@ -1,11 +1,11 @@
 import { useSelector } from 'react-redux'
-import { getTodoListsState, AddTodoList, Todolist } from '../../../entities/todolist'
-import { useAppDispatch } from '../../../app/providers/store'
+import { getTodolists, AddTodoList, Todolist } from 'entities/todolist'
+import { useAppDispatch } from 'app/providers/store'
 import { useCallback } from 'react'
 import Grid from '@mui/material/Unstable_Grid2'
 
 export const useApp = () => {
-  const todoLists = useSelector(getTodoListsState)
+  const todoLists = useSelector(getTodolists)
 
   const dispatch = useAppDispatch()
 
@@ -18,7 +18,7 @@ export const useApp = () => {
 
   const todoListsArray = todoLists.map(el => {
     return (
-      <Grid key={el.id} xl={3} lg={3} md={4} sm={6} xs={12}>
+      <Grid key={el.id} lg={4} md={6} sm={12}>
         <Todolist todolist={el} />
       </Grid>
     )

@@ -1,12 +1,11 @@
-import { TasksST } from 'entities/task'
-import { tasksReducer } from 'entities/task/model/reducer/tasks.reducer'
+import { TasksSchema, tasksReducer } from 'entities/task'
 import { AddTodoList } from '../actions/todolist.actions'
-import { TodoListST } from '../types/todolist.reducer'
+import { TodoListsSchema } from '../types/TodolistsSchema'
 import { todoListReducer } from './todolist.reducer'
 
 test('ids should be equals', () => {
-  const startTasksState: TasksST = {}
-  const startTodoListsState: TodoListST = []
+  const startTasksState: TasksSchema = {}
+  const startTodoListsState: TodoListsSchema = []
 
   const action = AddTodoList('new todolist')
 

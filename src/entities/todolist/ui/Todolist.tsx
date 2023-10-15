@@ -1,17 +1,24 @@
 import CloseIcon from '@mui/icons-material/Close'
-import { ButtonGroup, IconButton, List, Stack, Button } from '@mui/material'
+import { ButtonGroup, IconButton, List, Stack, Button, Typography } from '@mui/material'
 import { AddItemForm, EditableSpan } from 'components'
 import { FC, memo } from 'react'
-import { TodoListT } from '../model/types/todolist.reducer'
-import { useTodolist } from '../../../utils/hooks'
+import { UpdatedTodoListT } from '../model/types/TodolistsSchema'
+import { useTodolist } from '../model/hooks/useTodolist/useTodolist'
 import { getStyleFilterButton } from '../../../utils/getStyles/getStyleFilterButton/getStyleFilterButton'
 
+const options: Intl.DateTimeFormatOptions = {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  weekday: 'long',
+}
+
 interface TodolistPT {
-  todolist: TodoListT
+  todolist: UpdatedTodoListT
 }
 
 export const Todolist: FC<TodolistPT> = memo(({ todolist }) => {
-  const { id, title, filter } = todolist
+  const { id, title, addedDate, filter } = todolist
 
   const { tasks, remove, changeTitle, changeFilter, addTask } = useTodolist(id, filter)
 
@@ -38,6 +45,7 @@ export const Todolist: FC<TodolistPT> = memo(({ todolist }) => {
           COMPLETED
         </Button>
       </ButtonGroup>
+      <Typography>{addedDate.toLocaleDateString('en-US', options)}</Typography>
     </Stack>
   )
 })

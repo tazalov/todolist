@@ -1,5 +1,5 @@
 import { v1 } from 'uuid'
-import { FilterT } from '../types/todolist.reducer'
+import { FilterT } from '../types/TodolistsSchema'
 
 export const AddTodoList = (title: string) =>
   ({

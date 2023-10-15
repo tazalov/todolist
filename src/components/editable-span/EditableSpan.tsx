@@ -1,11 +1,11 @@
-import { TextField, Tooltip, Typography, InputAdornment } from '@mui/material'
+import { TextField, Tooltip, Typography, InputAdornment, IconButton } from '@mui/material'
 import ErrorIcon from '@mui/icons-material/Error'
+import SaveIcon from '@mui/icons-material/Save'
 import { FC, memo } from 'react'
 import { TypographyOwnProps } from '@mui/material/Typography/Typography'
 import { useEditableSpan } from '../../utils/hooks'
 
 const inheritStyleInput: any = {
-  height: 'inherit',
   lineHeight: 'inherit',
   fontSize: 'inherit',
   fontWeight: 'inherit',
@@ -19,23 +19,15 @@ interface EditableSpanPT extends TypographyOwnProps {
 }
 
 export const EditableSpan: FC<EditableSpanPT> = memo(({ title, changeTitle, ...rest }) => {
-  const {
-    currentTitle,
-    editMode,
-    error,
-    activateEditMode,
-    handleChange,
-    handleKeyDownUpdateTitle,
-    handleBlurUpdateTitle,
-  } = useEditableSpan(title, changeTitle)
+  const { currentTitle, editMode, error, activateEditMode, handleChange, updateTitle } =
+    useEditableSpan(title, changeTitle)
 
   return (
     <Tooltip title="Double click for edit">
       <Typography
-        height={'1.6em'}
         width="100%"
         onDoubleClick={activateEditMode}
-        sx={{ cursor: 'pointer' }}
+        sx={{ cursor: 'pointer', textOverFlow: 'ellipsis', wordBreak: 'break-all' }}
         {...rest}
       >
         {editMode ? (
@@ -44,18 +36,25 @@ export const EditableSpan: FC<EditableSpanPT> = memo(({ title, changeTitle, ...r
             error={error}
             value={currentTitle}
             onChange={handleChange}
-            onBlur={handleBlurUpdateTitle}
-            onKeyDown={handleKeyDownUpdateTitle}
             InputProps={{
               style: inheritStyleInput,
-              endAdornment: error && (
-                <InputAdornment position="start">
-                  <ErrorIcon color={'error'} />
+              endAdornment: (
+                <InputAdornment position="end">
+                  {error ? (
+                    <ErrorIcon color={'error'} />
+                  ) : (
+                    <IconButton onClick={updateTitle} size={'small'} disableRipple>
+                      <SaveIcon />
+                    </IconButton>
+                  )}
                 </InputAdornment>
               ),
             }}
             inputProps={{ style: inheritStyleInput }}
+            multiline
+            maxRows={3}
             autoFocus
+            fullWidth
           />
         ) : (
           title

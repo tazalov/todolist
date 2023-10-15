@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react'
-
 import { Task } from './Task'
 import { useSelector } from 'react-redux'
-import { getSpecificTasks } from '../model/selectors/getSpecificTasks'
-import { useAppDispatch } from '../../../app/providers/store'
+import { getSpecificTasks } from '../model/selectors/tasks'
+import { useAppDispatch } from 'app/providers/store'
 import { AddTask } from '../model/actions/tasks.actions'
 import { useLayoutEffect } from 'react'
+import { TaskStatus, TaskPriority } from '../model/types/TasksSchema'
 
 const meta: Meta<typeof Task> = {
   title: 'entities/Task',
@@ -48,14 +48,36 @@ export const TaskDemo: Story = {
 
 export const TaskIsDone: Story = {
   args: {
-    task: { id: '1', title: 'New task', isDone: true },
+    task: {
+      id: '1',
+      title: 'CSS',
+      status: TaskStatus.NEW,
+      startDate: new Date(),
+      todoListId: 'todolistId1',
+      order: 0,
+      priority: TaskPriority.LOW,
+      description: '',
+      deadline: new Date(),
+      addedDate: new Date(),
+    },
     todoListId: '1',
   },
 }
 
 export const TaskNotIsDone: Story = {
   args: {
-    task: { id: '1', title: 'New task', isDone: false },
+    task: {
+      id: '1',
+      title: 'CSS',
+      status: TaskStatus.NEW,
+      startDate: new Date(),
+      todoListId: 'todolistId1',
+      order: 0,
+      priority: TaskPriority.LOW,
+      description: '',
+      deadline: new Date(),
+      addedDate: new Date(),
+    },
     todoListId: '1',
   },
 }

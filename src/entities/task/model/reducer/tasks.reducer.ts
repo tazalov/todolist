@@ -1,14 +1,25 @@
 import { v1 } from 'uuid'
-import { TasksAT } from '../types/tasks.actions'
-import { TasksST } from '../types/tasks.reducer'
+import { TasksAT } from '../types/TasksActions'
+import { TasksSchema, TaskT, TaskPriority, TaskStatus } from '../types/TasksSchema'
 
-export const tasksInitialState: TasksST = {}
+export const tasksInitialState: TasksSchema = {}
 
-export const tasksReducer = (state = tasksInitialState, action: TasksAT): TasksST => {
+export const tasksReducer = (state = tasksInitialState, action: TasksAT): TasksSchema => {
   switch (action.type) {
     case 'todolist/tasks/add': {
       const { todolistId, title } = action.payload
-      const newTask = { id: v1(), title, isDone: false }
+      const newTask: TaskT = {
+        id: v1(),
+        title,
+        addedDate: new Date(),
+        deadline: new Date(),
+        description: '',
+        order: 0,
+        priority: TaskPriority.LOW,
+        status: TaskStatus.NEW,
+        startDate: new Date(),
+        todoListId: todolistId,
+      }
       return { ...state, [todolistId]: [newTask, ...state[todolistId]] }
     }
     case 'todolist/tasks/remove': {
@@ -19,10 +30,10 @@ export const tasksReducer = (state = tasksInitialState, action: TasksAT): TasksS
       }
     }
     case 'todolist/tasks/changeStatus': {
-      const { todolistId, taskId, isDone } = action.payload
+      const { todolistId, taskId, status } = action.payload
       return {
         ...state,
-        [todolistId]: state[todolistId].map(el => (el.id === taskId ? { ...el, isDone } : el)),
+        [todolistId]: state[todolistId].map(el => (el.id === taskId ? { ...el, status } : el)),
       }
     }
     case 'todolist/tasks/changeTitle': {
@@ -36,7 +47,7 @@ export const tasksReducer = (state = tasksInitialState, action: TasksAT): TasksS
       const { newTodolistId } = action.payload
       return {
         ...state,
-        [newTodolistId]: [{ id: v1(), title: 'new task1', isDone: false }],
+        [newTodolistId]: [],
       }
     }
     case 'todolist/list/remove': {
