@@ -19,9 +19,15 @@ export interface TaskT {
   addedDate: Date
 }
 
-export type ResponseT<T = {}> = {
+export type BaseResponseT<T = {}> = {
   resultCode: number
   messages: string[]
   fieldsErrors: string[]
   data: T
+}
+
+export type ItemsResponseT<T = {}> = {
+  items: T[]
+  totalCount: number
+  error: string
 }

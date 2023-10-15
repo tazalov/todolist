@@ -30,7 +30,7 @@ export default meta
 type Story = StoryObj<typeof Task>
 
 const TaskRedux = () => {
-  let tasks = useSelector(getSpecificTasks('1'))
+  const tasks = useSelector(getSpecificTasks('1'))
   const dispatch = useAppDispatch()
 
   useLayoutEffect(() => {
