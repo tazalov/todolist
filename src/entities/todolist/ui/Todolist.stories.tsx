@@ -26,7 +26,7 @@ export default meta
 type Story = StoryObj<typeof Todolist>
 
 const TodolistRedux = () => {
-  let todoLists = useSelector(getTodoListsState)
+  const todoLists = useSelector(getTodoListsState)
   const dispatch = useAppDispatch()
 
   useLayoutEffect(() => {
