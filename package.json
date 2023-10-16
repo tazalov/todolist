@@ -40,7 +40,9 @@
     "jest:integ:ok": "yarn run jest:integ --updateSnapshot",
     "test:integ": "start-server-and-test storybook http-get://localhost:9009 jest:integ",
     "sb:static:serve": "npx http-server storybook-static",
-    "test:integ:sb:static": "start-server-and-test sb:static:serve 8080 jest:integ"
+    "test:integ:sb:static": "start-server-and-test sb:static:serve 8080 jest:integ",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [

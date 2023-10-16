@@ -1,4 +1,7 @@
-# Social network
+# Todolist
+
+Login: `free@samuraijs.com`
+Password: `free`
 
 [Demo](https://tazalov.github.io/todolist/)
 
