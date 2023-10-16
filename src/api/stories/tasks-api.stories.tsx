@@ -1,7 +1,7 @@
 import React, { useEffect, useState, ChangeEvent } from 'react'
 import { tasksAPI } from '../config/tasks.api'
-import { TextField, Button } from '@mui/material'
-import { TaskT } from 'entities/task'
+import { TextField, Button, Select, MenuItem, SelectChangeEvent } from '@mui/material'
+import { TaskT, TaskStatus, TaskPriority } from 'entities/task'
 
 export default {
   title: 'API TASKS',
@@ -81,14 +81,29 @@ export const DeleteTask = () => {
   )
 }
 
-export const UpdateTaskTitle = () => {
+export const UpdateTask = () => {
   const [state, setState] = useState<any>(null)
   const [firstTask, setFirstTask] = useState<TaskT | null>(null)
-  const [title, setTitle] = useState('')
   const [isSend, setIsSend] = useState(false)
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+  const [status, setStatus] = useState<TaskStatus>(0)
+  const [priority, setPriority] = useState<TaskPriority>(0)
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeDescription = (e: ChangeEvent<HTMLInputElement>) => {
+    setDescription(e.currentTarget.value)
+  }
+
+  const handleChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.currentTarget.value)
+  }
+
+  const handleChangeStatus = (e: SelectChangeEvent) => {
+    setStatus(+e.target.value)
+  }
+
+  const handleChangePriority = (e: SelectChangeEvent) => {
+    setPriority(+e.target.value)
   }
 
   useEffect(() => {
@@ -96,22 +111,60 @@ export const UpdateTaskTitle = () => {
       .getTasks(todolistId)
       .then(response => setFirstTask(response.data.items[response.data.items.length - 1]))
     if (isSend && firstTask) {
-      tasksAPI
-        .updateTaskTitle(todolistId, firstTask.id, title)
-        .then(response => setState(response.data))
+      const model = {
+        description,
+        title,
+        status,
+        priority,
+        startDate: new Date(),
+        deadline: new Date(),
+      }
+      tasksAPI.updateTask(todolistId, firstTask.id, model).then(response => setState(response.data))
     }
     setIsSend(false)
   }, [isSend])
 
   return (
-    <>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       <div>todolist id : {todolistId}</div>
       <div>first task: {JSON.stringify(firstTask)}</div>
       <div>response : {JSON.stringify(state)}</div>
       <div>
-        <TextField variant="standard" value={title} onChange={handleChange} />
-        <Button onClick={() => setIsSend(true)}>UPDATE TITLE FOR FIRST</Button>
+        <TextField
+          placeholder={'title'}
+          variant="outlined"
+          value={title}
+          onChange={handleChangeTitle}
+        />
       </div>
-    </>
+      <div>
+        <TextField
+          placeholder={'description'}
+          variant="outlined"
+          value={description}
+          onChange={handleChangeDescription}
+        />
+      </div>
+      <div>
+        <Select value={status + ''} label="Status" onChange={handleChangeStatus}>
+          <MenuItem value={0}>NEW</MenuItem>
+          <MenuItem value={1}>IN_PROGRESS</MenuItem>
+          <MenuItem value={2}>COMPLETED</MenuItem>
+          <MenuItem value={3}>DRAFT</MenuItem>
+        </Select>
+      </div>
+      <div>
+        <Select value={priority + ''} label="Status" onChange={handleChangePriority}>
+          <MenuItem value={0}>LOW</MenuItem>
+          <MenuItem value={1}>MIDDLE</MenuItem>
+          <MenuItem value={2}>HIGH</MenuItem>
+          <MenuItem value={3}>URGENTLY</MenuItem>
+          <MenuItem value={4}>LATER</MenuItem>
+        </Select>
+      </div>
+      <div>
+        <Button onClick={() => setIsSend(true)}>UPDATE FIRST</Button>
+      </div>
+    </div>
   )
 }

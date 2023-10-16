@@ -1,6 +1,6 @@
 import { TaskT } from 'entities/task'
 import { todolist } from '../todolist'
-import { BaseResponseT, ItemsResponseT } from '../types/todolist'
+import { BaseResponseT, ItemsResponseT, TaskModelT } from '../types/todolist'
 
 export const tasksAPI = {
   getTasks(todolistId: string, count = 10, page = 1) {
@@ -13,8 +13,8 @@ export const tasksAPI = {
       title,
     })
   },
-  updateTaskTitle(todolistId: string, taskId: string, title: string) {
-    return todolist.put<BaseResponseT>(`todo-lists/${todolistId}/tasks/${taskId}`, { title })
+  updateTask(todolistId: string, taskId: string, model: TaskModelT) {
+    return todolist.put<BaseResponseT>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
   },
   deleteTask(todolistId: string, taskId: string) {
     return todolist.delete<BaseResponseT>(`todo-lists/${todolistId}/tasks/${taskId}`)
