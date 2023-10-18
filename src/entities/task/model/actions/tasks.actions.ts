@@ -1,4 +1,10 @@
-import { TaskStatus } from '../types/TasksSchema'
+import { TaskStatus, TaskT } from '../types/TasksSchema'
+
+export const SetTasks = (todolistId: string, tasks: TaskT[]) =>
+  ({
+    type: 'todolist/tasks/set',
+    payload: { todolistId, tasks },
+  }) as const
 
 export const AddTask = (todolistId: string, title: string) =>
   ({

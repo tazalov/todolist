@@ -12,6 +12,13 @@ export const tasksReducer = (state = tasksInitialState, action: TasksAT): TasksS
         return acc
       }, {})
     }
+    case 'todolist/tasks/set': {
+      const { todolistId, tasks } = action.payload
+      return {
+        ...state,
+        [todolistId]: tasks,
+      }
+    }
     case 'todolist/tasks/add': {
       const { todolistId, title } = action.payload
       const newTask: TaskT = {

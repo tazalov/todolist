@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from 'app/providers/store'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useEffect } from 'react'
 import {
   ChangeTitleTodolist,
   ChangeFilterTodolist,
@@ -8,11 +8,16 @@ import {
 } from '../../actions/todolist.actions'
 import { FilterT } from '../../types/TodolistsSchema'
 import { getSpecificTasks, AddTask, TaskStatus, Task } from 'entities/task'
+import { fetchTasksByTodolistId } from '../../../../task/model/services/fetchTasksByTodolistId'
 
 export const useTodolist = (todoListId: string, filter: FilterT) => {
   const tasks = useSelector(getSpecificTasks(todoListId))
 
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(fetchTasksByTodolistId(todoListId))
+  }, [])
 
   const remove = () => {
     dispatch(RemoveTodolist(todoListId))

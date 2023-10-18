@@ -1,11 +1,32 @@
 import { AddTodoList, RemoveTodolist } from 'entities/todolist'
-import { AddTask, ChangeStatusTask, ChangeTitleTask, RemoveTask } from '../actions/tasks.actions'
+import {
+  AddTask,
+  ChangeStatusTask,
+  ChangeTitleTask,
+  RemoveTask,
+  SetTasks,
+} from '../actions/tasks.actions'
 import { tasksReducer } from './tasks.reducer'
 import { TasksSchema, TaskStatus, TaskPriority } from '../types/TasksSchema'
 
-const date = new Date(2023, 0, 1, 0, 0, 0, 0)
-
 describe('tasks reducer', () => {
+  const date = new Date(2023, 0, 1, 0, 0, 0, 0)
+  const todoListId = 'todolistIdFromServer'
+  const tasks = [
+    {
+      id: 'asd',
+      title: 'TASK FROM SERVER',
+      status: TaskStatus.NEW,
+      startDate: date,
+      todoListId,
+      order: 0,
+      priority: TaskPriority.LOW,
+      description: '',
+      deadline: date,
+      addedDate: date,
+    },
+  ]
+
   let initialState: TasksSchema
   beforeEach(() => {
     initialState = {
@@ -50,6 +71,14 @@ describe('tasks reducer', () => {
         },
       ],
     }
+  })
+
+  it('correct task should be set', () => {
+    const action = SetTasks(todoListId, tasks)
+    const newState = tasksReducer(initialState, action)
+
+    expect(newState[todoListId].length).toBe(1)
+    expect(newState[todoListId]).toEqual(tasks)
   })
 
   it('correct task should be added to correct array', () => {
