@@ -20,3 +20,5 @@ export const tasksAPI = {
     return todolist.delete<BaseResponseT>(`todo-lists/${todolistId}/tasks/${taskId}`)
   },
 }
+
+export type TasksAPI = typeof tasksAPI

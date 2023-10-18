@@ -3,6 +3,8 @@ import { AddTask, ChangeStatusTask, ChangeTitleTask, RemoveTask } from '../actio
 import { tasksReducer } from './tasks.reducer'
 import { TasksSchema, TaskStatus, TaskPriority } from '../types/TasksSchema'
 
+const date = new Date(2023, 0, 1, 0, 0, 0, 0)
+
 describe('tasks reducer', () => {
   let initialState: TasksSchema
   beforeEach(() => {
@@ -12,13 +14,13 @@ describe('tasks reducer', () => {
           id: '1',
           title: 'CSS',
           status: TaskStatus.NEW,
-          startDate: new Date(2023, 0, 1, 0, 0, 0, 0),
+          startDate: date,
           todoListId: 'todolistId1',
           order: 0,
           priority: TaskPriority.LOW,
           description: '',
-          deadline: new Date(2023, 0, 1, 0, 0, 0, 0),
-          addedDate: new Date(2023, 0, 1, 0, 0, 0, 0),
+          deadline: date,
+          addedDate: date,
         },
       ],
       todolistId2: [
@@ -26,25 +28,25 @@ describe('tasks reducer', () => {
           id: '1',
           title: 'bread',
           status: TaskStatus.NEW,
-          startDate: new Date(2023, 0, 1, 0, 0, 0, 0),
+          startDate: date,
           todoListId: 'todolistId1',
           order: 0,
           priority: TaskPriority.LOW,
           description: '',
-          deadline: new Date(2023, 0, 1, 0, 0, 0, 0),
-          addedDate: new Date(2023, 0, 1, 0, 0, 0, 0),
+          deadline: date,
+          addedDate: date,
         },
         {
           id: '2',
           title: 'milk',
           status: TaskStatus.NEW,
-          startDate: new Date(2023, 0, 1, 0, 0, 0, 0),
+          startDate: date,
           todoListId: 'todolistId1',
           order: 0,
           priority: TaskPriority.LOW,
           description: '',
-          deadline: new Date(2023, 0, 1, 0, 0, 0, 0),
-          addedDate: new Date(2023, 0, 1, 0, 0, 0, 0),
+          deadline: date,
+          addedDate: date,
         },
       ],
     }
@@ -72,13 +74,13 @@ describe('tasks reducer', () => {
           id: '1',
           title: 'CSS',
           status: TaskStatus.NEW,
-          startDate: new Date(2023, 0, 1, 0, 0, 0, 0),
+          startDate: date,
           todoListId: 'todolistId1',
           order: 0,
           priority: TaskPriority.LOW,
           description: '',
-          deadline: new Date(2023, 0, 1, 0, 0, 0, 0),
-          addedDate: new Date(2023, 0, 1, 0, 0, 0, 0),
+          deadline: date,
+          addedDate: date,
         },
       ],
       todolistId2: [
@@ -86,13 +88,13 @@ describe('tasks reducer', () => {
           id: '1',
           title: 'bread',
           status: TaskStatus.NEW,
-          startDate: new Date(2023, 0, 1, 0, 0, 0, 0),
+          startDate: date,
           todoListId: 'todolistId1',
           order: 0,
           priority: TaskPriority.LOW,
           description: '',
-          deadline: new Date(2023, 0, 1, 0, 0, 0, 0),
-          addedDate: new Date(2023, 0, 1, 0, 0, 0, 0),
+          deadline: date,
+          addedDate: date,
         },
       ],
     })

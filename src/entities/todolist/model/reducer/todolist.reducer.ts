@@ -1,5 +1,5 @@
 import { TodoListAT } from '../types/TodolistsActions'
-import { UpdatedTodoListT, TodoListsSchema } from '../types/TodolistsSchema'
+import { UpdatedTodoListT, TodoListsSchema, FilterT } from '../types/TodolistsSchema'
 
 export const initialTodolistState: TodoListsSchema = []
 
@@ -8,6 +8,13 @@ export const todoListReducer = (
   action: TodoListAT,
 ): TodoListsSchema => {
   switch (action.type) {
+    case 'todolist/list/set': {
+      return action.payload.map(el => ({
+        ...el,
+        addedDate: new Date(el.addedDate),
+        filter: 'all' as FilterT,
+      }))
+    }
     case 'todolist/list/add': {
       const { newTodolistId, title } = action.payload
       const newTodoList: UpdatedTodoListT = {

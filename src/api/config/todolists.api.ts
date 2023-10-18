@@ -16,3 +16,5 @@ export const todolistAPI = {
     return todolist.post<BaseResponseT<{ item: TodoListT }>>(`todo-lists/`, { title })
   },
 }
+
+export type TodolistAPI = typeof todolistAPI

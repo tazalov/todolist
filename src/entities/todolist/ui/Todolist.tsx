@@ -13,6 +13,9 @@ const options: Intl.DateTimeFormatOptions = {
   weekday: 'long',
 }
 
+const styleClose = { position: 'absolute', right: '0', top: '0', display: 'inline-flex' }
+const styleTodolist = { p: 1.5, bgcolor: 'background.blocks', position: 'relative', boxShadow: 5 }
+
 interface TodolistPT {
   todolist: UpdatedTodoListT
 }
@@ -21,10 +24,6 @@ export const Todolist: FC<TodolistPT> = memo(({ todolist }) => {
   const { id, title, addedDate, filter } = todolist
 
   const { tasks, remove, changeTitle, changeFilter, addTask } = useTodolist(id, filter)
-
-  const styleClose = { position: 'absolute', right: '0', top: '0', display: 'inline-flex' }
-
-  const styleTodolist = { p: 1.5, bgcolor: 'background.blocks', position: 'relative', boxShadow: 5 }
 
   return (
     <Stack spacing={3} alignItems="center" sx={styleTodolist}>

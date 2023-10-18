@@ -4,20 +4,39 @@ import {
   ChangeFilterTodolist,
   ChangeTitleTodolist,
   RemoveTodolist,
+  SetTodoLists,
 } from '../actions/todolist.actions'
-import { TodoListsSchema } from '../types/TodolistsSchema'
+import { TodoListsSchema, TodoListT } from '../types/TodolistsSchema'
 import { todoListReducer } from './todolist.reducer'
 
 describe('todolist reducer', () => {
   const todoListId1 = v1()
   const todoListId2 = v1()
+
+  const date = new Date(2023, 0, 1, 0, 0, 0, 0)
+
   let initialState: TodoListsSchema = []
 
   beforeEach(() => {
     initialState = [
-      { id: todoListId1, title: 'What to learn', filter: 'all', order: 0, addedDate: new Date() },
-      { id: todoListId2, title: 'What to byu', filter: 'active', order: 0, addedDate: new Date() },
+      { id: todoListId1, title: 'What to learn', filter: 'all', order: 0, addedDate: date },
+      { id: todoListId2, title: 'What to byu', filter: 'active', order: 0, addedDate: date },
     ]
+  })
+
+  it('correct todolists should be set', () => {
+    const todoListsFromServer: TodoListT[] = [
+      { id: todoListId1, title: 'What to learn', order: 0, addedDate: date },
+      { id: todoListId2, title: 'What to byu', order: 0, addedDate: date },
+    ]
+    const action = SetTodoLists(todoListsFromServer)
+    const newState = todoListReducer([], action)
+
+    expect(newState.length).toBe(2)
+    expect(newState).toEqual([
+      { id: todoListId1, title: 'What to learn', filter: 'all', order: 0, addedDate: date },
+      { id: todoListId2, title: 'What to byu', filter: 'all', order: 0, addedDate: date },
+    ])
   })
 
   it('correct todolist should be added', () => {

@@ -6,6 +6,12 @@ export const tasksInitialState: TasksSchema = {}
 
 export const tasksReducer = (state = tasksInitialState, action: TasksAT): TasksSchema => {
   switch (action.type) {
+    case 'todolist/list/set': {
+      return action.payload.reduce((acc: TasksSchema, el) => {
+        acc[el.id] = []
+        return acc
+      }, {})
+    }
     case 'todolist/tasks/add': {
       const { todolistId, title } = action.payload
       const newTask: TaskT = {
