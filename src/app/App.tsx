@@ -1,10 +1,10 @@
 import { Container, Stack, styled, Box, Chip } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
-import { Header } from 'layout/header'
 import { useSelector } from 'react-redux'
 import { getTodolists, fetchTodoLists, Todolist, CreateTodolistForm } from 'entities/todolist'
 import { useAppDispatch } from './providers/store'
 import { useEffect } from 'react'
+import { Header } from 'widgets/Header'
 
 const hints = [
   { value: 'New', color: 'background.paper' },

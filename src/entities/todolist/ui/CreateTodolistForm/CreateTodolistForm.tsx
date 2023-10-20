@@ -1,10 +1,10 @@
-import { useCallback } from 'react'
+import { useCallback, memo } from 'react'
 import { Typography, Stack } from '@mui/material'
-import { AddItemForm } from 'components'
 import { useAppDispatch } from 'app/providers/store'
 import { createTodolist } from '../../model/services/createTodolist/createTodolist'
+import { AddItemForm } from 'shared/ui/AddItemForm/AddItemForm'
 
-export const CreateTodolistForm = () => {
+export const CreateTodolistForm = memo(() => {
   const dispatch = useAppDispatch()
 
   const handleCreateTodolist = useCallback((title: string) => {
@@ -17,4 +17,4 @@ export const CreateTodolistForm = () => {
       <AddItemForm addItem={handleCreateTodolist} />
     </Stack>
   )
-}
+})

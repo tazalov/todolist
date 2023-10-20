@@ -1,10 +1,11 @@
 import CloseIcon from '@mui/icons-material/Close'
 import { ButtonGroup, IconButton, List, Stack, Button, Typography } from '@mui/material'
-import { AddItemForm, EditableSpan } from 'components'
 import { FC, memo } from 'react'
 import { UpdatedTodoListT } from '../../model/types/TodolistsSchema'
 import { useTodolist } from '../../model/hooks/useTodolist/useTodolist'
-import { getStyleFilterButton } from 'utils/getStyles/getStyleFilterButton/getStyleFilterButton'
+import { getStyleFilterButton } from 'entities/todolist/model/utils/getStyleFilterButton'
+import { EditableSpan } from 'shared/ui/EditableSpan/EditableSpan'
+import { AddItemForm } from 'shared/ui/AddItemForm/AddItemForm'
 
 const options: Intl.DateTimeFormatOptions = {
   year: 'numeric',

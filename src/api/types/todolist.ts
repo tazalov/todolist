@@ -1,4 +1,4 @@
-import { TaskStatus, TaskPriority } from '../../entities/task'
+import { TaskStatus, TaskPriority } from 'entities/task'
 
 export type BaseResponseT<T = {}> = {
   resultCode: number

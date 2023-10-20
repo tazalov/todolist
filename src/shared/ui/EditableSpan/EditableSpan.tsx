@@ -1,9 +1,8 @@
 import { TextField, Tooltip, Typography, InputAdornment, IconButton } from '@mui/material'
 import ErrorIcon from '@mui/icons-material/Error'
 import SaveIcon from '@mui/icons-material/Save'
-import { FC, memo } from 'react'
+import { FC, memo, useState, ChangeEvent } from 'react'
 import { TypographyOwnProps } from '@mui/material/Typography/Typography'
-import { useEditableSpan } from '../../utils/hooks'
 
 const inheritStyleInput: any = {
   lineHeight: 'inherit',
@@ -19,8 +18,30 @@ interface EditableSpanPT extends TypographyOwnProps {
 }
 
 export const EditableSpan: FC<EditableSpanPT> = memo(({ title, changeTitle, ...rest }) => {
-  const { currentTitle, editMode, error, activateEditMode, handleChange, updateTitle } =
-    useEditableSpan(title, changeTitle)
+  const [editMode, setEditMode] = useState<boolean>(false)
+  const [currentTitle, setCurrentTitle] = useState<string>('')
+  const [error, setError] = useState<boolean>(false)
+
+  const activateEditMode = () => {
+    setEditMode(true)
+    setCurrentTitle(title)
+  }
+  const deactivateEditMode = () => setEditMode(false)
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setCurrentTitle(e.currentTarget.value)
+    setError(false)
+  }
+
+  const updateTitle = () => {
+    const newTitle = currentTitle.trim()
+    if (newTitle.length === 0) {
+      setError(true)
+    } else {
+      changeTitle(currentTitle)
+      deactivateEditMode()
+    }
+  }
 
   return (
     <Tooltip title="Double click for edit">

@@ -3,7 +3,7 @@ import { StoreProvider } from 'app/providers/store'
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import * as serviceWorker from './serviceWorker'
-import { ThemeContext } from 'styles/ThemeContext'
+import { ThemeContext } from 'app/styles/ThemeContext'
 
 const container = document.getElementById('root')
 const root = createRoot(container!)

@@ -1,27 +1,11 @@
 import { Checkbox, ListItem } from '@mui/material'
 import { FC, memo } from 'react'
-import { EditableSpan } from 'components'
 import { TaskT, TaskStatus } from '../model/types/TasksSchema'
-import { TodoMenu } from './todo-menu/TodoMenu'
-import { tasksPriority } from '../model/const/styles/tasksPriority'
+import { TodoMenu } from './TodoMenu/TodoMenu'
+import { tasksPriority } from '../model/const/tasksPriority'
 import { useTask } from '../model/hooks/useTask/useTask'
-
-const getBgcForStatus = (status: TaskStatus) => {
-  switch (status) {
-    case TaskStatus.COMPLETED: {
-      return 'completed.main'
-    }
-    case TaskStatus.IN_PROGRESS: {
-      return 'inProgress.main'
-    }
-    case TaskStatus.DRAFT: {
-      return 'draft.main'
-    }
-    default: {
-      return 'transparent'
-    }
-  }
-}
+import { EditableSpan } from 'shared/ui/EditableSpan/EditableSpan'
+import { getBgForStatus } from '../model/utils/getBgForStatus'
 
 interface TodoPT {
   todoListId: string
@@ -35,7 +19,7 @@ export const Task: FC<TodoPT> = memo(({ todoListId, task }) => {
 
   const styleItem = {
     opacity: task.status === TaskStatus.DRAFT ? 0.5 : 1,
-    backgroundColor: getBgcForStatus(task.status),
+    backgroundColor: getBgForStatus(task.status),
     borderColor: `${tasksPriority[priority]}.main`,
     borderStyle: 'solid',
     borderWidth: '0 0 0 5px',

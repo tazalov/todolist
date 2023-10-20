@@ -1,4 +1,4 @@
-import { TaskPriority } from '../../types/TasksSchema'
+import { TaskPriority } from '../types/TasksSchema'
 
 export const tasksPriority = {
   [TaskPriority.LOW]: 'LOW',

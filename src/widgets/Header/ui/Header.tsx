@@ -3,7 +3,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import NightsStayIcon from '@mui/icons-material/NightsStay'
 import { AppBar, Button, IconButton, Toolbar, Typography, useTheme } from '@mui/material'
 import { FC, useContext } from 'react'
-import { ColorModeContext } from '../../styles/ThemeContext'
+import { ColorModeContext } from '../../../app/styles/ThemeContext'
 
 type HeaderPT = {
   // add props type

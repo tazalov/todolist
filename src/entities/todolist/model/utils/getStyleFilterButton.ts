@@ -1,4 +1,4 @@
-import { FilterT } from '../../../entities/todolist'
+import { FilterT } from '../types/TodolistsSchema'
 
 export const getStyleFilterButton = (currentFilter: FilterT, targetFilter: FilterT) => {
   return {

@@ -2,16 +2,16 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import ReadMoreIcon from '@mui/icons-material/ReadMore'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material'
-import { FC, MouseEvent, useState } from 'react'
-import { EditMenu } from '../edit-menu/EditMenu'
+import { FC, MouseEvent, useState, memo } from 'react'
+import { EditMenu } from '../EditMenu/EditMenu'
 import { TaskT } from '../../model/types/TasksSchema'
 
-type TodoMenuPT = {
+interface TodoMenuPT {
   task: TaskT
   remove: () => void
 }
 
-export const TodoMenu: FC<TodoMenuPT> = ({ task, remove }) => {
+export const TodoMenu: FC<TodoMenuPT> = memo(({ task, remove }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
 
@@ -40,14 +40,8 @@ export const TodoMenu: FC<TodoMenuPT> = ({ task, remove }) => {
   }
 
   return (
-    <div>
-      <IconButton
-        id="long-button"
-        aria-controls={open ? 'long-menu' : undefined}
-        aria-expanded={open ? 'true' : undefined}
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
+    <>
+      <IconButton onClick={handleClick}>
         <MoreVertIcon />
       </IconButton>
       <Menu id="long-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
@@ -65,6 +59,6 @@ export const TodoMenu: FC<TodoMenuPT> = ({ task, remove }) => {
         </MenuItem>
       </Menu>
       <EditMenu task={task} open={openEditMenu} onClose={handleCloseEditMenu} />
-    </div>
+    </>
   )
-}
+})
