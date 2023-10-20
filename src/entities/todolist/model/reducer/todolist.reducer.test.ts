@@ -45,9 +45,9 @@ describe('todolist reducer', () => {
     const newState = todoListReducer(initialState, action)
 
     expect(newState.length).toBe(3)
-    expect(newState[newState.length - 1].id).toBeDefined()
-    expect(newState[newState.length - 1].title).toBe('new title todolist')
-    expect(newState[newState.length - 1].filter).toBe('all')
+    expect(newState[0].id).toBe(todoListId1)
+    expect(newState[0].title).toBe('new title todolist')
+    expect(newState[0].filter).toBe('all')
   })
 
   it('correct todolist should be removed', () => {

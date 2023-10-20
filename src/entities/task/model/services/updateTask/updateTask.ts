@@ -1,5 +1,5 @@
 import { TaskModel } from '../../types/TasksSchema'
-import { AppThunk } from 'app/providers/store/config/store'
+import { AppThunk } from 'app/providers/store'
 import { getSpecificTask } from '../../selectors/tasks'
 import { ChangeTask } from '../../actions/tasks.actions'
 

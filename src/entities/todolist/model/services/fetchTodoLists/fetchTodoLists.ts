@@ -1,5 +1,5 @@
 import { SetTodoLists } from '../../actions/todolist.actions'
-import { AppThunk } from 'app/providers/store/config/store'
+import { AppThunk } from 'app/providers/store'
 
 export const fetchTodoLists = (): AppThunk => async (dispatch, _, extra) => {
   const { todolistAPI } = extra

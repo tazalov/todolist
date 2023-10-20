@@ -4,7 +4,7 @@ import { AddItemForm, EditableSpan } from 'components'
 import { FC, memo } from 'react'
 import { UpdatedTodoListT } from '../../model/types/TodolistsSchema'
 import { useTodolist } from '../../model/hooks/useTodolist/useTodolist'
-import { getStyleFilterButton } from '../../../../utils/getStyles/getStyleFilterButton/getStyleFilterButton'
+import { getStyleFilterButton } from 'utils/getStyles/getStyleFilterButton/getStyleFilterButton'
 
 const options: Intl.DateTimeFormatOptions = {
   year: 'numeric',

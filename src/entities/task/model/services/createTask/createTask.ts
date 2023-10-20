@@ -1,4 +1,4 @@
-import { AppThunk } from 'app/providers/store/config/store'
+import { AppThunk } from 'app/providers/store'
 import { AddTask } from '../../actions/tasks.actions'
 
 export const createTask =

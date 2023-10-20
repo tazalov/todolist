@@ -1,10 +1,8 @@
 import { StoryFn } from '@storybook/react'
-import { Provider } from 'react-redux'
-import { legacy_createStore } from 'redux'
-import { rootReducer } from 'app/providers/store/config/store'
 import { TaskStatus, TaskPriority } from 'entities/task'
+import { StateSchema, StoreProvider } from 'app/providers/store'
 
-const store = legacy_createStore(rootReducer, {
+const state: StateSchema = {
   todoList: [
     { id: '1', filter: 'all', title: 'new todolist1', order: 0, addedDate: new Date() },
     { id: '2', filter: 'all', title: 'new todolist2', order: 0, addedDate: new Date() },
@@ -63,10 +61,10 @@ const store = legacy_createStore(rootReducer, {
       },
     ],
   },
-})
+}
 
 export const StoreDecorator = (Story: StoryFn) => (
-  <Provider store={store}>
+  <StoreProvider initialState={state}>
     <Story />
-  </Provider>
+  </StoreProvider>
 )
