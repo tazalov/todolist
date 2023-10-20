@@ -1,4 +1,3 @@
-import { v1 } from 'uuid'
 import { FilterT, TodoListT } from '../types/TodolistsSchema'
 
 export const SetTodoLists = (todolists: TodoListT[]) =>
@@ -7,10 +6,10 @@ export const SetTodoLists = (todolists: TodoListT[]) =>
     payload: todolists,
   }) as const
 
-export const AddTodoList = (title: string) =>
+export const AddTodoList = (todolist: TodoListT) =>
   ({
     type: 'todolist/list/add',
-    payload: { newTodolistId: v1(), title },
+    payload: { todolist },
   }) as const
 
 export const RemoveTodolist = (todoListId: string) =>

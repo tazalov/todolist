@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { Todolist } from './Todolist'
 import { useSelector } from 'react-redux'
-import { getTodolists } from '../model/selectors/todolists'
-import { useAppDispatch } from '../../../app/providers/store'
-import { AddTodoList } from '../model/actions/todolist.actions'
+import { getTodolists } from '../../model/selectors/todolists'
+import { useAppDispatch } from '../../../../app/providers/store'
+import { AddTodoList } from '../../model/actions/todolist.actions'
 import { useLayoutEffect } from 'react'
 
 const meta: Meta<typeof Todolist> = {
@@ -31,7 +31,14 @@ const TodolistRedux = () => {
 
   useLayoutEffect(() => {
     if (!todoLists.length) {
-      dispatch(AddTodoList('new todolist'))
+      dispatch(
+        AddTodoList({
+          id: 'asd',
+          title: 'new title todolist',
+          order: 0,
+          addedDate: new Date(2023, 0, 1, 0, 0, 0, 0),
+        }),
+      )
     }
   })
 

@@ -182,7 +182,7 @@ describe('tasks reducer', () => {
   })
 
   it('new array should be added when new todolist is added', () => {
-    const action = AddTodoList('new todolist')
+    const action = AddTodoList({ id: 'some_id', title: 'new title todolist', order: 0, addedDate: date })
 
     const newState = tasksReducer(initialState, action)
 

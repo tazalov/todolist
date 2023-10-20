@@ -2,9 +2,9 @@ import CloseIcon from '@mui/icons-material/Close'
 import { ButtonGroup, IconButton, List, Stack, Button, Typography } from '@mui/material'
 import { AddItemForm, EditableSpan } from 'components'
 import { FC, memo } from 'react'
-import { UpdatedTodoListT } from '../model/types/TodolistsSchema'
-import { useTodolist } from '../model/hooks/useTodolist/useTodolist'
-import { getStyleFilterButton } from '../../../utils/getStyles/getStyleFilterButton/getStyleFilterButton'
+import { UpdatedTodoListT } from '../../model/types/TodolistsSchema'
+import { useTodolist } from '../../model/hooks/useTodolist/useTodolist'
+import { getStyleFilterButton } from '../../../../utils/getStyles/getStyleFilterButton/getStyleFilterButton'
 
 const options: Intl.DateTimeFormatOptions = {
   year: 'numeric',
@@ -32,7 +32,9 @@ export const Todolist: FC<TodolistPT> = memo(({ todolist }) => {
       </IconButton>
       <EditableSpan variant="h4" title={title} textAlign={'center'} changeTitle={changeTitle} />
       <AddItemForm addItem={addTask} />
-      <List sx={{ width: '100%' }}>{tasks.length ? tasks : 'Not found'}</List>
+      <List sx={{ width: '100%' }}>
+        {tasks.length ? tasks : <Typography align={'center'}>Not found</Typography>}
+      </List>
       <ButtonGroup size="small" variant="contained" disableElevation>
         <Button sx={getStyleFilterButton(filter, 'all')} onClick={changeFilter('all')}>
           ALL

@@ -40,13 +40,13 @@ describe('todolist reducer', () => {
   })
 
   it('correct todolist should be added', () => {
-    const title = 'new title todolist'
-    const action = AddTodoList(title)
+    const todolistFromServer = { id: todoListId1, title: 'new title todolist', order: 0, addedDate: date }
+    const action = AddTodoList(todolistFromServer)
     const newState = todoListReducer(initialState, action)
 
     expect(newState.length).toBe(3)
     expect(newState[newState.length - 1].id).toBeDefined()
-    expect(newState[newState.length - 1].title).toBe(title)
+    expect(newState[newState.length - 1].title).toBe('new title todolist')
     expect(newState[newState.length - 1].filter).toBe('all')
   })
 
