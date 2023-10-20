@@ -7,8 +7,13 @@ import {
   RemoveTodolist,
 } from '../../actions/todolist.actions'
 import { FilterT } from '../../types/TodolistsSchema'
-import { getSpecificTasks, AddTask, TaskStatus, Task } from 'entities/task'
-import { fetchTasksByTodolistId } from '../../../../task/model/services/fetchTasksByTodolistId'
+import {
+  getSpecificTasks,
+  TaskStatus,
+  Task,
+  fetchTasksByTodolistId,
+  createTask,
+} from 'entities/task'
 
 export const useTodolist = (todoListId: string, filter: FilterT) => {
   const tasks = useSelector(getSpecificTasks(todoListId))
@@ -38,7 +43,7 @@ export const useTodolist = (todoListId: string, filter: FilterT) => {
 
   const addTask = useCallback(
     (title: string) => {
-      dispatch(AddTask(todoListId, title))
+      dispatch(createTask(todoListId, title))
     },
     [todoListId, dispatch],
   )

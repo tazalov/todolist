@@ -82,15 +82,34 @@ describe('tasks reducer', () => {
   })
 
   it('correct task should be added to correct array', () => {
-    const title = 'new task'
-    const action = AddTask('todolistId1', title)
+    const action = AddTask({
+      id: 'asd',
+      title: 'TASK FROM SERVER',
+      status: TaskStatus.NEW,
+      startDate: date,
+      todoListId: 'todolistId1',
+      order: 0,
+      priority: TaskPriority.LOW,
+      description: '',
+      deadline: date,
+      addedDate: date,
+    })
     const newState = tasksReducer(initialState, action)
 
     expect(newState['todolistId2'].length).toBe(2)
     expect(newState['todolistId1'].length).toBe(2)
-    expect(newState['todolistId1'][0].id).toBeDefined()
-    expect(newState['todolistId1'][0].title).toBe(title)
-    expect(newState['todolistId1'][0].status).toBe(TaskStatus.NEW)
+    expect(newState['todolistId1'][0]).toEqual({
+      id: 'asd',
+      title: 'TASK FROM SERVER',
+      status: TaskStatus.NEW,
+      startDate: date,
+      todoListId: 'todolistId1',
+      order: 0,
+      priority: TaskPriority.LOW,
+      description: '',
+      deadline: date,
+      addedDate: date,
+    })
   })
 
   it('should remove task', () => {

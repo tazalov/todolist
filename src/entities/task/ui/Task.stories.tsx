@@ -35,7 +35,20 @@ const TaskRedux = () => {
 
   useLayoutEffect(() => {
     if (!tasks.length) {
-      dispatch(AddTask('1', 'new task1'))
+      dispatch(
+        AddTask({
+          id: '1',
+          title: 'bread',
+          status: TaskStatus.NEW,
+          startDate: new Date(),
+          todoListId: '1',
+          order: 0,
+          priority: TaskPriority.LOW,
+          description: '',
+          deadline: new Date(),
+          addedDate: new Date(),
+        }),
+      )
     }
   })
 

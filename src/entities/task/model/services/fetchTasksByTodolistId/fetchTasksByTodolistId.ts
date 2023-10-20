@@ -1,5 +1,5 @@
 import { AppThunk } from 'app/providers/store/config/store'
-import { SetTasks } from '../actions/tasks.actions'
+import { SetTasks } from '../../actions/tasks.actions'
 
 export const fetchTasksByTodolistId =
   (todoListId: string): AppThunk =>

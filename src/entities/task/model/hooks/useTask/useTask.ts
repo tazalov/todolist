@@ -1,13 +1,14 @@
 import { useAppDispatch } from 'app/providers/store'
-import { RemoveTask, ChangeStatusTask, ChangeTitleTask } from '../../actions/tasks.actions'
+import { ChangeStatusTask, ChangeTitleTask } from '../../actions/tasks.actions'
 import { ChangeEvent, useCallback } from 'react'
 import { TaskStatus } from '../../types/TasksSchema'
+import { deleteTask } from '../../services/deleteTask/deleteTask'
 
 export const useTask = (todoListId: string, taskId: string) => {
   const dispatch = useAppDispatch()
 
   const remove = () => {
-    dispatch(RemoveTask(todoListId, taskId))
+    dispatch(deleteTask(todoListId, taskId))
   }
 
   const handleChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {

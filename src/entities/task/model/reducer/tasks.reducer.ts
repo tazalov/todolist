@@ -1,6 +1,5 @@
-import { v1 } from 'uuid'
 import { TasksAT } from '../types/TasksActions'
-import { TasksSchema, TaskT, TaskPriority, TaskStatus } from '../types/TasksSchema'
+import { TasksSchema } from '../types/TasksSchema'
 
 export const tasksInitialState: TasksSchema = {}
 
@@ -20,20 +19,8 @@ export const tasksReducer = (state = tasksInitialState, action: TasksAT): TasksS
       }
     }
     case 'todolist/tasks/add': {
-      const { todolistId, title } = action.payload
-      const newTask: TaskT = {
-        id: v1(),
-        title,
-        addedDate: new Date(),
-        deadline: new Date(),
-        description: '',
-        order: 0,
-        priority: TaskPriority.LOW,
-        status: TaskStatus.NEW,
-        startDate: new Date(),
-        todoListId: todolistId,
-      }
-      return { ...state, [todolistId]: [newTask, ...state[todolistId]] }
+      const { task } = action.payload
+      return { ...state, [task.todoListId]: [task, ...state[task.todoListId]] }
     }
     case 'todolist/tasks/remove': {
       const { todolistId, taskId } = action.payload

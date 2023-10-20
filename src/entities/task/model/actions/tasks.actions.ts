@@ -6,10 +6,10 @@ export const SetTasks = (todolistId: string, tasks: TaskT[]) =>
     payload: { todolistId, tasks },
   }) as const
 
-export const AddTask = (todolistId: string, title: string) =>
+export const AddTask = (task: TaskT) =>
   ({
     type: 'todolist/tasks/add',
-    payload: { todolistId, title },
+    payload: { task },
   }) as const
 
 export const RemoveTask = (todolistId: string, taskId: string) =>
