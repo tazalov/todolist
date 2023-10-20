@@ -1,17 +1,17 @@
 import DeleteIcon from '@mui/icons-material/Delete'
-import EditIcon from '@mui/icons-material/Edit'
+import ReadMoreIcon from '@mui/icons-material/ReadMore'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material'
 import { FC, MouseEvent, useState } from 'react'
 import { EditMenu } from '../edit-menu/EditMenu'
+import { TaskT } from '../../model/types/TasksSchema'
 
 type TodoMenuPT = {
-  edit?: () => {}
+  task: TaskT
   remove: () => void
-  priority?: () => {}
 }
 
-export const TodoMenu: FC<TodoMenuPT> = ({ edit, remove, priority }) => {
+export const TodoMenu: FC<TodoMenuPT> = ({ task, remove }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
 
@@ -53,9 +53,9 @@ export const TodoMenu: FC<TodoMenuPT> = ({ edit, remove, priority }) => {
       <Menu id="long-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
         <MenuItem onClick={handleOpenEditMenu} disableRipple color="default">
           <ListItemIcon>
-            <EditIcon fontSize={'small'} />
+            <ReadMoreIcon fontSize={'small'} />
           </ListItemIcon>
-          Edit
+          Show more
         </MenuItem>
         <MenuItem onClick={handleDelete} disableRipple color="default">
           <ListItemIcon>
@@ -64,7 +64,7 @@ export const TodoMenu: FC<TodoMenuPT> = ({ edit, remove, priority }) => {
           Remove
         </MenuItem>
       </Menu>
-      <EditMenu open={openEditMenu} onClose={handleCloseEditMenu} />
+      <EditMenu task={task} open={openEditMenu} onClose={handleCloseEditMenu} />
     </div>
   )
 }

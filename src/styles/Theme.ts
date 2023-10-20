@@ -19,6 +19,15 @@ export const theme = {
   success: {
     main: '#309054',
   },
+  inProgress: {
+    main: 'rgba(48,144,84,0.5)',
+  },
+  completed: {
+    main: 'rgba(224,84,184,0.3)',
+  },
+  draft: {
+    main: 'rgba(128,128,128,0.3)',
+  },
   background: {
     paper: '#F5F8FF',
     default: '#eefffe',
@@ -61,6 +70,15 @@ export const darkTheme = {
   },
   success: {
     main: '#44CC77',
+  },
+  inProgress: {
+    main: 'rgba(68,204,119,0.5)',
+  },
+  completed: {
+    main: 'rgba(255,116,217,0.3)',
+  },
+  draft: {
+    main: 'rgba(128,128,128,0.3)',
   },
   background: {
     paper: '#2c3f50',

@@ -1,38 +1,126 @@
 import SaveIcon from '@mui/icons-material/Save'
-import { Button, Dialog, DialogTitle, List, ListItem, TextField } from '@mui/material'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import dayjs, { Dayjs } from 'dayjs'
-import { FC, useState } from 'react'
+import EditIcon from '@mui/icons-material/Edit'
+import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault'
+import {
+  Button,
+  Dialog,
+  DialogTitle,
+  List,
+  ListItem,
+  TextField,
+  SelectChangeEvent,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+} from '@mui/material'
+import React, { FC, useState, ChangeEvent, useEffect } from 'react'
+import { TaskT, TaskStatus, TaskPriority } from '../../model/types/TasksSchema'
+import { useAppDispatch } from 'app/providers/store'
+import { updateTask } from '../../model/services/updateTask/updateTask'
+import { tasksPriority } from '../../model/const/styles/tasksPriority'
 
-const today = dayjs()
+const editMenuPriorityItems = [
+  { name: 'Low', value: 0, bgc: TaskPriority.LOW },
+  { name: 'Middle', value: 1, bgc: TaskPriority.MIDDLE },
+  { name: 'High', value: 2, bgc: TaskPriority.HIGH },
+  { name: 'Urgently', value: 3, bgc: TaskPriority.URGENTLY },
+  { name: 'Later', value: 4, bgc: TaskPriority.LATER },
+]
 
 export interface EditMenuPT {
+  task: TaskT
   open: boolean
   onClose: () => void
 }
 
-export const EditMenu: FC<EditMenuPT> = ({ onClose, open }) => {
-  const [startDate, setStartDate] = useState<Dayjs | null>(today)
-  const [deadLine, setDeadLine] = useState<Dayjs | null>(today)
+export const EditMenu: FC<EditMenuPT> = ({ task, onClose, open }) => {
+  const [editMode, setEditMode] = useState(false)
 
-  const handlerStartDate = (date: Dayjs | null) => setStartDate(date)
-  const handlerDeadLine = (date: Dayjs | null) => setDeadLine(date)
+  const [title, setTitle] = useState(task.title)
+  const [description, setDescription] = useState(task.description || '')
+  const [status, setStatus] = useState<TaskStatus>(task.status)
+  const [priority, setPriority] = useState<TaskPriority>(task.priority)
 
-  const shouldDisableDate = (date: Dayjs) => {
-    if (startDate) {
-      return date && date.isBefore(startDate, 'day')
+  useEffect(() => {
+    setTitle(task.title)
+  }, [task])
+
+  const dispatch = useAppDispatch()
+
+  const activateEditMode = () => setEditMode(true)
+
+  const handleChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.currentTarget.value)
+  }
+
+  const handleChangeDescription = (e: ChangeEvent<HTMLInputElement>) => {
+    setDescription(e.currentTarget.value)
+  }
+
+  const handleChangeStatus = (e: SelectChangeEvent) => {
+    setStatus(+e.target.value)
+  }
+
+  const handleChangePriority = (e: SelectChangeEvent) => {
+    setPriority(+e.target.value)
+  }
+
+  const handleSaveChanges = () => {
+    const model = {
+      title,
+      description,
+      status,
+      priority,
     }
-    return false
+    dispatch(updateTask(task.todoListId, task.id, model))
+    setEditMode(false)
+  }
+
+  const handleCancelChanges = () => {
+    setTitle(task.title)
+    setDescription(task.description)
+    setStatus(task.status)
+    setPriority(task.priority)
+    setEditMode(false)
   }
 
   return (
-    <Dialog onClose={onClose} open={open}>
+    <Dialog onClose={onClose} open={open} sx={{ minWidth: 300 }}>
       <DialogTitle>Set new data for task</DialogTitle>
       <List sx={{ pt: 0 }}>
+        <ListItem sx={{ gap: 1 }}>
+          {!editMode && (
+            <Button variant="outlined" color={'success'} onClick={activateEditMode} startIcon={<EditIcon />}>
+              Edit
+            </Button>
+          )}
+          {editMode && (
+            <>
+              <Button variant="outlined" color={'info'} onClick={handleSaveChanges} startIcon={<SaveIcon />}>
+                Save
+              </Button>
+              <Button
+                variant="outlined"
+                color={'error'}
+                onClick={handleCancelChanges}
+                startIcon={<DisabledByDefaultIcon />}
+              >
+                Cancel
+              </Button>
+            </>
+          )}
+        </ListItem>
         <ListItem>
-          <TextField label={'New title'} variant="outlined" size="medium" fullWidth />
+          <TextField
+            label={'New title'}
+            variant="outlined"
+            size="medium"
+            fullWidth
+            value={title}
+            onChange={handleChangeTitle}
+            disabled={!editMode}
+          />
         </ListItem>
         <ListItem>
           <TextField
@@ -42,23 +130,53 @@ export const EditMenu: FC<EditMenuPT> = ({ onClose, open }) => {
             multiline
             maxRows={4}
             fullWidth
+            value={description}
+            onChange={handleChangeDescription}
+            disabled={!editMode}
           />
         </ListItem>
-        <ListItem sx={{ gap: '10px' }}>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker label="Set start date" value={startDate} onChange={handlerStartDate} />
-            <DatePicker
-              label="Set deadline"
-              value={deadLine}
-              onChange={handlerDeadLine}
-              shouldDisableDate={shouldDisableDate}
-            />
-          </LocalizationProvider>
+        <ListItem>
+          <FormControl fullWidth>
+            <InputLabel id="edit-menu-status-select">Status</InputLabel>
+            <Select
+              value={status + ''}
+              label="Status"
+              onChange={handleChangeStatus}
+              disabled={!editMode}
+              fullWidth
+            >
+              <MenuItem value={0}>New</MenuItem>
+              <MenuItem value={1}>In progress</MenuItem>
+              <MenuItem value={2}>Completed</MenuItem>
+              <MenuItem value={3}>Draft</MenuItem>
+            </Select>
+          </FormControl>
         </ListItem>
         <ListItem>
-          <Button startIcon={<SaveIcon />} onClick={onClose} variant="contained">
-            Save
-          </Button>
+          <FormControl fullWidth>
+            <InputLabel id="edit-menu-priority-select">Priority</InputLabel>
+            <Select
+              value={priority + ''}
+              labelId="edit-menu-priority-select"
+              label="Priority"
+              onChange={handleChangePriority}
+              disabled={!editMode}
+            >
+              {editMenuPriorityItems.map((el, i) => (
+                <MenuItem
+                  key={i}
+                  value={el.value}
+                  sx={{
+                    borderColor: `${tasksPriority[el.bgc]}.main`,
+                    borderWidth: '0 0 0 5px',
+                    borderStyle: 'solid',
+                  }}
+                >
+                  {el.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </ListItem>
       </List>
     </Dialog>
