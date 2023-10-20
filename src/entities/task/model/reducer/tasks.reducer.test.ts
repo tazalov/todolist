@@ -1,32 +1,10 @@
 import { AddTodoList, RemoveTodolist } from 'entities/todolist'
-import {
-  AddTask,
-  ChangeStatusTask,
-  ChangeTitleTask,
-  RemoveTask,
-  SetTasks,
-} from '../actions/tasks.actions'
+import { AddTask, RemoveTask, SetTasks, ChangeTask } from '../actions/tasks.actions'
 import { tasksReducer } from './tasks.reducer'
 import { TasksSchema, TaskStatus, TaskPriority } from '../types/TasksSchema'
 
 describe('tasks reducer', () => {
   const date = new Date(2023, 0, 1, 0, 0, 0, 0)
-  const todoListId = 'todolistIdFromServer'
-  const tasks = [
-    {
-      id: 'asd',
-      title: 'TASK FROM SERVER',
-      status: TaskStatus.NEW,
-      startDate: date,
-      todoListId,
-      order: 0,
-      priority: TaskPriority.LOW,
-      description: '',
-      deadline: date,
-      addedDate: date,
-    },
-  ]
-
   let initialState: TasksSchema
   beforeEach(() => {
     initialState = {
@@ -50,7 +28,7 @@ describe('tasks reducer', () => {
           title: 'bread',
           status: TaskStatus.NEW,
           startDate: date,
-          todoListId: 'todolistId1',
+          todoListId: 'todolistId2',
           order: 0,
           priority: TaskPriority.LOW,
           description: '',
@@ -62,7 +40,7 @@ describe('tasks reducer', () => {
           title: 'milk',
           status: TaskStatus.NEW,
           startDate: date,
-          todoListId: 'todolistId1',
+          todoListId: 'todolistId2',
           order: 0,
           priority: TaskPriority.LOW,
           description: '',
@@ -74,6 +52,21 @@ describe('tasks reducer', () => {
   })
 
   it('correct task should be set', () => {
+    const todoListId = 'todolistIdFromServer'
+    const tasks = [
+      {
+        id: 'asd',
+        title: 'TASK FROM SERVER',
+        status: TaskStatus.NEW,
+        startDate: date,
+        todoListId,
+        order: 0,
+        priority: TaskPriority.LOW,
+        description: '',
+        deadline: date,
+        addedDate: date,
+      },
+    ]
     const action = SetTasks(todoListId, tasks)
     const newState = tasksReducer(initialState, action)
 
@@ -137,7 +130,7 @@ describe('tasks reducer', () => {
           title: 'bread',
           status: TaskStatus.NEW,
           startDate: date,
-          todoListId: 'todolistId1',
+          todoListId: 'todolistId2',
           order: 0,
           priority: TaskPriority.LOW,
           description: '',
@@ -149,7 +142,19 @@ describe('tasks reducer', () => {
   })
 
   it('status of specified task should be changed', () => {
-    const action = ChangeStatusTask('todolistId2', '1', TaskStatus.COMPLETED)
+    const updatedTask = {
+      id: '1',
+      title: 'bread',
+      status: TaskStatus.COMPLETED,
+      startDate: date,
+      todoListId: 'todolistId2',
+      order: 0,
+      priority: TaskPriority.LOW,
+      description: '',
+      deadline: date,
+      addedDate: date,
+    }
+    const action = ChangeTask('1', updatedTask)
     const newState = tasksReducer(initialState, action)
 
     expect(newState['todolistId1'][0].status).toBe(TaskStatus.NEW)
@@ -157,12 +162,23 @@ describe('tasks reducer', () => {
   })
 
   it('title of specified task should be changed', () => {
-    const title = 'new title task'
-    const action = ChangeTitleTask('todolistId2', '1', title)
+    const updatedTask = {
+      id: '1',
+      title: 'new title task',
+      status: TaskStatus.COMPLETED,
+      startDate: date,
+      todoListId: 'todolistId2',
+      order: 0,
+      priority: TaskPriority.LOW,
+      description: '',
+      deadline: date,
+      addedDate: date,
+    }
+    const action = ChangeTask('1', updatedTask)
     const newState = tasksReducer(initialState, action)
 
     expect(newState['todolistId1'][0].title).toBe('CSS')
-    expect(newState['todolistId2'][0].title).toBe(title)
+    expect(newState['todolistId2'][0].title).toBe('new title task')
   })
 
   it('new array should be added when new todolist is added', () => {

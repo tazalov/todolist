@@ -13,7 +13,7 @@ export type ItemsResponseT<T = {}> = {
   error: string
 }
 
-export interface TaskModelT {
+export interface TaskModelAPI {
   description: string
   title: string
   status: TaskStatus

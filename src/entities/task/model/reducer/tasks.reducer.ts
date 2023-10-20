@@ -29,18 +29,11 @@ export const tasksReducer = (state = tasksInitialState, action: TasksAT): TasksS
         [todolistId]: state[todolistId].filter(el => el.id !== taskId),
       }
     }
-    case 'todolist/tasks/changeStatus': {
-      const { todolistId, taskId, status } = action.payload
+    case 'todolist/tasks/change': {
+      const { taskId, task } = action.payload
       return {
         ...state,
-        [todolistId]: state[todolistId].map(el => (el.id === taskId ? { ...el, status } : el)),
-      }
-    }
-    case 'todolist/tasks/changeTitle': {
-      const { todolistId, taskId, title } = action.payload
-      return {
-        ...state,
-        [todolistId]: state[todolistId].map(el => (el.id === taskId ? { ...el, title } : el)),
+        [task.todoListId]: state[task.todoListId].map(el => (el.id === taskId ? { ...el, ...task } : el)),
       }
     }
     case 'todolist/list/add': {

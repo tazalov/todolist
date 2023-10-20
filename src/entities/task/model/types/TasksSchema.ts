@@ -29,3 +29,12 @@ export enum TaskPriority {
   URGENTLY = 3,
   LATER = 4,
 }
+
+export interface TaskModel {
+  description?: string
+  title?: string
+  status?: TaskStatus
+  priority?: TaskPriority
+  startDate?: Date
+  deadline?: Date
+}

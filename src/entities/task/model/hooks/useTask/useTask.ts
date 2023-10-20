@@ -1,8 +1,8 @@
 import { useAppDispatch } from 'app/providers/store'
-import { ChangeStatusTask, ChangeTitleTask } from '../../actions/tasks.actions'
 import { ChangeEvent, useCallback } from 'react'
 import { TaskStatus } from '../../types/TasksSchema'
 import { deleteTask } from '../../services/deleteTask/deleteTask'
+import { updateTask } from '../../services/updateTask/updateTask'
 
 export const useTask = (todoListId: string, taskId: string) => {
   const dispatch = useAppDispatch()
@@ -12,18 +12,18 @@ export const useTask = (todoListId: string, taskId: string) => {
   }
 
   const handleChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(
-      ChangeStatusTask(
-        todoListId,
-        taskId,
-        e.currentTarget.checked ? TaskStatus.COMPLETED : TaskStatus.NEW,
-      ),
-    )
+    const model = {
+      status: e.currentTarget.checked ? TaskStatus.COMPLETED : TaskStatus.NEW,
+    }
+    dispatch(updateTask(todoListId, taskId, model))
   }
 
   const changeTitle = useCallback(
     (newTitle: string) => {
-      dispatch(ChangeTitleTask(todoListId, taskId, newTitle))
+      const model = {
+        title: newTitle,
+      }
+      dispatch(updateTask(todoListId, taskId, model))
     },
     [dispatch, todoListId, taskId],
   )

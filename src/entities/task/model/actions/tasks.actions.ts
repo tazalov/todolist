@@ -1,4 +1,4 @@
-import { TaskStatus, TaskT } from '../types/TasksSchema'
+import { TaskT } from '../types/TasksSchema'
 
 export const SetTasks = (todolistId: string, tasks: TaskT[]) =>
   ({
@@ -18,14 +18,8 @@ export const RemoveTask = (todolistId: string, taskId: string) =>
     payload: { todolistId, taskId },
   }) as const
 
-export const ChangeStatusTask = (todolistId: string, taskId: string, status: TaskStatus) =>
+export const ChangeTask = (taskId: string, task: TaskT) =>
   ({
-    type: 'todolist/tasks/changeStatus',
-    payload: { todolistId, taskId, status },
-  }) as const
-
-export const ChangeTitleTask = (todolistId: string, taskId: string, title: string) =>
-  ({
-    type: 'todolist/tasks/changeTitle',
-    payload: { todolistId, taskId, title },
+    type: 'todolist/tasks/change',
+    payload: { taskId, task },
   }) as const
