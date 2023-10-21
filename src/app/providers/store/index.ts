@@ -1,3 +1,3 @@
 export { StoreProvider } from './ui/StoreProvider'
 export { useAppDispatch } from './config/store'
-export type { StateSchema, AppThunk } from './config/StateSchema'
+export type { StateSchema, AppThunk, AppThunkExtra } from './config/StateSchema'

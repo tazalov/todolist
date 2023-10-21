@@ -1,9 +1,9 @@
-import { TaskPriority } from '../types/TasksSchema'
+import { TaskPriority, TaskStatus } from '../types/TasksSchema'
 
 export interface SelectMenuItems {
   name: string
   value: number
-  bgc?: TaskPriority
+  bgc?: TaskPriority | TaskStatus
 }
 
 export const editMenuPriorityItems: SelectMenuItems[] = [
@@ -15,8 +15,8 @@ export const editMenuPriorityItems: SelectMenuItems[] = [
 ]
 
 export const editMenuStatusItems: SelectMenuItems[] = [
-  { name: 'New', value: 0 },
-  { name: 'In progress', value: 1 },
-  { name: 'Completed', value: 2 },
-  { name: 'Draft', value: 3 },
+  { name: 'New', value: 0, bgc: TaskStatus.NEW },
+  { name: 'In progress', value: 1, bgc: TaskStatus.IN_PROGRESS },
+  { name: 'Completed', value: 2, bgc: TaskStatus.COMPLETED },
+  { name: 'Draft', value: 3, bgc: TaskStatus.DRAFT },
 ]

@@ -19,10 +19,10 @@ export const SelectNum: FC<SelectPT> = ({ label, options, ...rest }) => {
             key={el.name}
             value={el.value}
             sx={
-              el.bgc
+              el.bgc !== undefined
                 ? {
                     borderColor: `${tasksPriority[el.bgc]}.main`,
-                    borderWidth: '0 0 0 5px',
+                    borderWidth: '0 0 0 10px',
                     borderStyle: 'solid',
                   }
                 : undefined

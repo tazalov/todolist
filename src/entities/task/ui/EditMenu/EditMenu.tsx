@@ -67,9 +67,9 @@ export const EditMenu: FC<EditMenuPT> = memo(({ task, onClose, open }) => {
   }
 
   return (
-    <Dialog onClose={onClose} open={open} sx={{ minWidth: 300 }}>
-      <DialogTitle>Set new data for task</DialogTitle>
-      <List sx={{ pt: 0 }}>
+    <Dialog onClose={onClose} open={open}>
+      <DialogTitle align={'center'}>Set new data for task</DialogTitle>
+      <List sx={{ pt: 0, minWidth: 300 }}>
         <ListItem sx={{ gap: 1 }}>
           {!editMode && (
             <Button variant="outlined" color={'success'} onClick={activateEditMode} startIcon={<EditIcon />}>

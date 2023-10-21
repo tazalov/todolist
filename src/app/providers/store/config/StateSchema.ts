@@ -10,7 +10,7 @@ export interface StateSchema {
   tasks: TasksSchema
 }
 
-type AppThunkExtra = {
+export type AppThunkExtra = {
   todolistAPI: TodolistAPI
   tasksAPI: TasksAPI
 }
