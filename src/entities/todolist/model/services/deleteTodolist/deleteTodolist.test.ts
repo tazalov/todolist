@@ -1,11 +1,11 @@
 import { deleteTodolist } from './deleteTodolist'
-import { todolistAPI, TodolistAPI } from 'api/config/todolists.api'
-import { BaseResponseT } from 'api/types/todolist'
+import { todolistAPI, TodolistAPI } from '../../../api/todolists.api'
+import { BaseResponseT } from 'shared/api/types/todolist'
 import { StateSchema, AppThunkExtra } from 'app/providers/store'
 import { AxiosResponse } from 'axios'
 import { RemoveTodolist } from '../../actions/todolist.actions'
 
-jest.mock('api/config/todolists.api')
+jest.mock('../../../api/todolists.api')
 
 const todolistAPIMock = todolistAPI as jest.Mocked<TodolistAPI>
 

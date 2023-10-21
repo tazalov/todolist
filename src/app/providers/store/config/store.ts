@@ -1,10 +1,8 @@
 import { useDispatch } from 'react-redux'
 import { applyMiddleware, combineReducers, compose, legacy_createStore } from 'redux'
 import thunk from 'redux-thunk'
-import { tasksReducer } from 'entities/task'
-import { todoListReducer } from 'entities/todolist'
-import { todolistAPI } from 'api/config/todolists.api'
-import { tasksAPI } from 'api/config/tasks.api'
+import { tasksReducer, tasksAPI } from 'entities/task'
+import { todoListReducer, todolistAPI } from 'entities/todolist'
 import { StateSchema, AppDispatch } from './StateSchema'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

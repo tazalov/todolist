@@ -1,6 +1,6 @@
-import { TaskT } from 'entities/task'
-import { todolist } from '../todolist'
-import { BaseResponseT, ItemsResponseT, TaskModelAPI } from '../types/todolist'
+import { TaskT, TaskModelAPI } from '../model/types/TasksSchema'
+import { todolist } from 'shared/api/config/todolist'
+import { BaseResponseT, ItemsResponseT } from 'shared/api/types/todolist'
 
 export const tasksAPI = {
   getTasks(todolistId: string, count = 10, page = 1) {

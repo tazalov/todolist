@@ -1,6 +1,5 @@
 import { StateSchema } from 'app/providers/store'
-import { TaskT, TasksSchema } from '../types/TasksSchema'
-import { TaskModelAPI } from 'api/types/todolist'
+import { TaskT, TasksSchema, TaskModelAPI } from '../types/TasksSchema'
 
 export const getSpecificTasks =
   (todoListId: string) =>

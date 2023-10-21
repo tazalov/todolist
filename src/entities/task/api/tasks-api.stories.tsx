@@ -1,7 +1,7 @@
 import React, { useEffect, useState, ChangeEvent } from 'react'
-import { tasksAPI } from '../config/tasks.api'
+import { tasksAPI } from './tasks.api'
 import { TextField, Button, Select, MenuItem, SelectChangeEvent } from '@mui/material'
-import { TaskT, TaskStatus, TaskPriority } from 'entities/task'
+import { TaskT, TaskStatus, TaskPriority } from '../model/types/TasksSchema'
 
 export default {
   title: 'API TASKS',
@@ -130,12 +130,7 @@ export const UpdateTask = () => {
       <div>first task: {JSON.stringify(firstTask)}</div>
       <div>response : {JSON.stringify(state)}</div>
       <div>
-        <TextField
-          placeholder={'title'}
-          variant="outlined"
-          value={title}
-          onChange={handleChangeTitle}
-        />
+        <TextField placeholder={'title'} variant="outlined" value={title} onChange={handleChangeTitle} />
       </div>
       <div>
         <TextField

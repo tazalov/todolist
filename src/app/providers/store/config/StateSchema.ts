@@ -1,9 +1,7 @@
-import { TodoListsSchema } from 'entities/todolist'
-import { TasksSchema } from 'entities/task'
+import { TodoListsSchema, TodolistAPI } from 'entities/todolist'
+import { TasksSchema, TasksAPI } from 'entities/task'
 import { ThunkAction, ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
-import { TodolistAPI } from 'api/config/todolists.api'
-import { TasksAPI } from 'api/config/tasks.api'
 
 export interface StateSchema {
   todoList: TodoListsSchema

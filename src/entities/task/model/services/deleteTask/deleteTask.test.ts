@@ -1,11 +1,11 @@
 import { deleteTask } from './deleteTask'
-import { tasksAPI, TasksAPI } from 'api/config/tasks.api'
-import { BaseResponseT } from 'api/types/todolist'
+import { tasksAPI, TasksAPI } from '../../../api/tasks.api'
+import { BaseResponseT } from 'shared/api/types/todolist'
 import { StateSchema, AppThunkExtra } from 'app/providers/store'
 import { RemoveTask } from '../../actions/tasks.actions'
 import { AxiosResponse } from 'axios'
 
-jest.mock('api/config/tasks.api')
+jest.mock('../../../api/tasks.api')
 
 const tasksAPIMock = tasksAPI as jest.Mocked<TasksAPI>
 

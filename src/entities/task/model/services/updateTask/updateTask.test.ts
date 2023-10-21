@@ -1,13 +1,13 @@
 import { updateTask } from './updateTask'
-import { tasksAPI, TasksAPI } from 'api/config/tasks.api'
-import { BaseResponseT } from 'api/types/todolist'
+import { tasksAPI, TasksAPI } from '../../../api/tasks.api'
+import { BaseResponseT } from 'shared/api/types/todolist'
 import { TaskT, TaskModel } from '../../types/TasksSchema'
 import { StateSchema, AppThunkExtra } from 'app/providers/store'
 import { ChangeTask } from '../../actions/tasks.actions'
 import { AxiosResponse } from 'axios'
 import { getModelSpecificTask } from '../../selectors/tasks'
 
-jest.mock('api/config/tasks.api')
+jest.mock('../../../api/tasks.api')
 jest.mock('../../selectors/tasks')
 
 const tasksAPIMock = tasksAPI as jest.Mocked<TasksAPI>

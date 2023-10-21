@@ -1,6 +1,6 @@
-import { TodoListT } from 'entities/todolist'
-import { todolist } from '../todolist'
-import { BaseResponseT } from '../types/todolist'
+import { TodoListT } from '../model/types/TodolistsSchema'
+import { todolist } from 'shared/api/config/todolist'
+import { BaseResponseT } from 'shared/api/types/todolist'
 
 export const todolistAPI = {
   updateTodolist(todolistId: string, title: string) {

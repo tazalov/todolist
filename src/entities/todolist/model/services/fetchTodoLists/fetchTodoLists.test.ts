@@ -1,11 +1,11 @@
 import { fetchTodoLists } from './fetchTodoLists'
-import { todolistAPI, TodolistAPI } from 'api/config/todolists.api'
+import { todolistAPI, TodolistAPI } from '../../../api/todolists.api'
 import { StateSchema, AppThunkExtra } from 'app/providers/store'
 import { AxiosResponse } from 'axios'
 import { TodoListT } from '../../types/TodolistsSchema'
 import { SetTodoLists } from '../../actions/todolist.actions'
 
-jest.mock('api/config/todolists.api')
+jest.mock('../../../api/todolists.api')
 
 const todolistAPIMock = todolistAPI as jest.Mocked<TodolistAPI>
 

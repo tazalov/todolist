@@ -1,12 +1,12 @@
 import { fetchTasksByTodolistId } from './fetchTasksByTodolistId'
-import { tasksAPI, TasksAPI } from 'api/config/tasks.api'
-import { ItemsResponseT } from 'api/types/todolist'
+import { tasksAPI, TasksAPI } from '../../../api/tasks.api'
+import { ItemsResponseT } from 'shared/api/types/todolist'
 import { TaskT } from '../../types/TasksSchema'
 import { StateSchema, AppThunkExtra } from 'app/providers/store'
 import { SetTasks } from '../../actions/tasks.actions'
 import { AxiosResponse } from 'axios'
 
-jest.mock('api/config/tasks.api')
+jest.mock('../../../api/tasks.api')
 
 const tasksAPIMock = tasksAPI as jest.Mocked<TasksAPI>
 

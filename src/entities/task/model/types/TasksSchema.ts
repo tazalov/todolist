@@ -38,3 +38,12 @@ export interface TaskModel {
   startDate?: Date
   deadline?: Date
 }
+
+export interface TaskModelAPI {
+  description: string
+  title: string
+  status: TaskStatus
+  priority: TaskPriority
+  startDate: Date
+  deadline: Date
+}

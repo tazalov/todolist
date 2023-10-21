@@ -1,6 +1,6 @@
 import React, { useEffect, useState, ChangeEvent } from 'react'
-import { todolistAPI } from '../config/todolists.api'
-import { TodoListT } from 'entities/todolist'
+import { todolistAPI } from './todolists.api'
+import { TodoListT } from '../model/types/TodolistsSchema'
 import { TextField, Button } from '@mui/material'
 
 export default {
@@ -86,9 +86,7 @@ export const UpdateTodolistTitle = () => {
   }
 
   useEffect(() => {
-    todolistAPI
-      .getTodolists()
-      .then(response => setFirstTodolist(response.data[response.data.length - 1]))
+    todolistAPI.getTodolists().then(response => setFirstTodolist(response.data[response.data.length - 1]))
     if (isSend && firstTodolist) {
       todolistAPI.updateTodolist(firstTodolist.id, title).then(response => setState(response.data))
     }
