@@ -11,7 +11,7 @@ interface TodoMenuPT {
   remove: () => void
 }
 
-export const TodoMenu: FC<TodoMenuPT> = memo(({ task, remove }) => {
+export const TaskMenu: FC<TodoMenuPT> = memo(({ task, remove }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
 

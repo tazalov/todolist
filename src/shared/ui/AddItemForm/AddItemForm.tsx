@@ -4,9 +4,10 @@ import { FC, memo, useState, ChangeEvent, KeyboardEvent } from 'react'
 
 interface AddItemFormPT {
   addItem: (title: string) => void
+  disabled?: boolean
 }
 
-export const AddItemForm: FC<AddItemFormPT> = memo(({ addItem }) => {
+export const AddItemForm: FC<AddItemFormPT> = memo(({ addItem, disabled = false }) => {
   const [title, setTitle] = useState<string>('')
   const [error, setError] = useState<string>('')
 
@@ -46,9 +47,10 @@ export const AddItemForm: FC<AddItemFormPT> = memo(({ addItem }) => {
         onChange={handleChange}
         onKeyDown={handleKeyDownAddItem}
         onBlur={handleBlur}
+        disabled={disabled}
       />
       <Tooltip title="Click to create new item">
-        <IconButton onClick={addNewItem} color={'success'} disabled={!!error}>
+        <IconButton onClick={addNewItem} color={'success'} disabled={!!error || disabled}>
           <AddBoxIcon fontSize="large" />
         </IconButton>
       </Tooltip>

@@ -14,4 +14,10 @@ export interface UpdatedTodoListT extends TodoListT {
   entityStatus: Status
 }
 
+export interface UpdateModelTodoList {
+  title?: string
+  filter?: FilterT
+  entityStatus?: Status
+}
+
 export type TodoListsSchema = UpdatedTodoListT[]

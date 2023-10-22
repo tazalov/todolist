@@ -1,11 +1,5 @@
 import { v1 } from 'uuid'
-import {
-  AddTodoList,
-  ChangeFilterTodolist,
-  ChangeTitleTodolist,
-  RemoveTodolist,
-  SetTodoLists,
-} from '../actions/todolist.actions'
+import { AddTodoList, ChangeTodolist, RemoveTodolist, SetTodoLists } from '../actions/todolist.actions'
 import { TodoListsSchema, TodoListT } from '../types/TodolistsSchema'
 import { todoListReducer } from './todolist.reducer'
 
@@ -19,8 +13,22 @@ describe('todolist reducer', () => {
 
   beforeEach(() => {
     initialState = [
-      { id: todoListId1, title: 'What to learn', filter: 'all', order: 0, addedDate: date },
-      { id: todoListId2, title: 'What to byu', filter: 'active', order: 0, addedDate: date },
+      {
+        id: todoListId1,
+        title: 'What to learn',
+        filter: 'all',
+        order: 0,
+        addedDate: date,
+        entityStatus: 'idle',
+      },
+      {
+        id: todoListId2,
+        title: 'What to byu',
+        filter: 'active',
+        order: 0,
+        addedDate: date,
+        entityStatus: 'idle',
+      },
     ]
   })
 
@@ -34,8 +42,22 @@ describe('todolist reducer', () => {
 
     expect(newState.length).toBe(2)
     expect(newState).toEqual([
-      { id: todoListId1, title: 'What to learn', filter: 'all', order: 0, addedDate: date },
-      { id: todoListId2, title: 'What to byu', filter: 'all', order: 0, addedDate: date },
+      {
+        id: todoListId1,
+        title: 'What to learn',
+        filter: 'all',
+        order: 0,
+        addedDate: date,
+        entityStatus: 'idle',
+      },
+      {
+        id: todoListId2,
+        title: 'What to byu',
+        filter: 'all',
+        order: 0,
+        addedDate: date,
+        entityStatus: 'idle',
+      },
     ])
   })
 
@@ -60,18 +82,25 @@ describe('todolist reducer', () => {
     expect(newState[0].filter).toBe('active')
   })
 
-  it('todolist filter should be changed', () => {
-    const action = ChangeFilterTodolist(todoListId1, 'active')
+  it('todolist entityStatus should be changed', () => {
+    const action = ChangeTodolist(todoListId1, { entityStatus: 'loading' })
     const newState = todoListReducer(initialState, action)
 
     expect(newState.length).toBe(2)
-    expect(newState[0].title).toBe('What to learn')
+    expect(newState[0].entityStatus).toBe('loading')
+  })
+
+  it('todolist filter should be changed', () => {
+    const action = ChangeTodolist(todoListId1, { filter: 'active' })
+    const newState = todoListReducer(initialState, action)
+
+    expect(newState.length).toBe(2)
     expect(newState[0].filter).toBe('active')
   })
 
   it('todolist title should be changed', () => {
     const title = 'new title todolist'
-    const action = ChangeTitleTodolist(todoListId1, title)
+    const action = ChangeTodolist(todoListId1, { title })
     const newState = todoListReducer(initialState, action)
 
     expect(newState.length).toBe(2)

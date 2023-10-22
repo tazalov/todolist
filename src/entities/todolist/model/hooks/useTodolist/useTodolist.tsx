@@ -1,19 +1,21 @@
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from 'app/providers/store'
 import { useCallback, useMemo, useEffect } from 'react'
-import { ChangeFilterTodolist } from '../../actions/todolist.actions'
+import { ChangeTodolist } from '../../actions/todolist.actions'
 import { FilterT } from '../../types/TodolistsSchema'
 import { getSpecificTasks, TaskStatus, Task, fetchTasksByTodolistId, createTask } from 'entities/task'
 import { deleteTodolist } from '../../services/deleteTodolist/deleteTodolist'
 import { updateTitleTodolist } from '../../services/updateTitleTodolist/updateTitleTodolist'
 
-export const useTodolist = (todoListId: string, filter: FilterT) => {
+export const useTodolist = (todoListId: string, filter: FilterT, demo: boolean) => {
   const tasks = useSelector(getSpecificTasks(todoListId))
 
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(fetchTasksByTodolistId(todoListId))
+    if (!demo) {
+      dispatch(fetchTasksByTodolistId(todoListId))
+    }
   }, [])
 
   const remove = () => {
@@ -29,7 +31,8 @@ export const useTodolist = (todoListId: string, filter: FilterT) => {
 
   const changeFilter = useCallback(
     (filter: FilterT) => () => {
-      dispatch(ChangeFilterTodolist(todoListId, filter))
+      const model = { filter }
+      dispatch(ChangeTodolist(todoListId, model))
     },
     [dispatch, todoListId],
   )

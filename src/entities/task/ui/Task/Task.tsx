@@ -1,11 +1,11 @@
 import { Checkbox, ListItem } from '@mui/material'
 import { FC, memo } from 'react'
-import { TaskT, TaskStatus } from '../model/types/TasksSchema'
-import { TodoMenu } from './TodoMenu/TodoMenu'
-import { useTask } from '../model/hooks/useTask/useTask'
+import { TaskT, TaskStatus } from '../../model/types/TasksSchema'
+import { TaskMenu } from '../TaskMenu/TaskMenu'
+import { useTask } from '../../model/hooks/useTask/useTask'
 import { EditableSpan } from 'shared/ui/EditableSpan/EditableSpan'
-import { getBgForStatus } from '../model/utils/getBgForStatus'
-import { tasksPriority } from '../model/const/colorsEditMenuItems'
+import { getBgForStatus } from '../../model/utils/getBgForStatus'
+import { tasksPriority } from '../../model/const/colorsEditMenuItems'
 
 interface TodoPT {
   todoListId: string
@@ -31,7 +31,7 @@ export const Task: FC<TodoPT> = memo(({ todoListId, task }) => {
     <ListItem role="listitem" sx={styleItem} disablePadding>
       <Checkbox color="secondary" checked={status === TaskStatus.COMPLETED} onChange={changeStatus} />
       <EditableSpan variant="h6" title={title} changeTitle={changeTitle} />
-      <TodoMenu task={task} remove={remove} />
+      <TaskMenu task={task} remove={remove} />
     </ListItem>
   )
 })

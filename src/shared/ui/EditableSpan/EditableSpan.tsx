@@ -15,16 +15,19 @@ const inheritStyleInput: any = {
 interface EditableSpanPT extends TypographyOwnProps {
   title: string
   changeTitle: (newTitle: string) => void
+  disabled?: boolean
 }
 
-export const EditableSpan: FC<EditableSpanPT> = memo(({ title, changeTitle, ...rest }) => {
+export const EditableSpan: FC<EditableSpanPT> = memo(({ title, changeTitle, disabled = false, ...rest }) => {
   const [editMode, setEditMode] = useState<boolean>(false)
   const [currentTitle, setCurrentTitle] = useState<string>('')
   const [error, setError] = useState<boolean>(false)
 
   const activateEditMode = () => {
-    setEditMode(true)
-    setCurrentTitle(title)
+    if (!disabled) {
+      setEditMode(true)
+      setCurrentTitle(title)
+    }
   }
   const deactivateEditMode = () => setEditMode(false)
 

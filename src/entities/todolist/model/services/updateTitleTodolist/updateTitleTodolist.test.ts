@@ -3,7 +3,7 @@ import { todolistAPI, TodolistAPI } from '../../../api/todolists.api'
 import { StateSchema, AppThunkExtra } from 'app/providers/store'
 import { AxiosResponse } from 'axios'
 import { TodoListT } from '../../types/TodolistsSchema'
-import { ChangeTitleTodolist } from '../../actions/todolist.actions'
+import { ChangeTodolist } from '../../actions/todolist.actions'
 import { BaseResponseT } from 'shared/api/types/todolist'
 
 jest.mock('../../../api/todolists.api')
@@ -36,6 +36,6 @@ describe('updateTitleTodolist thunk', () => {
     await updateTitleTodolist('1', 'title')(dispatch, getState, extra)
 
     expect(dispatch).toHaveBeenCalledTimes(1)
-    expect(dispatch).toHaveBeenCalledWith(ChangeTitleTodolist('1', 'title'))
+    expect(dispatch).toHaveBeenCalledWith(ChangeTodolist('1', { title: 'title' }))
   })
 })

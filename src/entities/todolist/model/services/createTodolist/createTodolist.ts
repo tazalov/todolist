@@ -1,7 +1,7 @@
 import { AppThunk } from 'app/providers/store'
 import { AddTodoList } from '../../actions/todolist.actions'
-import { SetStatus, SetError } from '../../../../notification'
-import { ResultCodes } from '../../../../../shared/api/types/todolist'
+import { SetStatus, SetError } from 'entities/notification'
+import { ResultCodes } from 'shared/api/types/todolist'
 
 export const createTodolist =
   (title: string): AppThunk =>

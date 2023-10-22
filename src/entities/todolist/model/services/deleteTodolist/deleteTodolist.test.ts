@@ -3,7 +3,8 @@ import { todolistAPI, TodolistAPI } from '../../../api/todolists.api'
 import { BaseResponseT } from 'shared/api/types/todolist'
 import { StateSchema, AppThunkExtra } from 'app/providers/store'
 import { AxiosResponse } from 'axios'
-import { RemoveTodolist } from '../../actions/todolist.actions'
+import { RemoveTodolist, ChangeTodolist } from '../../actions/todolist.actions'
+import { SetStatus } from 'entities/notification'
 
 jest.mock('../../../api/todolists.api')
 
@@ -32,7 +33,11 @@ describe('deleteTodolist thunk', () => {
 
     await deleteTodolist('1')(dispatch, getState, extra)
 
-    expect(dispatch).toHaveBeenCalledTimes(1)
-    expect(dispatch).toHaveBeenCalledWith(RemoveTodolist('1'))
+    expect(dispatch).toHaveBeenCalledTimes(5)
+    expect(dispatch).toHaveBeenNthCalledWith(1, SetStatus('loading'))
+    expect(dispatch).toHaveBeenNthCalledWith(2, ChangeTodolist('1', { entityStatus: 'loading' }))
+    expect(dispatch).toHaveBeenNthCalledWith(3, RemoveTodolist('1'))
+    expect(dispatch).toHaveBeenNthCalledWith(4, ChangeTodolist('1', { entityStatus: 'succeed' }))
+    expect(dispatch).toHaveBeenNthCalledWith(5, SetStatus('succeed'))
   })
 })

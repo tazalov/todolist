@@ -19,20 +19,21 @@ const styleTodolist = { p: 1.5, bgcolor: 'background.blocks', position: 'relativ
 
 interface TodolistPT {
   todolist: UpdatedTodoListT
+  demo?: boolean
 }
 
-export const Todolist: FC<TodolistPT> = memo(({ todolist }) => {
-  const { id, title, addedDate, filter } = todolist
+export const Todolist: FC<TodolistPT> = memo(({ todolist, demo = false }) => {
+  const { id, title, addedDate, filter, entityStatus } = todolist
 
-  const { tasks, remove, changeTitle, changeFilter, addTask } = useTodolist(id, filter)
+  const { tasks, remove, changeTitle, changeFilter, addTask } = useTodolist(id, filter, demo)
 
   return (
     <Stack spacing={3} alignItems="center" sx={styleTodolist}>
-      <IconButton color="primary" sx={styleClose} onClick={remove}>
+      <IconButton color="primary" sx={styleClose} onClick={remove} disabled={entityStatus === 'loading'}>
         <CloseIcon fontSize="medium" />
       </IconButton>
       <EditableSpan variant="h4" title={title} textAlign={'center'} changeTitle={changeTitle} />
-      <AddItemForm addItem={addTask} />
+      <AddItemForm addItem={addTask} disabled={entityStatus === 'loading'} />
       <List sx={{ width: '100%' }}>
         {tasks.length ? tasks : <Typography align={'center'}>Not found</Typography>}
       </List>

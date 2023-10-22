@@ -1,4 +1,4 @@
-import { FilterT, TodoListT } from '../types/TodolistsSchema'
+import { TodoListT, UpdateModelTodoList } from '../types/TodolistsSchema'
 
 export const SetTodoLists = (todolists: TodoListT[]) =>
   ({
@@ -18,14 +18,8 @@ export const RemoveTodolist = (todoListId: string) =>
     payload: { todoListId },
   }) as const
 
-export const ChangeFilterTodolist = (todoListId: string, filter: FilterT) =>
+export const ChangeTodolist = (todoListId: string, model: UpdateModelTodoList) =>
   ({
-    type: 'todolist/list/changeFilter',
-    payload: { todoListId, filter },
-  }) as const
-
-export const ChangeTitleTodolist = (todoListId: string, title: string) =>
-  ({
-    type: 'todolist/list/changeTitle',
-    payload: { todoListId, title },
+    type: 'todolist/list/change',
+    payload: { todoListId, model },
   }) as const

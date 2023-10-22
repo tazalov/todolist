@@ -1,5 +1,5 @@
 export { tasksReducer } from './model/reducer/tasks.reducer'
-export { Task } from './ui/Task'
+export { Task } from './ui/Task/Task'
 export { getTasks, getSpecificTasks } from './model/selectors/tasks'
 export { fetchTasksByTodolistId } from './model/services/fetchTasksByTodolistId/fetchTasksByTodolistId'
 export { createTask } from './model/services/createTask/createTask'

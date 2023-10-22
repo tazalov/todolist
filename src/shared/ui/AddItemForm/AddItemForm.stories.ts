@@ -1,23 +1,31 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react'
 import { AddItemForm } from './AddItemForm'
 
-
 const meta: Meta<typeof AddItemForm> = {
-  title: 'components/AddItemForm',
+  title: 'shared/AddItemForm',
   component: AddItemForm,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
   argTypes: {
-addItem: {
-  description: 'Function for add item',
-  action: 'item added!'
-}
+    addItem: {
+      description: 'Function for add item',
+      action: 'item added!',
+    },
+    disabled: {
+      description: 'Flag for disable form & button',
+      control: 'boolean',
+    },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof AddItemForm>;
+export default meta
+type Story = StoryObj<typeof AddItemForm>
 
-export const Demo: Story = {};
+export const Demo: Story = {}
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+  },
+}

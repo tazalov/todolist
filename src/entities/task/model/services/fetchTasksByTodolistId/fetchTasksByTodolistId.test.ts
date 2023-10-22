@@ -72,6 +72,6 @@ describe('fetchTasksByTodolistId thunk', () => {
     expect(dispatch).toHaveBeenCalledTimes(3)
     expect(dispatch).toHaveBeenNthCalledWith(1, SetStatus('loading'))
     expect(dispatch).toHaveBeenNthCalledWith(2, SetError('some occurred error'))
-    expect(dispatch).toHaveBeenNthCalledWith(3, SetStatus('succeed'))
+    expect(dispatch).toHaveBeenNthCalledWith(3, SetStatus('failed'))
   })
 })
