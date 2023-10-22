@@ -1,9 +1,11 @@
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 import MenuIcon from '@mui/icons-material/Menu'
 import NightsStayIcon from '@mui/icons-material/NightsStay'
-import { AppBar, Button, IconButton, Toolbar, Typography, useTheme } from '@mui/material'
+import { AppBar, Button, IconButton, LinearProgress, Toolbar, Typography, useTheme } from '@mui/material'
 import { FC, useContext } from 'react'
-import { ColorModeContext } from '../../../app/styles/ThemeContext'
+import { ColorModeContext } from 'app/styles/ThemeContext'
+import { useSelector } from 'react-redux'
+import { getStatus } from 'entities/notification'
 
 type HeaderPT = {
   // add props type
@@ -14,8 +16,10 @@ export const Header: FC<HeaderPT> = ({}) => {
   const theme = useTheme()
   const colorMode = useContext(ColorModeContext)
 
+  const status = useSelector(getStatus)
+
   return (
-    <AppBar position="static" enableColorOnDark sx={{ bgcolor: 'background.header' }}>
+    <AppBar position="static" enableColorOnDark sx={{ bgcolor: 'background.header', position: 'relative' }}>
       <Toolbar>
         <IconButton size="large" edge="start" sx={{ mr: 2, color: 'primary.contrastText' }}>
           <MenuIcon />
@@ -28,6 +32,16 @@ export const Header: FC<HeaderPT> = ({}) => {
           {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <NightsStayIcon />}
         </IconButton>
       </Toolbar>
+      {status === 'loading' && (
+        <LinearProgress
+          color="secondary"
+          sx={{
+            position: 'absolute',
+            width: '100%',
+            bottom: '0',
+          }}
+        />
+      )}
     </AppBar>
   )
 }

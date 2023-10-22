@@ -2,7 +2,7 @@ import { TaskStatus } from '../types/TasksSchema'
 import { TaskPriority } from '../types/TasksSchema'
 
 export const tasksStatus = {
-  [TaskStatus.NEW]: '',
+  [TaskStatus.NEW]: 'NEW',
   [TaskStatus.IN_PROGRESS]: 'IN_PROGRESS',
   [TaskStatus.COMPLETED]: 'COMPLETED',
   [TaskStatus.DRAFT]: 'DRAFT',

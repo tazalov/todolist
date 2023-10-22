@@ -19,6 +19,9 @@ export const theme = {
   success: {
     main: '#309054',
   },
+  NEW: {
+    main: 'rgba(0,0,0,0)',
+  },
   IN_PROGRESS: {
     main: 'rgba(48,144,84,0.5)',
   },
@@ -70,6 +73,9 @@ export const darkTheme = {
   },
   success: {
     main: '#44CC77',
+  },
+  NEW: {
+    main: 'rgba(0,0,0,0)',
   },
   IN_PROGRESS: {
     main: 'rgba(68,204,119,0.5)',

@@ -3,6 +3,10 @@ import { TaskStatus, TaskPriority } from 'entities/task'
 import { StateSchema, StoreProvider } from 'app/providers/store'
 
 const state: StateSchema = {
+  notification: {
+    status: 'idle',
+    error: null,
+  },
   todoList: [
     { id: '1', filter: 'all', title: 'new todolist1', order: 0, addedDate: new Date() },
     { id: '2', filter: 'all', title: 'new todolist2', order: 0, addedDate: new Date() },

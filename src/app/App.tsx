@@ -5,6 +5,7 @@ import { getTodolists, fetchTodoLists, Todolist, CreateTodolistForm } from 'enti
 import { useAppDispatch } from './providers/store'
 import { useEffect } from 'react'
 import { Header } from 'widgets/Header'
+import { ErrorSnackbar } from 'entities/notification'
 
 const hints = [
   { value: 'New', color: 'background.paper' },
@@ -65,6 +66,7 @@ export const App = () => {
           {todoListsArray}
         </Grid>
       </ResponsiveContainer>
+      <ErrorSnackbar />
     </>
   )
 }
