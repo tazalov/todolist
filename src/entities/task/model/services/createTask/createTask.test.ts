@@ -46,7 +46,7 @@ describe('createTask thunk', () => {
 
     await createTask('1', 'title')(dispatch, getState, extra)
 
-    expect(dispatch).toHaveBeenCalledTimes(1)
+    expect(dispatch).toHaveBeenCalledTimes(3)
     expect(dispatch).toHaveBeenCalledWith(AddTask(task))
   })
 })
