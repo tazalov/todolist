@@ -4,6 +4,7 @@ import { StateSchema, AppThunkExtra } from 'app/providers/store'
 import { AxiosResponse } from 'axios'
 import { TodoListT } from '../../types/TodolistsSchema'
 import { SetTodoLists } from '../../actions/todolist.actions'
+import { SetStatus } from 'entities/notification'
 
 jest.mock('../../../api/todolists.api')
 
@@ -34,7 +35,9 @@ describe('fetchTodoLists thunk', () => {
 
     await fetchTodoLists()(dispatch, getState, extra)
 
-    expect(dispatch).toHaveBeenCalledTimes(1)
-    expect(dispatch).toHaveBeenCalledWith(SetTodoLists(result.data))
+    expect(dispatch).toHaveBeenCalledTimes(3)
+    expect(dispatch).toHaveBeenNthCalledWith(1, SetStatus('loading'))
+    expect(dispatch).toHaveBeenNthCalledWith(2, SetTodoLists(result.data))
+    expect(dispatch).toHaveBeenNthCalledWith(3, SetStatus('succeed'))
   })
 })

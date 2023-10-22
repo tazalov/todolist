@@ -1,5 +1,5 @@
 import { TodoListAT } from '../types/TodolistsActions'
-import { UpdatedTodoListT, TodoListsSchema, FilterT } from '../types/TodolistsSchema'
+import { UpdatedTodoListT, TodoListsSchema } from '../types/TodolistsSchema'
 
 export const initialTodolistState: TodoListsSchema = []
 
@@ -9,7 +9,8 @@ export const todoListReducer = (state = initialTodolistState, action: TodoListAT
       return action.payload.map(el => ({
         ...el,
         addedDate: new Date(el.addedDate),
-        filter: 'all' as FilterT,
+        filter: 'all',
+        entityStatus: 'idle',
       }))
     }
     case 'todolist/list/add': {
@@ -18,6 +19,7 @@ export const todoListReducer = (state = initialTodolistState, action: TodoListAT
         ...todolist,
         addedDate: new Date(todolist.addedDate),
         filter: 'all',
+        entityStatus: 'idle',
       }
       return [newTodoList, ...state]
     }
