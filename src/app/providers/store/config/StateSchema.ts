@@ -1,7 +1,6 @@
-import { TodoListsSchema, TodolistAPI } from 'entities/todolist'
-import { TasksSchema, TasksAPI } from 'entities/task'
+import { TodoListsSchema, TodolistAPI, TodoListAT } from 'entities/todolist'
+import { TasksSchema, TasksAPI, TasksAT } from 'entities/task'
 import { ThunkAction, ThunkDispatch } from 'redux-thunk'
-import { AnyAction } from 'redux'
 
 export interface StateSchema {
   todoList: TodoListsSchema
@@ -13,6 +12,8 @@ export type AppThunkExtra = {
   tasksAPI: TasksAPI
 }
 
-export type AppDispatch = ThunkDispatch<StateSchema, any, AnyAction>
+type ActionsType = TasksAT | TodoListAT
 
-export type AppThunk<T = void, E = AppThunkExtra> = ThunkAction<T, StateSchema, E, AnyAction>
+export type AppDispatch = ThunkDispatch<StateSchema, any, ActionsType>
+
+export type AppThunk<T = void, E = AppThunkExtra> = ThunkAction<T, StateSchema, E, ActionsType>

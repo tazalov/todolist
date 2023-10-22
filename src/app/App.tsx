@@ -8,9 +8,9 @@ import { Header } from 'widgets/Header'
 
 const hints = [
   { value: 'New', color: 'background.paper' },
-  { value: 'In progress', color: 'inProgress.main' },
-  { value: 'Completed', color: 'completed.main' },
-  { value: 'Draft', color: 'draft.main' },
+  { value: 'In progress', color: 'IN_PROGRESS.main' },
+  { value: 'Completed', color: 'COMPLETED.main' },
+  { value: 'Draft', color: 'DRAFT.main' },
 ]
 
 const ResponsiveContainer = styled(Container)(({ theme }) => ({
@@ -21,6 +21,7 @@ const ResponsiveContainer = styled(Container)(({ theme }) => ({
 }))
 
 export const App = () => {
+  // TODO сделать страницу TodoListsListPage, где будем рендерить список тудулистов и вся логика уйдет туда
   const todoLists = useSelector(getTodolists)
 
   const dispatch = useAppDispatch()

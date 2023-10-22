@@ -6,8 +6,9 @@ import React, { FC, useState, ChangeEvent, useEffect, useCallback, memo } from '
 import { TaskT, TaskStatus, TaskPriority } from '../../model/types/TasksSchema'
 import { useAppDispatch } from 'app/providers/store'
 import { updateTask } from '../../model/services/updateTask/updateTask'
-import { editMenuPriorityItems, editMenuStatusItems } from '../../model/const/editMenuPriorityItems'
+import { editMenuPriorityItems, editMenuStatusItems } from '../../model/const/editMenuItems'
 import { SelectNum } from '../SelectNum/SelectNum'
+import { tasksStatus, tasksPriority } from '../../model/const/colorsEditMenuItems'
 
 export interface EditMenuPT {
   task: TaskT
@@ -119,6 +120,7 @@ export const EditMenu: FC<EditMenuPT> = memo(({ task, onClose, open }) => {
         <ListItem>
           <SelectNum
             options={editMenuStatusItems}
+            colors={tasksStatus}
             label={'Status'}
             value={status}
             onChange={handleChangeStatus}
@@ -129,6 +131,7 @@ export const EditMenu: FC<EditMenuPT> = memo(({ task, onClose, open }) => {
         <ListItem>
           <SelectNum
             options={editMenuPriorityItems}
+            colors={tasksPriority}
             label={'Priority'}
             value={priority}
             onChange={handleChangePriority}

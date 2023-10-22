@@ -3,13 +3,13 @@ import { TaskStatus } from '../types/TasksSchema'
 export const getBgForStatus = (status: TaskStatus) => {
   switch (status) {
     case TaskStatus.COMPLETED: {
-      return 'completed.main'
+      return 'COMPLETED.main'
     }
     case TaskStatus.IN_PROGRESS: {
-      return 'inProgress.main'
+      return 'IN_PROGRESS.main'
     }
     case TaskStatus.DRAFT: {
-      return 'draft.main'
+      return 'DRAFT.main'
     }
     default: {
       return 'transparent'

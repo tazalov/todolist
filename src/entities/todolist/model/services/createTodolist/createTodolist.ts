@@ -3,8 +3,8 @@ import { AddTodoList } from '../../actions/todolist.actions'
 
 export const createTodolist =
   (title: string): AppThunk =>
-  async (dispath, _, extra) => {
+  async (dispatch, _, extra) => {
     const { todolistAPI } = extra
     const response = await todolistAPI.createTodolist(title)
-    dispath(AddTodoList(response.data.data.item))
+    dispatch(AddTodoList(response.data.data.item))
   }

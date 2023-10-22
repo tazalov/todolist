@@ -2,10 +2,10 @@ import { Checkbox, ListItem } from '@mui/material'
 import { FC, memo } from 'react'
 import { TaskT, TaskStatus } from '../model/types/TasksSchema'
 import { TodoMenu } from './TodoMenu/TodoMenu'
-import { tasksPriority } from '../model/const/tasksPriority'
 import { useTask } from '../model/hooks/useTask/useTask'
 import { EditableSpan } from 'shared/ui/EditableSpan/EditableSpan'
 import { getBgForStatus } from '../model/utils/getBgForStatus'
+import { tasksPriority } from '../model/const/colorsEditMenuItems'
 
 interface TodoPT {
   todoListId: string
