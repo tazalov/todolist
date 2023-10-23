@@ -51,12 +51,10 @@ describe('updateTask thunk', () => {
         messages: [],
         fieldsErrors: [],
       },
-    }
+    } as unknown as AxiosResponse<BaseResponseT<{ item: TaskT }>>
 
     getModelSpecificTaskMocked.mockReturnValue(() => task)
-    tasksAPIMock.updateTask.mockReturnValue(
-      Promise.resolve(result as unknown as AxiosResponse<BaseResponseT<{ item: TaskT }>>),
-    )
+    tasksAPIMock.updateTask.mockReturnValue(Promise.resolve(result))
 
     await updateTask('1', '2', taskModel)(dispatch, getState, extra)
 
@@ -66,7 +64,7 @@ describe('updateTask thunk', () => {
     expect(dispatch).toHaveBeenNthCalledWith(3, SetStatus('succeed'))
   })
 
-  it('set of actions for a bad request is correct', async () => {
+  it('set of actions for a successful request with error is correct', async () => {
     const dispatch = jest.fn()
     const getState = () => ({}) as StateSchema
     const extra = {
@@ -78,18 +76,34 @@ describe('updateTask thunk', () => {
         resultCode: 1,
         messages: ['some error occurred'],
       },
-    }
+    } as unknown as AxiosResponse<BaseResponseT<{ item: TaskT }>>
 
     getModelSpecificTaskMocked.mockReturnValue(() => task)
-    tasksAPIMock.updateTask.mockReturnValue(
-      Promise.resolve(result as unknown as AxiosResponse<BaseResponseT<{ item: TaskT }>>),
-    )
+    tasksAPIMock.updateTask.mockReturnValue(Promise.resolve(result))
 
     await updateTask('1', '2', taskModel)(dispatch, getState, extra)
 
     expect(dispatch).toHaveBeenCalledTimes(3)
     expect(dispatch).toHaveBeenNthCalledWith(1, SetStatus('loading'))
     expect(dispatch).toHaveBeenNthCalledWith(2, SetError('some error occurred'))
+    expect(dispatch).toHaveBeenNthCalledWith(3, SetStatus('failed'))
+  })
+
+  it('set of actions for a bad request is correct', async () => {
+    const dispatch = jest.fn()
+    const getState = () => ({}) as StateSchema
+    const extra = {
+      tasksAPI: tasksAPIMock,
+    } as unknown as AppThunkExtra
+
+    getModelSpecificTaskMocked.mockReturnValue(() => task)
+    tasksAPIMock.updateTask.mockReturnValue(Promise.reject(new Error('some error')))
+
+    await updateTask('1', '2', taskModel)(dispatch, getState, extra)
+
+    expect(dispatch).toHaveBeenCalledTimes(3)
+    expect(dispatch).toHaveBeenNthCalledWith(1, SetStatus('loading'))
+    expect(dispatch).toHaveBeenNthCalledWith(2, SetError('some error'))
     expect(dispatch).toHaveBeenNthCalledWith(3, SetStatus('failed'))
   })
 
@@ -104,8 +118,9 @@ describe('updateTask thunk', () => {
 
     await updateTask('1', '2', taskModel)(dispatch, getState, extra)
 
-    expect(dispatch).toHaveBeenCalledTimes(2)
+    expect(dispatch).toHaveBeenCalledTimes(3)
     expect(dispatch).toHaveBeenNthCalledWith(1, SetStatus('loading'))
-    expect(dispatch).toHaveBeenNthCalledWith(2, SetError('Task not found!'))
+    expect(dispatch).toHaveBeenNthCalledWith(2, SetError('Some error occurred'))
+    expect(dispatch).toHaveBeenNthCalledWith(3, SetStatus('failed'))
   })
 })

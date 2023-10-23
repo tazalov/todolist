@@ -31,11 +31,9 @@ describe('createTodolist thunk', () => {
         resultCode: 0,
         data: { item: todolist },
       },
-    }
+    } as unknown as AxiosResponse<BaseResponseT<{ item: TodoListT }>>
 
-    todolistAPIMock.createTodolist.mockReturnValue(
-      Promise.resolve(result as unknown as AxiosResponse<BaseResponseT<{ item: TodoListT }>>),
-    )
+    todolistAPIMock.createTodolist.mockReturnValue(Promise.resolve(result))
 
     await createTodolist('title')(dispatch, getState, extra)
 
@@ -45,7 +43,7 @@ describe('createTodolist thunk', () => {
     expect(dispatch).toHaveBeenNthCalledWith(3, SetStatus('succeed'))
   })
 
-  it('set of actions for a bad request is correct', async () => {
+  it('set of actions for a successful request with error is correct', async () => {
     const dispatch = jest.fn()
     const getState = () => ({}) as StateSchema
     const extra = {
@@ -57,17 +55,32 @@ describe('createTodolist thunk', () => {
         resultCode: 1,
         messages: ['some error occurred'],
       },
-    }
+    } as unknown as AxiosResponse<BaseResponseT<{ item: TodoListT }>>
 
-    todolistAPIMock.createTodolist.mockReturnValue(
-      Promise.resolve(result as unknown as AxiosResponse<BaseResponseT<{ item: TodoListT }>>),
-    )
+    todolistAPIMock.createTodolist.mockReturnValue(Promise.resolve(result))
 
     await createTodolist('title')(dispatch, getState, extra)
 
     expect(dispatch).toHaveBeenCalledTimes(3)
     expect(dispatch).toHaveBeenNthCalledWith(1, SetStatus('loading'))
     expect(dispatch).toHaveBeenNthCalledWith(2, SetError('some error occurred'))
+    expect(dispatch).toHaveBeenNthCalledWith(3, SetStatus('failed'))
+  })
+
+  it('set of actions for a bad request is correct', async () => {
+    const dispatch = jest.fn()
+    const getState = () => ({}) as StateSchema
+    const extra = {
+      todolistAPI: todolistAPIMock,
+    } as unknown as AppThunkExtra
+
+    todolistAPIMock.createTodolist.mockReturnValue(Promise.reject(new Error('some error')))
+
+    await createTodolist('title')(dispatch, getState, extra)
+
+    expect(dispatch).toHaveBeenCalledTimes(3)
+    expect(dispatch).toHaveBeenNthCalledWith(1, SetStatus('loading'))
+    expect(dispatch).toHaveBeenNthCalledWith(2, SetError('some error'))
     expect(dispatch).toHaveBeenNthCalledWith(3, SetStatus('failed'))
   })
 })

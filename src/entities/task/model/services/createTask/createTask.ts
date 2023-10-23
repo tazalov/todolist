@@ -1,6 +1,6 @@
 import { AppThunk } from 'app/providers/store'
 import { AddTask } from '../../actions/tasks.actions'
-import { SetError, SetStatus } from 'entities/notification'
+import { SetStatus, handleServerError, handleNetworkError } from 'entities/notification'
 import { ResultCodes } from 'shared/api/types/todolist'
 
 export const createTask =
@@ -14,10 +14,9 @@ export const createTask =
         dispatch(AddTask(response.data.data.item))
         dispatch(SetStatus('succeed'))
       } else {
-        throw new Error(response.data.messages[0] || 'Some error occurred')
+        handleServerError(response.data, dispatch)
       }
     } catch (e: any) {
-      dispatch(SetError(e.message))
-      dispatch(SetStatus('failed'))
+      handleNetworkError(e.message, dispatch)
     }
   }

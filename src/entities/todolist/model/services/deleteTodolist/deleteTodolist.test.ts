@@ -25,11 +25,9 @@ describe('deleteTodolist thunk', () => {
         messages: [],
         fieldsErrors: [],
       },
-    }
+    } as unknown as AxiosResponse<BaseResponseT>
 
-    todolistAPIMock.deleteTodolist.mockReturnValue(
-      Promise.resolve(result as unknown as AxiosResponse<BaseResponseT>),
-    )
+    todolistAPIMock.deleteTodolist.mockReturnValue(Promise.resolve(result))
 
     await deleteTodolist('1')(dispatch, getState, extra)
 

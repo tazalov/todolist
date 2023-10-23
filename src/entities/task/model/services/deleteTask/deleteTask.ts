@@ -1,6 +1,6 @@
 import { AppThunk } from 'app/providers/store'
 import { RemoveTask } from '../../actions/tasks.actions'
-import { SetStatus, SetError } from 'entities/notification'
+import { SetStatus, handleServerError, handleNetworkError } from 'entities/notification'
 import { ResultCodes } from 'shared/api/types/todolist'
 
 export const deleteTask =
@@ -14,10 +14,9 @@ export const deleteTask =
         dispatch(RemoveTask(todoListId, taskId))
         dispatch(SetStatus('succeed'))
       } else {
-        throw new Error(response.data.messages[0] || 'Some error occurred')
+        handleServerError(response.data, dispatch)
       }
     } catch (e: any) {
-      dispatch(SetError(e.message))
-      dispatch(SetStatus('failed'))
+      handleNetworkError(e.message, dispatch)
     }
   }

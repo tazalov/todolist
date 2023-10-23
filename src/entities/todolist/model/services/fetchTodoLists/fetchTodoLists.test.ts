@@ -4,7 +4,7 @@ import { StateSchema, AppThunkExtra } from 'app/providers/store'
 import { AxiosResponse } from 'axios'
 import { TodoListT } from '../../types/TodolistsSchema'
 import { SetTodoLists } from '../../actions/todolist.actions'
-import { SetStatus } from 'entities/notification'
+import { SetStatus, SetError } from 'entities/notification'
 
 jest.mock('../../../api/todolists.api')
 
@@ -39,5 +39,22 @@ describe('fetchTodoLists thunk', () => {
     expect(dispatch).toHaveBeenNthCalledWith(1, SetStatus('loading'))
     expect(dispatch).toHaveBeenNthCalledWith(2, SetTodoLists(result.data))
     expect(dispatch).toHaveBeenNthCalledWith(3, SetStatus('succeed'))
+  })
+
+  it('set of actions for a bad request is correct', async () => {
+    const dispatch = jest.fn()
+    const getState = () => ({}) as StateSchema
+    const extra = {
+      todolistAPI: todolistAPIMock,
+    } as unknown as AppThunkExtra
+
+    todolistAPIMock.getTodolists.mockReturnValue(Promise.reject(new Error('some error')))
+
+    await fetchTodoLists()(dispatch, getState, extra)
+
+    expect(dispatch).toHaveBeenCalledTimes(3)
+    expect(dispatch).toHaveBeenNthCalledWith(1, SetStatus('loading'))
+    expect(dispatch).toHaveBeenNthCalledWith(2, SetError('some error'))
+    expect(dispatch).toHaveBeenNthCalledWith(3, SetStatus('failed'))
   })
 })
