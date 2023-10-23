@@ -7,12 +7,16 @@ export const fetchTasksByTodolistId =
   async (dispatch, _, extra) => {
     const { tasksAPI } = extra
     dispatch(SetStatus('loading'))
-    const response = await tasksAPI.getTasks(todoListId)
-    if (!response.data.error) {
-      dispatch(SetTasks(todoListId, response.data.items))
-      dispatch(SetStatus('succeed'))
-    } else {
-      dispatch(SetError(response.data.error || 'Some error occurred'))
+    try {
+      const response = await tasksAPI.getTasks(todoListId)
+      if (!response.data.error) {
+        dispatch(SetTasks(todoListId, response.data.items))
+        dispatch(SetStatus('succeed'))
+      } else {
+        throw new Error(response.data.error || 'Some error occurred')
+      }
+    } catch (e: any) {
+      dispatch(SetError(e.message))
       dispatch(SetStatus('failed'))
     }
   }

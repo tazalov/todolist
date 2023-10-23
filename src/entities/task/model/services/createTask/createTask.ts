@@ -8,12 +8,16 @@ export const createTask =
   async (dispatch, _, extra) => {
     const { tasksAPI } = extra
     dispatch(SetStatus('loading'))
-    const response = await tasksAPI.createTask(todoListId, title)
-    if (response.data.resultCode === ResultCodes.Success) {
-      dispatch(AddTask(response.data.data.item))
-      dispatch(SetStatus('succeed'))
-    } else {
-      dispatch(SetError(response.data.messages[0] || 'Some error occurred'))
+    try {
+      const response = await tasksAPI.createTask(todoListId, title)
+      if (response.data.resultCode === ResultCodes.Success) {
+        dispatch(AddTask(response.data.data.item))
+        dispatch(SetStatus('succeed'))
+      } else {
+        throw new Error(response.data.messages[0] || 'Some error occurred')
+      }
+    } catch (e: any) {
+      dispatch(SetError(e.message))
       dispatch(SetStatus('failed'))
     }
   }

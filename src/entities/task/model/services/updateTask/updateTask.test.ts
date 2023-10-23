@@ -6,6 +6,7 @@ import { StateSchema, AppThunkExtra } from 'app/providers/store'
 import { ChangeTask } from '../../actions/tasks.actions'
 import { AxiosResponse } from 'axios'
 import { getModelSpecificTask } from '../../selectors/tasks'
+import { SetStatus, SetError } from 'entities/notification'
 
 jest.mock('../../../api/tasks.api')
 jest.mock('../../selectors/tasks')
@@ -59,7 +60,52 @@ describe('updateTask thunk', () => {
 
     await updateTask('1', '2', taskModel)(dispatch, getState, extra)
 
-    expect(dispatch).toHaveBeenCalledTimes(1)
-    expect(dispatch).toHaveBeenCalledWith(ChangeTask('2', task))
+    expect(dispatch).toHaveBeenCalledTimes(3)
+    expect(dispatch).toHaveBeenNthCalledWith(1, SetStatus('loading'))
+    expect(dispatch).toHaveBeenNthCalledWith(2, ChangeTask('2', task))
+    expect(dispatch).toHaveBeenNthCalledWith(3, SetStatus('succeed'))
+  })
+
+  it('set of actions for a bad request is correct', async () => {
+    const dispatch = jest.fn()
+    const getState = () => ({}) as StateSchema
+    const extra = {
+      tasksAPI: tasksAPIMock,
+    } as unknown as AppThunkExtra
+
+    const result = {
+      data: {
+        resultCode: 1,
+        messages: ['some error occurred'],
+      },
+    }
+
+    getModelSpecificTaskMocked.mockReturnValue(() => task)
+    tasksAPIMock.updateTask.mockReturnValue(
+      Promise.resolve(result as unknown as AxiosResponse<BaseResponseT<{ item: TaskT }>>),
+    )
+
+    await updateTask('1', '2', taskModel)(dispatch, getState, extra)
+
+    expect(dispatch).toHaveBeenCalledTimes(3)
+    expect(dispatch).toHaveBeenNthCalledWith(1, SetStatus('loading'))
+    expect(dispatch).toHaveBeenNthCalledWith(2, SetError('some error occurred'))
+    expect(dispatch).toHaveBeenNthCalledWith(3, SetStatus('failed'))
+  })
+
+  it('set of actions for a empty task is correct', async () => {
+    const dispatch = jest.fn()
+    const getState = () => ({}) as StateSchema
+    const extra = {
+      tasksAPI: tasksAPIMock,
+    } as unknown as AppThunkExtra
+
+    getModelSpecificTaskMocked.mockReturnValue(() => undefined)
+
+    await updateTask('1', '2', taskModel)(dispatch, getState, extra)
+
+    expect(dispatch).toHaveBeenCalledTimes(2)
+    expect(dispatch).toHaveBeenNthCalledWith(1, SetStatus('loading'))
+    expect(dispatch).toHaveBeenNthCalledWith(2, SetError('Task not found!'))
   })
 })
