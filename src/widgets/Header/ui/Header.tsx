@@ -2,16 +2,16 @@ import Brightness7Icon from '@mui/icons-material/Brightness7'
 import MenuIcon from '@mui/icons-material/Menu'
 import NightsStayIcon from '@mui/icons-material/NightsStay'
 import { AppBar, Button, IconButton, LinearProgress, Toolbar, Typography, useTheme } from '@mui/material'
-import { FC, useContext } from 'react'
+import { FC, useContext, memo } from 'react'
 import { ColorModeContext } from 'app/styles/ThemeContext'
 import { useSelector } from 'react-redux'
 import { getStatus } from 'entities/notification'
 
-type HeaderPT = {
+interface HeaderPT {
   // add props type
 }
 
-export const Header: FC<HeaderPT> = ({}) => {
+export const Header: FC<HeaderPT> = memo(({}) => {
   //! ---------- work with theme
   const theme = useTheme()
   const colorMode = useContext(ColorModeContext)
@@ -44,4 +44,4 @@ export const Header: FC<HeaderPT> = ({}) => {
       )}
     </AppBar>
   )
-}
+})

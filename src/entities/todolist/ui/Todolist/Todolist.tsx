@@ -1,11 +1,12 @@
 import CloseIcon from '@mui/icons-material/Close'
-import { ButtonGroup, IconButton, List, Stack, Button, Typography } from '@mui/material'
+import { ButtonGroup, IconButton, Stack, Button, Typography } from '@mui/material'
 import { FC, memo } from 'react'
 import { UpdatedTodoListT } from '../../model/types/TodolistsSchema'
 import { useTodolist } from '../../model/hooks/useTodolist/useTodolist'
 import { getStyleFilterButton } from 'entities/todolist/model/utils/getStyleFilterButton'
 import { EditableSpan } from 'shared/ui/EditableSpan/EditableSpan'
 import { AddItemForm } from 'shared/ui/AddItemForm/AddItemForm'
+import { TaskList } from '../../../task/ui/TaskList/TaskList'
 
 const options: Intl.DateTimeFormatOptions = {
   year: 'numeric',
@@ -25,7 +26,7 @@ interface TodolistPT {
 export const Todolist: FC<TodolistPT> = memo(({ todolist, demo = false }) => {
   const { id, title, addedDate, filter, entityStatus } = todolist
 
-  const { tasks, remove, changeTitle, changeFilter, addTask } = useTodolist(id, filter, demo)
+  const { remove, changeTitle, changeFilter, addTask } = useTodolist(id, demo)
 
   return (
     <Stack spacing={3} alignItems="center" sx={styleTodolist}>
@@ -34,9 +35,7 @@ export const Todolist: FC<TodolistPT> = memo(({ todolist, demo = false }) => {
       </IconButton>
       <EditableSpan variant="h4" title={title} textAlign={'center'} changeTitle={changeTitle} />
       <AddItemForm addItem={addTask} disabled={entityStatus === 'loading'} />
-      <List sx={{ width: '100%' }}>
-        {tasks.length ? tasks : <Typography align={'center'}>Not found</Typography>}
-      </List>
+      <TaskList todoListId={id} filter={filter} />
       <ButtonGroup size="small" variant="contained" disableElevation>
         <Button sx={getStyleFilterButton(filter, 'all')} onClick={changeFilter('all')}>
           ALL
