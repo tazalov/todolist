@@ -1,7 +1,7 @@
 import { TaskModel } from '../../types/TasksSchema'
 import { AppThunk } from 'app/providers/store'
 import { getModelSpecificTask } from '../../selectors/tasks'
-import { ChangeTask } from '../../actions/tasks.actions'
+import { ChangeTask, ChangeTaskStatus } from '../../actions/tasks.actions'
 import { SetStatus, handleServerError, handleNetworkError } from 'entities/notification'
 import { ResultCodes } from 'shared/api/types/todolist'
 
@@ -10,6 +10,7 @@ export const updateTask =
   async (dispatch, getState, extra) => {
     const { tasksAPI } = extra
     dispatch(SetStatus('loading'))
+    dispatch(ChangeTaskStatus(todoListId, 'loading'))
     const taskModelFromState = getModelSpecificTask(todoListId, taskId)(getState())
     if (taskModelFromState) {
       const updatedTask = {
@@ -20,14 +21,15 @@ export const updateTask =
         const response = await tasksAPI.updateTask(todoListId, taskId, updatedTask)
         if (response.data.resultCode === ResultCodes.Success) {
           dispatch(ChangeTask(taskId, response.data.data.item))
+          dispatch(ChangeTaskStatus(todoListId, 'succeed'))
           dispatch(SetStatus('succeed'))
         } else {
           handleServerError(response.data, dispatch)
+          dispatch(ChangeTaskStatus(todoListId, 'failed'))
         }
       } catch (e: any) {
         handleNetworkError(e.message, dispatch)
+        dispatch(ChangeTaskStatus(todoListId, 'failed'))
       }
-    } else {
-      handleNetworkError('', dispatch)
     }
   }

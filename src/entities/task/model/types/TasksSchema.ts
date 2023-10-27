@@ -11,8 +11,12 @@ export interface TaskT {
   addedDate: Date
 }
 
+export interface UpdatedTaskT extends TaskT {
+  entityStatus: CurrentStatus
+}
+
 export interface TasksSchema {
-  [todolistId: string]: TaskT[]
+  [todolistId: string]: UpdatedTaskT[]
 }
 
 export enum TaskStatus {

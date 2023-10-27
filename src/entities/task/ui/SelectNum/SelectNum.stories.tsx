@@ -48,6 +48,6 @@ export const SelectPriority: Story = {
   args: {
     options: editMenuPriorityItems,
     colors: tasksPriority,
-    label: 'Status',
+    label: 'Priority',
   },
 }

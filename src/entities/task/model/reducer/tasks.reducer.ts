@@ -5,25 +5,16 @@ export const tasksInitialState: TasksSchema = {}
 
 export const tasksReducer = (state = tasksInitialState, action: TasksAT): TasksSchema => {
   switch (action.type) {
-    case 'todolist/list/set': {
-      return action.payload.reduce(
-        (acc: TasksSchema, el) => {
-          acc[el.id] = []
-          return acc
-        },
-        { ...state },
-      )
-    }
     case 'todolist/tasks/set': {
       const { todolistId, tasks } = action.payload
       return {
         ...state,
-        [todolistId]: tasks,
+        [todolistId]: tasks.map(el => ({ ...el, entityStatus: 'idle' })),
       }
     }
     case 'todolist/tasks/add': {
       const { task } = action.payload
-      return { ...state, [task.todoListId]: [task, ...state[task.todoListId]] }
+      return { ...state, [task.todoListId]: [{ ...task, entityStatus: 'idle' }, ...state[task.todoListId]] }
     }
     case 'todolist/tasks/remove': {
       const { todolistId, taskId } = action.payload
@@ -38,6 +29,22 @@ export const tasksReducer = (state = tasksInitialState, action: TasksAT): TasksS
         ...state,
         [task.todoListId]: state[task.todoListId].map(el => (el.id === taskId ? { ...el, ...task } : el)),
       }
+    }
+    case 'todolist/tasks/changeStatus': {
+      const { todolistId, entityStatus } = action.payload
+      return {
+        ...state,
+        [todolistId]: state[todolistId].map(el => ({ ...el, entityStatus })),
+      }
+    }
+    case 'todolist/list/set': {
+      return action.payload.reduce(
+        (acc: TasksSchema, el) => {
+          acc[el.id] = []
+          return acc
+        },
+        { ...state },
+      )
     }
     case 'todolist/list/add': {
       const { todolist } = action.payload

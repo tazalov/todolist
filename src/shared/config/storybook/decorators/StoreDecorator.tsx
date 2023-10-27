@@ -32,6 +32,7 @@ const state: StateSchema = {
         description: '',
         deadline: new Date(),
         addedDate: new Date(),
+        entityStatus: 'idle',
       },
       {
         id: '2',
@@ -44,6 +45,7 @@ const state: StateSchema = {
         description: '',
         deadline: new Date(),
         addedDate: new Date(),
+        entityStatus: 'idle',
       },
       {
         id: '3',
@@ -56,6 +58,7 @@ const state: StateSchema = {
         description: '',
         deadline: new Date(),
         addedDate: new Date(),
+        entityStatus: 'idle',
       },
     ],
     '2': [
@@ -70,6 +73,7 @@ const state: StateSchema = {
         description: '',
         deadline: new Date(),
         addedDate: new Date(),
+        entityStatus: 'idle',
       },
     ],
     '3': [
@@ -84,6 +88,7 @@ const state: StateSchema = {
         description: '',
         deadline: new Date(),
         addedDate: new Date(),
+        entityStatus: 'idle',
       },
     ],
   },

@@ -1,5 +1,3 @@
-import { Status } from 'entities/notification'
-
 export type FilterT = 'all' | 'active' | 'completed'
 
 export interface TodoListT {
@@ -11,13 +9,13 @@ export interface TodoListT {
 
 export interface UpdatedTodoListT extends TodoListT {
   filter: FilterT
-  entityStatus: Status
+  entityStatus: CurrentStatus
 }
 
 export interface UpdateModelTodoList {
   title?: string
   filter?: FilterT
-  entityStatus?: Status
+  entityStatus?: CurrentStatus
 }
 
 export type TodoListsSchema = UpdatedTodoListT[]

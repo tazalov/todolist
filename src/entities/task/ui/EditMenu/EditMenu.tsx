@@ -3,7 +3,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault'
 import { Button, Dialog, DialogTitle, List, ListItem, TextField, SelectChangeEvent } from '@mui/material'
 import React, { FC, useState, ChangeEvent, useEffect, useCallback, memo } from 'react'
-import { TaskT, TaskStatus, TaskPriority } from '../../model/types/TasksSchema'
+import { TaskStatus, TaskPriority, UpdatedTaskT } from '../../model/types/TasksSchema'
 import { useAppDispatch } from 'app/providers/store'
 import { updateTask } from '../../model/services/updateTask/updateTask'
 import { editMenuPriorityItems, editMenuStatusItems } from '../../model/const/editMenuItems'
@@ -11,7 +11,7 @@ import { SelectNum } from '../SelectNum/SelectNum'
 import { tasksStatus, tasksPriority } from '../../model/const/colorsEditMenuItems'
 
 export interface EditMenuPT {
-  task: TaskT
+  task: UpdatedTaskT
   open: boolean
   onClose: () => void
 }
@@ -61,7 +61,7 @@ export const EditMenu: FC<EditMenuPT> = memo(({ task, onClose, open }) => {
 
   const handleCancelChanges = () => {
     setTitle(task.title)
-    setDescription(task.description)
+    setDescription(task.description || '')
     setStatus(task.status)
     setPriority(task.priority)
     setEditMode(false)
@@ -73,13 +73,25 @@ export const EditMenu: FC<EditMenuPT> = memo(({ task, onClose, open }) => {
       <List sx={{ pt: 0, minWidth: 300 }}>
         <ListItem sx={{ gap: 1 }}>
           {!editMode && (
-            <Button variant="outlined" color={'success'} onClick={activateEditMode} startIcon={<EditIcon />}>
+            <Button
+              variant="outlined"
+              color={'success'}
+              onClick={activateEditMode}
+              startIcon={<EditIcon />}
+              disabled={task.entityStatus === 'loading'}
+            >
               Edit
             </Button>
           )}
           {editMode && (
             <>
-              <Button variant="outlined" color={'info'} onClick={handleSaveChanges} startIcon={<SaveIcon />}>
+              <Button
+                variant="outlined"
+                color={'info'}
+                onClick={handleSaveChanges}
+                startIcon={<SaveIcon />}
+                disabled={task.entityStatus === 'loading'}
+              >
                 Save
               </Button>
               <Button
@@ -87,6 +99,7 @@ export const EditMenu: FC<EditMenuPT> = memo(({ task, onClose, open }) => {
                 color={'error'}
                 onClick={handleCancelChanges}
                 startIcon={<DisabledByDefaultIcon />}
+                disabled={task.entityStatus === 'loading'}
               >
                 Cancel
               </Button>

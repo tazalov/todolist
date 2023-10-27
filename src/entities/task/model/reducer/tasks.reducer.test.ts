@@ -20,6 +20,7 @@ describe('tasks reducer', () => {
           description: '',
           deadline: date,
           addedDate: date,
+          entityStatus: 'idle',
         },
       ],
       todolistId2: [
@@ -34,6 +35,7 @@ describe('tasks reducer', () => {
           description: '',
           deadline: date,
           addedDate: date,
+          entityStatus: 'idle',
         },
         {
           id: '2',
@@ -46,6 +48,7 @@ describe('tasks reducer', () => {
           description: '',
           deadline: date,
           addedDate: date,
+          entityStatus: 'idle',
         },
       ],
     }
@@ -71,7 +74,7 @@ describe('tasks reducer', () => {
     const newState = tasksReducer(initialState, action)
 
     expect(newState[todoListId].length).toBe(1)
-    expect(newState[todoListId]).toEqual(tasks)
+    expect(newState[todoListId]).toEqual([{ ...tasks[0], entityStatus: 'idle' }])
   })
 
   it('correct task should be added to correct array', () => {
@@ -102,6 +105,7 @@ describe('tasks reducer', () => {
       description: '',
       deadline: date,
       addedDate: date,
+      entityStatus: 'idle',
     })
   })
 
@@ -122,6 +126,7 @@ describe('tasks reducer', () => {
           description: '',
           deadline: date,
           addedDate: date,
+          entityStatus: 'idle',
         },
       ],
       todolistId2: [
@@ -136,6 +141,7 @@ describe('tasks reducer', () => {
           description: '',
           deadline: date,
           addedDate: date,
+          entityStatus: 'idle',
         },
       ],
     })

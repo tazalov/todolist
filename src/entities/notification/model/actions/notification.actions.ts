@@ -1,6 +1,4 @@
-import { Status } from '../types/NotificationSchema'
-
-export const SetStatus = (status: Status) =>
+export const SetStatus = (status: CurrentStatus) =>
   ({
     type: 'todolist/notification/status/set',
     payload: { status },

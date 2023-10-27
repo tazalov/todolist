@@ -9,9 +9,10 @@ import { TaskT } from '../../model/types/TasksSchema'
 interface TodoMenuPT {
   task: TaskT
   remove: () => void
+  disabled?: boolean
 }
 
-export const TaskMenu: FC<TodoMenuPT> = memo(({ task, remove }) => {
+export const TaskMenu: FC<TodoMenuPT> = memo(({ task, remove, disabled = false }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
 
@@ -41,7 +42,7 @@ export const TaskMenu: FC<TodoMenuPT> = memo(({ task, remove }) => {
 
   return (
     <>
-      <IconButton onClick={handleClick}>
+      <IconButton disabled={disabled} onClick={handleClick}>
         <MoreVertIcon />
       </IconButton>
       <Menu id="long-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>

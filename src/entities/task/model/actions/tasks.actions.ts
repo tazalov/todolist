@@ -23,3 +23,9 @@ export const ChangeTask = (taskId: string, task: TaskT) =>
     type: 'todolist/tasks/change',
     payload: { taskId, task },
   }) as const
+
+export const ChangeTaskStatus = (todolistId: string, entityStatus: CurrentStatus) =>
+  ({
+    type: 'todolist/tasks/changeStatus',
+    payload: { todolistId, entityStatus },
+  }) as const
