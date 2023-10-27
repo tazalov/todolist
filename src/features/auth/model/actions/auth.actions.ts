@@ -1,6 +1,6 @@
 import { UserData } from '../types/AuthSchema'
 
-export const SetUserData = (data: UserData) =>
+export const SetUserData = (data: UserData | null) =>
   ({
     type: 'todolist/auth/setUserData',
     payload: { data },

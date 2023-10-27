@@ -16,5 +16,5 @@ export interface AuthSchema {
   captcha: string | null
 
   //* инициализируем юзера через auth/me, а потом меняем флаг на true
-  _inited: false
+  _inited: boolean
 }

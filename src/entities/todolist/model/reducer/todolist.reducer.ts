@@ -31,6 +31,9 @@ export const todoListReducer = (state = initialTodolistState, action: TodoListAT
       const { todoListId, model } = action.payload
       return state.map(el => (el.id === todoListId ? { ...el, ...model } : el))
     }
+    case 'todolist/clear_current_state': {
+      return initialTodolistState
+    }
     default: {
       return state
     }

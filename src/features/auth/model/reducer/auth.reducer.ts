@@ -7,11 +7,11 @@ const initialState: AuthSchema = {
   _inited: false,
 }
 
-export const authReducer = (state = initialState, action: AuthAT) => {
+export const authReducer = (state = initialState, action: AuthAT): AuthSchema => {
   switch (action.type) {
     case 'todolist/auth/setUserData': {
       const { data } = action.payload
-      return { ...state, data }
+      return { ...state, data: data }
     }
     case 'todolist/auth/setCaptcha': {
       const { captcha } = action.payload

@@ -6,6 +6,7 @@ const state: StateSchema = {
   auth: {
     data: null,
     captcha: null,
+    _inited: true,
   },
   notification: {
     status: 'idle',

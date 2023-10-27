@@ -58,6 +58,9 @@ export const tasksReducer = (state = tasksInitialState, action: TasksAT): TasksS
       const { [todoListId]: deleted, ...stateCopy } = state
       return stateCopy
     }
+    case 'todolist/clear_current_state': {
+      return tasksInitialState
+    }
     default: {
       return state
     }

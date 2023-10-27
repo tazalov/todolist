@@ -1,4 +1,4 @@
-import { AddTodolistAT, RemoveTodolistAT, SetTodoListsAT } from 'entities/todolist'
+import { AddTodolistAT, RemoveTodolistAT, SetTodoListsAT, ClearStateAT } from 'entities/todolist'
 import { AddTask, RemoveTask, SetTasks, ChangeTask, ChangeTaskStatus } from '../actions/tasks.actions'
 
 export type TasksAT =
@@ -10,6 +10,7 @@ export type TasksAT =
   | RemoveTaskAT
   | ChangeTaskAT
   | ChangeTaskStatusAT
+  | ClearStateAT
 
 type SetTasksAT = ReturnType<typeof SetTasks>
 type AddTaskAT = ReturnType<typeof AddTask>

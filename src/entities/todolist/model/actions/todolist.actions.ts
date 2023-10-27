@@ -1,5 +1,7 @@
 import { TodoListT, UpdateModelTodoList } from '../types/TodolistsSchema'
 
+export const ClearState = () => ({ type: 'todolist/clear_current_state' }) as const
+
 export const SetTodoLists = (todolists: TodoListT[]) =>
   ({
     type: 'todolist/list/set',

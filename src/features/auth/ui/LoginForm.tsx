@@ -10,8 +10,8 @@ import { useAppDispatch } from 'app/providers/store'
 import { loginUser } from '../model/services/loginUser/loginUser'
 import Tooltip from '@mui/material/Tooltip'
 import { useSelector } from 'react-redux'
-import { getUserData } from '../model/auth'
-import { useNavigate } from 'react-router-dom'
+import { getUserData } from '../model/selectors/auth'
+import { Navigate } from 'react-router-dom'
 
 const validationSchema = yup.object({
   email: yup.string().email('Enter a valid email').required('Email is required'),
@@ -36,11 +36,11 @@ export const LoginForm = () => {
   })
 
   const dispatch = useAppDispatch()
-  const navigate = useNavigate()
+
   const userData = useSelector(getUserData)
 
   if (userData) {
-    navigate('/')
+    return <Navigate to={'/'} />
   }
 
   return (
