@@ -5,7 +5,7 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from 'app/providers/store'
 import { getError } from '../../model/selectors/notification'
-import { SetError } from '../../model/actions/notification.actions'
+import { SetError, SetStatus } from '../../model/actions/notification.actions'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
@@ -23,6 +23,7 @@ export const ErrorSnackbar = memo(() => {
       return
     }
     dispatch(SetError(null))
+    dispatch(SetStatus('idle'))
   }
 
   return (

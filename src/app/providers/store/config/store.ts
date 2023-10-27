@@ -5,6 +5,7 @@ import { tasksReducer, tasksAPI } from 'entities/task'
 import { todoListReducer, todolistAPI } from 'entities/todolist'
 import { StateSchema, AppDispatch } from './StateSchema'
 import { notificationReducer } from 'entities/notification'
+import { authAPI, authReducer } from 'features/auth'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
@@ -13,12 +14,14 @@ export const createReduxStore = (initialState?: StateSchema) => {
     todoList: todoListReducer,
     tasks: tasksReducer,
     notification: notificationReducer,
+    auth: authReducer,
   }
 
   const middleWares = [
     thunk.withExtraArgument({
       todolistAPI,
       tasksAPI,
+      authAPI,
     }),
   ]
 

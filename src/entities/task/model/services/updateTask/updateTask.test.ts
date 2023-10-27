@@ -3,7 +3,7 @@ import { tasksAPI, TasksAPI } from '../../../api/tasks.api'
 import { BaseResponseT } from 'shared/api/types/todolist'
 import { TaskT, TaskModel } from '../../types/TasksSchema'
 import { StateSchema, AppThunkExtra } from 'app/providers/store'
-import { ChangeTask } from '../../actions/tasks.actions'
+import { ChangeTask, ChangeTaskStatus } from '../../actions/tasks.actions'
 import { AxiosResponse } from 'axios'
 import { getModelSpecificTask } from '../../selectors/tasks'
 import { SetStatus, SetError } from 'entities/notification'
@@ -58,10 +58,12 @@ describe('updateTask thunk', () => {
 
     await updateTask('1', '2', taskModel)(dispatch, getState, extra)
 
-    expect(dispatch).toHaveBeenCalledTimes(3)
+    expect(dispatch).toHaveBeenCalledTimes(5)
     expect(dispatch).toHaveBeenNthCalledWith(1, SetStatus('loading'))
-    expect(dispatch).toHaveBeenNthCalledWith(2, ChangeTask('2', task))
-    expect(dispatch).toHaveBeenNthCalledWith(3, SetStatus('succeed'))
+    expect(dispatch).toHaveBeenNthCalledWith(2, ChangeTaskStatus('1', 'loading'))
+    expect(dispatch).toHaveBeenNthCalledWith(3, ChangeTask('2', task))
+    expect(dispatch).toHaveBeenNthCalledWith(4, ChangeTaskStatus('1', 'succeed'))
+    expect(dispatch).toHaveBeenNthCalledWith(5, SetStatus('succeed'))
   })
 
   it('set of actions for a successful request with error is correct', async () => {
@@ -83,10 +85,12 @@ describe('updateTask thunk', () => {
 
     await updateTask('1', '2', taskModel)(dispatch, getState, extra)
 
-    expect(dispatch).toHaveBeenCalledTimes(3)
+    expect(dispatch).toHaveBeenCalledTimes(5)
     expect(dispatch).toHaveBeenNthCalledWith(1, SetStatus('loading'))
-    expect(dispatch).toHaveBeenNthCalledWith(2, SetError('some error occurred'))
-    expect(dispatch).toHaveBeenNthCalledWith(3, SetStatus('failed'))
+    expect(dispatch).toHaveBeenNthCalledWith(2, ChangeTaskStatus('1', 'loading'))
+    expect(dispatch).toHaveBeenNthCalledWith(3, SetError('some error occurred'))
+    expect(dispatch).toHaveBeenNthCalledWith(4, SetStatus('failed'))
+    expect(dispatch).toHaveBeenNthCalledWith(5, ChangeTaskStatus('1', 'failed'))
   })
 
   it('set of actions for a bad request is correct', async () => {
@@ -101,10 +105,12 @@ describe('updateTask thunk', () => {
 
     await updateTask('1', '2', taskModel)(dispatch, getState, extra)
 
-    expect(dispatch).toHaveBeenCalledTimes(3)
+    expect(dispatch).toHaveBeenCalledTimes(5)
     expect(dispatch).toHaveBeenNthCalledWith(1, SetStatus('loading'))
-    expect(dispatch).toHaveBeenNthCalledWith(2, SetError('some error'))
-    expect(dispatch).toHaveBeenNthCalledWith(3, SetStatus('failed'))
+    expect(dispatch).toHaveBeenNthCalledWith(2, ChangeTaskStatus('1', 'loading'))
+    expect(dispatch).toHaveBeenNthCalledWith(3, SetError('some error'))
+    expect(dispatch).toHaveBeenNthCalledWith(4, SetStatus('failed'))
+    expect(dispatch).toHaveBeenNthCalledWith(5, ChangeTaskStatus('1', 'failed'))
   })
 
   it('set of actions for a empty task is correct', async () => {
@@ -118,9 +124,8 @@ describe('updateTask thunk', () => {
 
     await updateTask('1', '2', taskModel)(dispatch, getState, extra)
 
-    expect(dispatch).toHaveBeenCalledTimes(3)
+    expect(dispatch).toHaveBeenCalledTimes(2)
     expect(dispatch).toHaveBeenNthCalledWith(1, SetStatus('loading'))
-    expect(dispatch).toHaveBeenNthCalledWith(2, SetError('Some error occurred'))
-    expect(dispatch).toHaveBeenNthCalledWith(3, SetStatus('failed'))
+    expect(dispatch).toHaveBeenNthCalledWith(2, ChangeTaskStatus('1', 'loading'))
   })
 })

@@ -3,6 +3,10 @@ import { TaskStatus, TaskPriority } from 'entities/task'
 import { StateSchema, StoreProvider } from 'app/providers/store'
 
 const state: StateSchema = {
+  auth: {
+    data: null,
+    captcha: null,
+  },
   notification: {
     status: 'idle',
     error: null,
