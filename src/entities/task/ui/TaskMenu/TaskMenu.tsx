@@ -4,10 +4,10 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material'
 import { FC, MouseEvent, useState, memo } from 'react'
 import { EditMenu } from '../EditMenu/EditMenu'
-import { TaskT } from '../../model/types/TasksSchema'
+import { UpdatedTaskT } from '../../model/types/TasksSchema'
 
 interface TodoMenuPT {
-  task: TaskT
+  task: UpdatedTaskT
   remove: () => void
   disabled?: boolean
 }

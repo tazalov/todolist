@@ -37,6 +37,7 @@ export const Demo: Story = {
       description: '',
       deadline: new Date(),
       addedDate: new Date(),
+      entityStatus: 'idle',
     },
   },
 }
