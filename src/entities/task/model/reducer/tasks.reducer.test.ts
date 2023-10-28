@@ -1,7 +1,9 @@
-import { AddTodoList, RemoveTodolist } from 'entities/todolist'
-import { AddTask, RemoveTask, SetTasks, ChangeTask } from '../actions/tasks.actions'
 import { tasksReducer } from './tasks.reducer'
+
+import { AddTask, RemoveTask, SetTasks, ChangeTask } from '../actions/tasks.actions'
 import { TasksSchema, TaskStatus, TaskPriority } from '../types/TasksSchema'
+
+import { AddTodoList, RemoveTodolist } from 'entities/todolist'
 
 describe('tasks reducer', () => {
   const date = new Date(2023, 0, 1, 0, 0, 0, 0)
@@ -193,7 +195,7 @@ describe('tasks reducer', () => {
     const newState = tasksReducer(initialState, action)
 
     const keys = Object.keys(newState)
-    const newKey = keys.find(k => k !== 'todolistId1' && k !== 'todolistId2')
+    const newKey = keys.find((k) => k !== 'todolistId1' && k !== 'todolistId2')
     if (!newKey) {
       throw Error('new key should be added')
     }

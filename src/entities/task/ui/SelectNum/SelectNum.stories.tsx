@@ -1,7 +1,9 @@
-import type { Meta, StoryObj, StoryFn } from '@storybook/react'
 import { SelectNum } from './SelectNum'
-import { editMenuStatusItems, editMenuPriorityItems } from '../../model/const/editMenuItems'
+
 import { tasksStatus, tasksPriority } from '../../model/const/colorsEditMenuItems'
+import { editMenuStatusItems, editMenuPriorityItems } from '../../model/const/editMenuItems'
+
+import type { Meta, StoryObj, StoryFn } from '@storybook/react'
 
 const SelectDecorator = (Story: StoryFn) => (
   <div style={{ width: '150px' }}>

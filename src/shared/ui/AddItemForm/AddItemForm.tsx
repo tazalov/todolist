@@ -37,11 +37,11 @@ export const AddItemForm: FC<AddItemFormPT> = memo(({ addItem, disabled = false 
   }
 
   return (
-    <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
+    <Stack direction='row' justifyContent='center' alignItems='center' spacing={1}>
       <TextField
         label={error || 'New title'}
-        variant="outlined"
-        size="small"
+        variant='outlined'
+        size='small'
         error={!!error}
         value={title}
         onChange={handleChange}
@@ -49,9 +49,9 @@ export const AddItemForm: FC<AddItemFormPT> = memo(({ addItem, disabled = false 
         onBlur={handleBlur}
         disabled={disabled}
       />
-      <Tooltip title="Click to create new item">
+      <Tooltip title='Click to create new item'>
         <IconButton onClick={addNewItem} color={'success'} disabled={!!error || disabled}>
-          <AddBoxIcon fontSize="large" />
+          <AddBoxIcon fontSize='large' />
         </IconButton>
       </Tooltip>
     </Stack>

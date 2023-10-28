@@ -1,6 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react'
 import { TaskMenu } from './TaskMenu'
+
 import { TaskStatus, TaskPriority } from '../../model/types/TasksSchema'
+
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof TaskMenu> = {
   title: 'entities/Task/TaskMenu',

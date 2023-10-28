@@ -6,7 +6,7 @@ export const initialTodolistState: TodoListsSchema = []
 export const todoListReducer = (state = initialTodolistState, action: TodoListAT): TodoListsSchema => {
   switch (action.type) {
     case 'todolist/list/set': {
-      return action.payload.map(el => ({
+      return action.payload.map((el) => ({
         ...el,
         addedDate: new Date(el.addedDate),
         filter: 'all',
@@ -25,11 +25,11 @@ export const todoListReducer = (state = initialTodolistState, action: TodoListAT
     }
     case 'todolist/list/remove': {
       const { todoListId } = action.payload
-      return state.filter(el => el.id !== todoListId)
+      return state.filter((el) => el.id !== todoListId)
     }
     case 'todolist/list/change': {
       const { todoListId, model } = action.payload
-      return state.map(el => (el.id === todoListId ? { ...el, ...model } : el))
+      return state.map((el) => (el.id === todoListId ? { ...el, ...model } : el))
     }
     case 'todolist/clear_current_state': {
       return initialTodolistState

@@ -1,12 +1,17 @@
-import { updateTask } from './updateTask'
-import { tasksAPI, TasksAPI } from '../../../api/tasks.api'
-import { BaseResponseT } from 'shared/api/types/todolist'
-import { TaskT, TaskModel } from '../../types/TasksSchema'
-import { StateSchema, AppThunkExtra } from 'app/providers/store'
-import { ChangeTask, ChangeTaskStatus } from '../../actions/tasks.actions'
 import { AxiosResponse } from 'axios'
+
+import { updateTask } from './updateTask'
+
+import { tasksAPI, TasksAPI } from '../../../api/tasks.api'
+
+import { ChangeTask, ChangeTaskStatus } from '../../actions/tasks.actions'
 import { getModelSpecificTask } from '../../selectors/tasks'
+import { TaskT, TaskModel } from '../../types/TasksSchema'
+
+import { StateSchema, AppThunkExtra } from 'app/providers/store'
+
 import { SetStatus, SetError } from 'entities/notification'
+import { BaseResponseT } from 'shared/api/types/todolist'
 
 jest.mock('../../../api/tasks.api')
 jest.mock('../../selectors/tasks')

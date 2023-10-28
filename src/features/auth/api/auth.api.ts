@@ -1,5 +1,6 @@
-import { todolist } from 'shared/api/config/todolist'
 import { LoginDataForm, UserData } from '../model/types/AuthSchema'
+
+import { todolist } from 'shared/api/config/todolist'
 import { BaseResponseT } from 'shared/api/types/todolist'
 
 export const authAPI = {

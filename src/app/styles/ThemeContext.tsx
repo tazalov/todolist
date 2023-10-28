@@ -1,6 +1,7 @@
 import CssBaseline from '@mui/material/CssBaseline'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { createContext, FC, ReactNode, useMemo, useState } from 'react'
+
 import { getDesignTokens } from './Theme'
 
 export const ColorModeContext = createContext({ toggleColorMode: () => {} })
@@ -14,7 +15,7 @@ export const ThemeContext: FC<ThemeContextPT> = ({ children }) => {
   //! ---------- useMemo return object with key - toggleColorMode and value - callback with setMode
   const colorMode = useMemo(
     () => ({
-      toggleColorMode: () => setMode(prev => (prev === 'light' ? 'dark' : 'light')),
+      toggleColorMode: () => setMode((prev) => (prev === 'light' ? 'dark' : 'light')),
     }),
     [],
   )

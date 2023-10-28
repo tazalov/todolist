@@ -1,5 +1,6 @@
-import { SetError, SetStatus } from '../actions/notification.actions'
 import { notificationReducer } from './notification.reducer'
+
+import { SetError, SetStatus } from '../actions/notification.actions'
 import { NotificationSchema } from '../types/NotificationSchema'
 
 describe('notification reducer', () => {

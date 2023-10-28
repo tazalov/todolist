@@ -1,5 +1,6 @@
-import { StateSchema } from 'app/providers/store'
 import { TaskT, TasksSchema, TaskModelAPI, UpdatedTaskT } from '../types/TasksSchema'
+
+import { StateSchema } from 'app/providers/store'
 
 export const getSpecificTasks =
   (todoListId: string) =>
@@ -9,7 +10,7 @@ export const getSpecificTasks =
 export const getModelSpecificTask =
   (todoListId: string, taskId: string) =>
   (state: StateSchema): TaskModelAPI | undefined => {
-    const task = state.tasks[todoListId].find(el => el.id === taskId)
+    const task = state.tasks[todoListId].find((el) => el.id === taskId)
     return task
       ? {
           deadline: task.deadline,

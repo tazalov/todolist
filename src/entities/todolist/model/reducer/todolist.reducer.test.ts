@@ -1,7 +1,9 @@
 import { v1 } from 'uuid'
+
+import { todoListReducer } from './todolist.reducer'
+
 import { AddTodoList, ChangeTodolist, RemoveTodolist, SetTodoLists } from '../actions/todolist.actions'
 import { TodoListsSchema, TodoListT } from '../types/TodolistsSchema'
-import { todoListReducer } from './todolist.reducer'
 
 describe('todolist reducer', () => {
   const todoListId1 = v1()

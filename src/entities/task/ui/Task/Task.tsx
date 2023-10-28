@@ -1,11 +1,13 @@
 import { Checkbox, ListItem } from '@mui/material'
 import { FC, memo } from 'react'
-import { TaskStatus, UpdatedTaskT } from '../../model/types/TasksSchema'
-import { TaskMenu } from '../TaskMenu/TaskMenu'
-import { useTask } from '../../model/hooks/useTask/useTask'
-import { EditableSpan } from 'shared/ui/EditableSpan/EditableSpan'
-import { getBgForStatus } from '../../model/utils/getBgForStatus'
+
 import { tasksPriority } from '../../model/const/colorsEditMenuItems'
+import { useTask } from '../../model/hooks/useTask/useTask'
+import { TaskStatus, UpdatedTaskT } from '../../model/types/TasksSchema'
+import { getBgForStatus } from '../../model/utils/getBgForStatus'
+import { TaskMenu } from '../TaskMenu/TaskMenu'
+
+import { EditableSpan } from 'shared/ui/EditableSpan/EditableSpan'
 
 interface TodoPT {
   todoListId: string
@@ -28,19 +30,14 @@ export const Task: FC<TodoPT> = memo(({ todoListId, task }) => {
   }
 
   return (
-    <ListItem role="listitem" sx={styleItem} disablePadding>
+    <ListItem role='listitem' sx={styleItem} disablePadding>
       <Checkbox
-        color="secondary"
+        color='secondary'
         checked={status === TaskStatus.COMPLETED}
         onChange={changeStatus}
         disabled={entityStatus === 'loading'}
       />
-      <EditableSpan
-        variant="h6"
-        title={title}
-        changeTitle={changeTitle}
-        disabled={entityStatus === 'loading'}
-      />
+      <EditableSpan variant='h6' title={title} changeTitle={changeTitle} disabled={entityStatus === 'loading'} />
       <TaskMenu task={task} remove={remove} disabled={entityStatus === 'loading'} />
     </ListItem>
   )

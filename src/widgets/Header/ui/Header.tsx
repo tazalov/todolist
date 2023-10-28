@@ -1,14 +1,16 @@
 import Brightness7Icon from '@mui/icons-material/Brightness7'
+import LogoutIcon from '@mui/icons-material/Logout'
 import MenuIcon from '@mui/icons-material/Menu'
 import NightsStayIcon from '@mui/icons-material/NightsStay'
 import { AppBar, Button, IconButton, LinearProgress, Toolbar, Typography, useTheme } from '@mui/material'
 import { FC, useContext, memo } from 'react'
-import { ColorModeContext } from 'app/styles/ThemeContext'
+
 import { useSelector } from 'react-redux'
+
+import { useAppDispatch } from 'app/providers/store'
+import { ColorModeContext } from 'app/styles/ThemeContext'
 import { getStatus } from 'entities/notification'
 import { getUserData } from 'features/auth'
-import LogoutIcon from '@mui/icons-material/Logout'
-import { useAppDispatch } from 'app/providers/store'
 import { logoutUser } from 'features/auth'
 
 interface HeaderPT {
@@ -30,12 +32,12 @@ export const Header: FC<HeaderPT> = memo(({}) => {
   }
 
   return (
-    <AppBar position="static" enableColorOnDark sx={{ bgcolor: 'background.header', position: 'relative' }}>
+    <AppBar position='static' enableColorOnDark sx={{ bgcolor: 'background.header', position: 'relative' }}>
       <Toolbar>
-        <IconButton size="large" edge="start" sx={{ mr: 2, color: 'primary.contrastText' }}>
+        <IconButton size='large' edge='start' sx={{ mr: 2, color: 'primary.contrastText' }}>
           <MenuIcon />
         </IconButton>
-        <Typography variant="h4" sx={{ flexGrow: 1 }}>
+        <Typography variant='h4' sx={{ flexGrow: 1 }}>
           DODOLIST
         </Typography>
         {!userData ? (
@@ -51,7 +53,7 @@ export const Header: FC<HeaderPT> = memo(({}) => {
       </Toolbar>
       {status === 'loading' && (
         <LinearProgress
-          color="secondary"
+          color='secondary'
           sx={{
             position: 'absolute',
             width: '100%',

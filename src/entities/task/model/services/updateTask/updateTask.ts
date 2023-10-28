@@ -1,7 +1,9 @@
-import { TaskModel } from '../../types/TasksSchema'
-import { AppThunk } from 'app/providers/store'
-import { getModelSpecificTask } from '../../selectors/tasks'
 import { ChangeTask, ChangeTaskStatus } from '../../actions/tasks.actions'
+import { getModelSpecificTask } from '../../selectors/tasks'
+import { TaskModel } from '../../types/TasksSchema'
+
+import { AppThunk } from 'app/providers/store'
+
 import { SetStatus, handleServerError, handleNetworkError } from 'entities/notification'
 import { ResultCodes } from 'shared/api/types/todolist'
 

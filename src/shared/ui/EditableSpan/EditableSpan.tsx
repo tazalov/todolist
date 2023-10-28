@@ -1,8 +1,8 @@
-import { TextField, Tooltip, Typography, InputAdornment, IconButton } from '@mui/material'
 import ErrorIcon from '@mui/icons-material/Error'
 import SaveIcon from '@mui/icons-material/Save'
-import { FC, memo, useState, ChangeEvent } from 'react'
+import { TextField, Tooltip, Typography, InputAdornment, IconButton } from '@mui/material'
 import { TypographyOwnProps } from '@mui/material/Typography/Typography'
+import { FC, memo, useState, ChangeEvent } from 'react'
 
 const inheritStyleInput: any = {
   lineHeight: 'inherit',
@@ -47,23 +47,23 @@ export const EditableSpan: FC<EditableSpanPT> = memo(({ title, changeTitle, disa
   }
 
   return (
-    <Tooltip title="Double click for edit">
+    <Tooltip title='Double click for edit'>
       <Typography
-        width="100%"
+        width='100%'
         onDoubleClick={activateEditMode}
         sx={{ cursor: 'pointer', textOverFlow: 'ellipsis', wordBreak: 'break-all' }}
         {...rest}
       >
         {editMode ? (
           <TextField
-            variant="standard"
+            variant='standard'
             error={error}
             value={currentTitle}
             onChange={handleChange}
             InputProps={{
               style: inheritStyleInput,
               endAdornment: (
-                <InputAdornment position="end">
+                <InputAdornment position='end'>
                   {error ? (
                     <ErrorIcon color={'error'} />
                   ) : (

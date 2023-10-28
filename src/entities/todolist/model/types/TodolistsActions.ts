@@ -1,10 +1,4 @@
-import {
-  AddTodoList,
-  RemoveTodolist,
-  SetTodoLists,
-  ChangeTodolist,
-  ClearState,
-} from '../actions/todolist.actions'
+import { AddTodoList, RemoveTodolist, SetTodoLists, ChangeTodolist, ClearState } from '../actions/todolist.actions'
 
 export type TodoListAT = SetTodoListsAT | AddTodolistAT | RemoveTodolistAT | ChangeTodolistAT | ClearStateAT
 

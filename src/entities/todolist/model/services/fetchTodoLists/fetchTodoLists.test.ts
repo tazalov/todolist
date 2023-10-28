@@ -1,9 +1,14 @@
-import { fetchTodoLists } from './fetchTodoLists'
-import { todolistAPI, TodolistAPI } from '../../../api/todolists.api'
-import { StateSchema, AppThunkExtra } from 'app/providers/store'
 import { AxiosResponse } from 'axios'
-import { TodoListT } from '../../types/TodolistsSchema'
+
+import { fetchTodoLists } from './fetchTodoLists'
+
+import { todolistAPI, TodolistAPI } from '../../../api/todolists.api'
+
 import { SetTodoLists } from '../../actions/todolist.actions'
+import { TodoListT } from '../../types/TodolistsSchema'
+
+import { StateSchema, AppThunkExtra } from 'app/providers/store'
+
 import { SetStatus, SetError } from 'entities/notification'
 
 jest.mock('../../../api/todolists.api')
@@ -29,9 +34,7 @@ describe('fetchTodoLists thunk', () => {
       data: [todolist],
     }
 
-    todolistAPIMock.getTodolists.mockReturnValue(
-      Promise.resolve(result as unknown as AxiosResponse<TodoListT[]>),
-    )
+    todolistAPIMock.getTodolists.mockReturnValue(Promise.resolve(result as unknown as AxiosResponse<TodoListT[]>))
 
     await fetchTodoLists()(dispatch, getState, extra)
 

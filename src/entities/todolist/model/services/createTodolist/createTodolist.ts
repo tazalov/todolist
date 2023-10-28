@@ -1,5 +1,6 @@
-import { AppThunk } from 'app/providers/store'
 import { AddTodoList } from '../../actions/todolist.actions'
+
+import { AppThunk } from 'app/providers/store'
 import { SetStatus, handleServerError, handleNetworkError } from 'entities/notification'
 import { ResultCodes } from 'shared/api/types/todolist'
 

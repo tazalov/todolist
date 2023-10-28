@@ -1,7 +1,10 @@
-import { TasksSchema, tasksReducer } from 'entities/task'
-import { AddTodoList } from '../actions/todolist.actions'
-import { TodoListsSchema } from '../types/TodolistsSchema'
 import { todoListReducer } from './todolist.reducer'
+
+import { AddTodoList } from '../actions/todolist.actions'
+
+import { TodoListsSchema } from '../types/TodolistsSchema'
+
+import { TasksSchema, tasksReducer } from 'entities/task'
 
 const date = new Date(2023, 0, 1, 0, 0, 0, 0)
 

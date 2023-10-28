@@ -1,8 +1,10 @@
-import { useAppDispatch } from 'app/providers/store'
 import { ChangeEvent, useCallback } from 'react'
-import { TaskStatus } from '../../types/TasksSchema'
+
 import { deleteTask } from '../../services/deleteTask/deleteTask'
 import { updateTask } from '../../services/updateTask/updateTask'
+import { TaskStatus } from '../../types/TasksSchema'
+
+import { useAppDispatch } from 'app/providers/store'
 
 export const useTask = (todoListId: string, taskId: string) => {
   const dispatch = useAppDispatch()

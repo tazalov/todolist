@@ -1,11 +1,15 @@
-import { fetchTasksByTodolistId } from './fetchTasksByTodolistId'
-import { tasksAPI, TasksAPI } from '../../../api/tasks.api'
-import { ItemsResponseT } from 'shared/api/types/todolist'
-import { TaskT } from '../../types/TasksSchema'
-import { StateSchema, AppThunkExtra } from 'app/providers/store'
-import { SetTasks } from '../../actions/tasks.actions'
 import { AxiosResponse } from 'axios'
+
+import { fetchTasksByTodolistId } from './fetchTasksByTodolistId'
+
+import { tasksAPI, TasksAPI } from '../../../api/tasks.api'
+
+import { SetTasks } from '../../actions/tasks.actions'
+import { TaskT } from '../../types/TasksSchema'
+
+import { StateSchema, AppThunkExtra } from 'app/providers/store'
 import { SetStatus, SetError } from 'entities/notification'
+import { ItemsResponseT } from 'shared/api/types/todolist'
 
 jest.mock('../../../api/tasks.api')
 

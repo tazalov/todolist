@@ -9,7 +9,7 @@ export const tasksReducer = (state = tasksInitialState, action: TasksAT): TasksS
       const { todolistId, tasks } = action.payload
       return {
         ...state,
-        [todolistId]: tasks.map(el => ({ ...el, entityStatus: 'idle' })),
+        [todolistId]: tasks.map((el) => ({ ...el, entityStatus: 'idle' })),
       }
     }
     case 'todolist/tasks/add': {
@@ -20,21 +20,21 @@ export const tasksReducer = (state = tasksInitialState, action: TasksAT): TasksS
       const { todolistId, taskId } = action.payload
       return {
         ...state,
-        [todolistId]: state[todolistId].filter(el => el.id !== taskId),
+        [todolistId]: state[todolistId].filter((el) => el.id !== taskId),
       }
     }
     case 'todolist/tasks/change': {
       const { taskId, task } = action.payload
       return {
         ...state,
-        [task.todoListId]: state[task.todoListId].map(el => (el.id === taskId ? { ...el, ...task } : el)),
+        [task.todoListId]: state[task.todoListId].map((el) => (el.id === taskId ? { ...el, ...task } : el)),
       }
     }
     case 'todolist/tasks/changeStatus': {
       const { todolistId, entityStatus } = action.payload
       return {
         ...state,
-        [todolistId]: state[todolistId].map(el => ({ ...el, entityStatus })),
+        [todolistId]: state[todolistId].map((el) => ({ ...el, entityStatus })),
       }
     }
     case 'todolist/list/set': {

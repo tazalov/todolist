@@ -1,6 +1,7 @@
 import { StoryFn } from '@storybook/react'
-import { TaskStatus, TaskPriority } from 'entities/task'
+
 import { StateSchema, StoreProvider } from 'app/providers/store'
+import { TaskStatus, TaskPriority } from 'entities/task'
 
 const state: StateSchema = {
   auth: {

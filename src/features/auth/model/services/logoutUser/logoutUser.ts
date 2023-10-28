@@ -1,8 +1,9 @@
-import { AppThunk } from 'app/providers/store'
-import { ResultCodes } from 'shared/api/types/todolist'
 import { SetUserData } from '../../actions/auth.actions'
+
+import { AppThunk } from 'app/providers/store'
 import { SetStatus, handleServerError, handleNetworkError } from 'entities/notification'
 import { ClearState } from 'entities/todolist'
+import { ResultCodes } from 'shared/api/types/todolist'
 
 export const logoutUser = (): AppThunk => async (dispatch, _, extra) => {
   const { authAPI } = extra

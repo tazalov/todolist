@@ -1,8 +1,10 @@
 import { FC, ReactNode } from 'react'
 import { Provider } from 'react-redux'
-import { createReduxStore } from '../config/store'
-import { StateSchema } from '../config/StateSchema'
+
 import { DeepPartial } from 'redux'
+
+import { StateSchema } from '../config/StateSchema'
+import { createReduxStore } from '../config/store'
 
 type StoreProviderPT = {
   children: ReactNode

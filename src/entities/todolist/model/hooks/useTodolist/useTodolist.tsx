@@ -1,10 +1,13 @@
-import { useAppDispatch } from 'app/providers/store'
 import { useCallback, useEffect } from 'react'
+
 import { ChangeTodolist } from '../../actions/todolist.actions'
-import { FilterT } from '../../types/TodolistsSchema'
-import { fetchTasksByTodolistId, createTask } from 'entities/task'
+
 import { deleteTodolist } from '../../services/deleteTodolist/deleteTodolist'
 import { updateTitleTodolist } from '../../services/updateTitleTodolist/updateTitleTodolist'
+import { FilterT } from '../../types/TodolistsSchema'
+
+import { useAppDispatch } from 'app/providers/store'
+import { fetchTasksByTodolistId, createTask } from 'entities/task'
 
 export const useTodolist = (todoListId: string, demo: boolean) => {
   const dispatch = useAppDispatch()

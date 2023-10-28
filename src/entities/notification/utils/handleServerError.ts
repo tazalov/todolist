@@ -1,5 +1,6 @@
-import { AppDispatch } from 'app/providers/store'
 import { SetError, SetStatus } from '../model/actions/notification.actions'
+
+import { AppDispatch } from 'app/providers/store'
 import { BaseResponseT } from 'shared/api/types/todolist'
 
 export const handleServerError = (data: BaseResponseT, dispatch: AppDispatch) => {

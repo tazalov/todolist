@@ -1,5 +1,5 @@
-import { AuthSchema } from '../types/AuthSchema'
 import { AuthAT } from '../types/AuthActions'
+import { AuthSchema } from '../types/AuthSchema'
 
 const initialState: AuthSchema = {
   data: null,

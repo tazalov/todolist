@@ -1,8 +1,9 @@
-import { LoginDataForm } from '../../types/AuthSchema'
-import { AppThunk } from 'app/providers/store'
-import { ResultCodes } from 'shared/api/types/todolist'
-import { handleServerError, handleNetworkError, SetStatus } from 'entities/notification'
 import { SetUserData } from '../../actions/auth.actions'
+import { LoginDataForm } from '../../types/AuthSchema'
+
+import { AppThunk } from 'app/providers/store'
+import { handleServerError, handleNetworkError, SetStatus } from 'entities/notification'
+import { ResultCodes } from 'shared/api/types/todolist'
 
 export const loginUser =
   (loginDataForm: LoginDataForm): AppThunk =>

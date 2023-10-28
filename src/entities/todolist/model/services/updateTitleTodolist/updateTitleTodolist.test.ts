@@ -1,10 +1,15 @@
-import { updateTitleTodolist } from './updateTitleTodolist'
-import { todolistAPI, TodolistAPI } from '../../../api/todolists.api'
-import { StateSchema, AppThunkExtra } from 'app/providers/store'
 import { AxiosResponse } from 'axios'
+
+import { updateTitleTodolist } from './updateTitleTodolist'
+
+import { todolistAPI, TodolistAPI } from '../../../api/todolists.api'
+
 import { ChangeTodolist } from '../../actions/todolist.actions'
-import { BaseResponseT } from 'shared/api/types/todolist'
+
+import { StateSchema, AppThunkExtra } from 'app/providers/store'
+
 import { SetStatus, SetError } from 'entities/notification'
+import { BaseResponseT } from 'shared/api/types/todolist'
 
 jest.mock('../../../api/todolists.api')
 
@@ -31,10 +36,7 @@ describe('updateTitleTodolist thunk', () => {
     expect(dispatch).toHaveBeenCalledTimes(4)
     expect(dispatch).toHaveBeenNthCalledWith(1, SetStatus('loading'))
     expect(dispatch).toHaveBeenNthCalledWith(2, ChangeTodolist('1', { entityStatus: 'loading' }))
-    expect(dispatch).toHaveBeenNthCalledWith(
-      3,
-      ChangeTodolist('1', { title: 'title', entityStatus: 'succeed' }),
-    )
+    expect(dispatch).toHaveBeenNthCalledWith(3, ChangeTodolist('1', { title: 'title', entityStatus: 'succeed' }))
     expect(dispatch).toHaveBeenNthCalledWith(4, SetStatus('succeed'))
   })
 

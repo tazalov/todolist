@@ -1,11 +1,16 @@
-import { createTodolist } from './createTodolist'
-import { todolistAPI, TodolistAPI } from '../../../api/todolists.api'
-import { BaseResponseT } from 'shared/api/types/todolist'
-import { StateSchema, AppThunkExtra } from 'app/providers/store'
 import { AxiosResponse } from 'axios'
-import { TodoListT } from '../../types/TodolistsSchema'
+
+import { createTodolist } from './createTodolist'
+
+import { todolistAPI, TodolistAPI } from '../../../api/todolists.api'
+
 import { AddTodoList } from '../../actions/todolist.actions'
+import { TodoListT } from '../../types/TodolistsSchema'
+
+import { StateSchema, AppThunkExtra } from 'app/providers/store'
+
 import { SetStatus, SetError } from 'entities/notification'
+import { BaseResponseT } from 'shared/api/types/todolist'
 
 jest.mock('../../../api/todolists.api')
 

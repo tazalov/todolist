@@ -1,15 +1,12 @@
-import { NotificationSchema } from '../types/NotificationSchema'
 import { NotificationAT } from '../types/NotificationActions'
+import { NotificationSchema } from '../types/NotificationSchema'
 
 export const notificationInitialState: NotificationSchema = {
   status: 'idle',
   error: null,
 }
 
-export const notificationReducer = (
-  state = notificationInitialState,
-  action: NotificationAT,
-): NotificationSchema => {
+export const notificationReducer = (state = notificationInitialState, action: NotificationAT): NotificationSchema => {
   switch (action.type) {
     case 'todolist/notification/status/set': {
       const { status } = action.payload

@@ -1,20 +1,8 @@
-import { Typography } from '@mui/material'
-import type { Meta, StoryObj, StoryFn } from '@storybook/react'
+import Typography from '@mui/material/Typography'
+
 import { EditableSpan } from './EditableSpan'
 
-const EditableSpanDecorator = (Story: StoryFn) => (
-  <Typography
-    variant={'h6'}
-    sx={{
-      height: '1.5em',
-      display: 'inline-flex',
-      width: '100%',
-      alignItems: 'center',
-    }}
-  >
-    <Story />
-  </Typography>
-)
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof EditableSpan> = {
   title: 'shared/EditableSpan',
@@ -37,7 +25,21 @@ const meta: Meta<typeof EditableSpan> = {
       action: 'title changed!',
     },
   },
-  decorators: [EditableSpanDecorator],
+  decorators: [
+    (Story) => (
+      <Typography
+        variant={'h6'}
+        sx={{
+          height: '1.5em',
+          display: 'inline-flex',
+          width: '100%',
+          alignItems: 'center',
+        }}
+      >
+        <Story />
+      </Typography>
+    ),
+  ],
 }
 
 export default meta
@@ -48,5 +50,4 @@ export const Demo: Story = {
     title: 'title editable span',
     disabled: false,
   },
-  decorators: [],
 }

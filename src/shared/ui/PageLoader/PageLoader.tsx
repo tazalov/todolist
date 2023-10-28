@@ -1,6 +1,6 @@
-import { memo } from 'react'
-import CircularProgress from '@mui/material/CircularProgress'
 import Box from '@mui/material/Box'
+import CircularProgress from '@mui/material/CircularProgress'
+import { memo } from 'react'
 
 export const PageLoader = memo(() => {
   return (
@@ -13,7 +13,7 @@ export const PageLoader = memo(() => {
         justifyContent: 'center',
       }}
     >
-      <CircularProgress color="inherit" />
+      <CircularProgress color='inherit' />
     </Box>
   )
 })

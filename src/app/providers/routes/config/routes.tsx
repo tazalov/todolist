@@ -1,6 +1,7 @@
 import { RouteProps } from 'react-router-dom'
-import { TodoListsPage } from 'pages/TodoListsPage'
+
 import { LoginPage } from 'pages/LoginPage'
+import { TodoListsPage } from 'pages/TodoListsPage'
 
 export enum AppRoutes {
   MAIN = 'main',

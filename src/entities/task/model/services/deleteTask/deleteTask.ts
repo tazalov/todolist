@@ -1,5 +1,6 @@
-import { AppThunk } from 'app/providers/store'
 import { RemoveTask } from '../../actions/tasks.actions'
+
+import { AppThunk } from 'app/providers/store'
 import { SetStatus, handleServerError, handleNetworkError } from 'entities/notification'
 import { ResultCodes } from 'shared/api/types/todolist'
 

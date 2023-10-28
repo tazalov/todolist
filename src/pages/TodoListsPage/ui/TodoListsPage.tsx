@@ -1,9 +1,13 @@
-import { FC } from 'react'
-import { CreateTodolistForm, TodolistList } from 'entities/todolist'
 import { styled, Container } from '@mui/material'
+import { FC } from 'react'
+
 import { useSelector } from 'react-redux'
-import { getUserData } from 'features/auth'
+
 import { Navigate } from 'react-router-dom'
+
+import { CreateTodolistForm, TodolistList } from 'entities/todolist'
+
+import { getUserData } from 'features/auth'
 
 const ResponsiveContainer = styled(Container)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {

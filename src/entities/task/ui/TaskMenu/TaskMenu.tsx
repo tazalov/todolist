@@ -1,10 +1,11 @@
 import DeleteIcon from '@mui/icons-material/Delete'
-import ReadMoreIcon from '@mui/icons-material/ReadMore'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
+import ReadMoreIcon from '@mui/icons-material/ReadMore'
 import { IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material'
 import { FC, MouseEvent, useState, memo } from 'react'
-import { EditMenu } from '../EditMenu/EditMenu'
+
 import { UpdatedTaskT } from '../../model/types/TasksSchema'
+import { EditMenu } from '../EditMenu/EditMenu'
 
 interface TodoMenuPT {
   task: UpdatedTaskT
@@ -45,14 +46,14 @@ export const TaskMenu: FC<TodoMenuPT> = memo(({ task, remove, disabled = false }
       <IconButton disabled={disabled} onClick={handleClick}>
         <MoreVertIcon />
       </IconButton>
-      <Menu id="long-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <MenuItem onClick={handleOpenEditMenu} disableRipple color="default">
+      <Menu id='long-menu' anchorEl={anchorEl} open={open} onClose={handleClose}>
+        <MenuItem onClick={handleOpenEditMenu} disableRipple color='default'>
           <ListItemIcon>
             <ReadMoreIcon fontSize={'small'} />
           </ListItemIcon>
           Show more
         </MenuItem>
-        <MenuItem onClick={handleDelete} disableRipple color="default">
+        <MenuItem onClick={handleDelete} disableRipple color='default'>
           <ListItemIcon>
             <DeleteIcon fontSize={'small'} />
           </ListItemIcon>

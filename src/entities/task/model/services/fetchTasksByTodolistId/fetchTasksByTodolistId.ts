@@ -1,5 +1,6 @@
-import { AppThunk } from 'app/providers/store'
 import { SetTasks } from '../../actions/tasks.actions'
+
+import { AppThunk } from 'app/providers/store'
 import { SetStatus, handleNetworkError } from 'entities/notification'
 
 export const fetchTasksByTodolistId =

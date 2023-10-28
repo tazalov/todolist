@@ -1,10 +1,14 @@
-import { deleteTask } from './deleteTask'
-import { tasksAPI, TasksAPI } from '../../../api/tasks.api'
-import { BaseResponseT } from 'shared/api/types/todolist'
-import { StateSchema, AppThunkExtra } from 'app/providers/store'
-import { RemoveTask } from '../../actions/tasks.actions'
 import { AxiosResponse } from 'axios'
+
+import { deleteTask } from './deleteTask'
+
+import { tasksAPI, TasksAPI } from '../../../api/tasks.api'
+
+import { RemoveTask } from '../../actions/tasks.actions'
+
+import { StateSchema, AppThunkExtra } from 'app/providers/store'
 import { SetStatus, SetError } from 'entities/notification'
+import { BaseResponseT } from 'shared/api/types/todolist'
 
 jest.mock('../../../api/tasks.api')
 

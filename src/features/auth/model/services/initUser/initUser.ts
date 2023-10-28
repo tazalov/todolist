@@ -1,6 +1,7 @@
+import { SetUserData, SetInited } from '../../actions/auth.actions'
+
 import { AppThunk } from 'app/providers/store'
 import { ResultCodes } from 'shared/api/types/todolist'
-import { SetUserData, SetInited } from '../../actions/auth.actions'
 
 export const initUser = (): AppThunk => async (dispatch, _, extra) => {
   const { authAPI } = extra

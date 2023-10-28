@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react'
 import { CreateTodolistForm } from './CreateTodolistForm'
+
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof CreateTodolistForm> = {
   title: 'entities/Todolist/CreateTodolistForm',

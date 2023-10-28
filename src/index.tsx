@@ -1,20 +1,25 @@
+import React from 'react'
+
+import { createRoot } from 'react-dom/client'
+
+import { HashRouter } from 'react-router-dom'
+
+import * as serviceWorker from './serviceWorker'
+
 import { App } from 'app/App'
 import { StoreProvider } from 'app/providers/store'
-import React from 'react'
-import { createRoot } from 'react-dom/client'
-import * as serviceWorker from './serviceWorker'
+
 import { ThemeContext } from 'app/styles/ThemeContext'
-import { BrowserRouter } from 'react-router-dom'
 
 const container = document.getElementById('root')
 const root = createRoot(container!)
 root.render(
   <StoreProvider>
-    <BrowserRouter>
+    <HashRouter>
       <ThemeContext>
         <App />
       </ThemeContext>
-    </BrowserRouter>
+    </HashRouter>
   </StoreProvider>,
 )
 

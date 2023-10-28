@@ -1,6 +1,8 @@
 import { FC, useCallback, Suspense } from 'react'
 import { RouteProps, Route, Routes } from 'react-router-dom'
+
 import { routeConfig } from '../config/routes'
+
 import { PageLoader } from 'shared/ui/PageLoader/PageLoader'
 
 export const AppRouter: FC = () => {
