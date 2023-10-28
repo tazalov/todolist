@@ -1,9 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { useDispatch } from 'react-redux'
 import { combineReducers } from 'redux'
 import thunk from 'redux-thunk'
 
-import { StateSchema, AppDispatch } from './StateSchema'
+import { StateSchema } from './StateSchema'
 
 import { notificationReducer } from 'entities/notification'
 import { taskReducer, tasksAPI } from 'entities/task'
