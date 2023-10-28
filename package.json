@@ -48,7 +48,8 @@
     "sb:static:serve": "npx http-server storybook-static",
     "test:integ:sb:static": "start-server-and-test sb:static:serve 8080 jest:integ",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "prepare": "husky install"
   },
   "browserslist": {
     "production": [
@@ -91,7 +92,8 @@
     "puppeteer": "^21.3.6",
     "start-server-and-test": "^2.0.1",
     "storybook": "7.4.6",
-    "webpack": "5.88.2"
+    "webpack": "5.88.2",
+    "husky": "^8.0.0"
   },
   "jest": {
     "moduleNameMapper": {
