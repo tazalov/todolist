@@ -1,12 +1,9 @@
 import { styled, Container } from '@mui/material'
-import { FC } from 'react'
 
 import { useSelector } from 'react-redux'
-
 import { Navigate } from 'react-router-dom'
 
 import { CreateTodolistForm, TodolistList } from 'entities/todolist'
-
 import { getUserData } from 'features/auth'
 
 const ResponsiveContainer = styled(Container)(({ theme }) => ({
@@ -16,11 +13,7 @@ const ResponsiveContainer = styled(Container)(({ theme }) => ({
   },
 }))
 
-type TodoListsPagePT = {
-  // add props type
-}
-
-const TodoListsPage: FC<TodoListsPagePT> = ({}) => {
+const TodoListsPage = () => {
   const userData = useSelector(getUserData)
 
   if (!userData) {

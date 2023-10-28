@@ -1,11 +1,10 @@
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 import LogoutIcon from '@mui/icons-material/Logout'
-import MenuIcon from '@mui/icons-material/Menu'
 import NightsStayIcon from '@mui/icons-material/NightsStay'
-import { AppBar, Button, IconButton, LinearProgress, Toolbar, Typography, useTheme } from '@mui/material'
-import { FC, useContext, memo } from 'react'
-
+import { AppBar, Button, IconButton, LinearProgress, Toolbar, Typography, useTheme, styled, Link } from '@mui/material'
+import { useContext, memo } from 'react'
 import { useSelector } from 'react-redux'
+import { NavLink } from 'react-router-dom'
 
 import { useAppDispatch } from 'app/providers/store'
 import { ColorModeContext } from 'app/styles/ThemeContext'
@@ -13,11 +12,13 @@ import { getStatus } from 'entities/notification'
 import { getUserData } from 'features/auth'
 import { logoutUser } from 'features/auth'
 
-interface HeaderPT {
-  // add props type
-}
+const ResponsiveToolbar = styled(Toolbar)(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    flexDirection: 'column',
+  },
+}))
 
-export const Header: FC<HeaderPT> = memo(({}) => {
+export const Header = memo(() => {
   //! ---------- work with theme
   const theme = useTheme()
   const colorMode = useContext(ColorModeContext)
@@ -33,15 +34,14 @@ export const Header: FC<HeaderPT> = memo(({}) => {
 
   return (
     <AppBar position='static' enableColorOnDark sx={{ bgcolor: 'background.header', position: 'relative' }}>
-      <Toolbar>
-        <IconButton size='large' edge='start' sx={{ mr: 2, color: 'primary.contrastText' }}>
-          <MenuIcon />
-        </IconButton>
+      <ResponsiveToolbar>
         <Typography variant='h4' sx={{ flexGrow: 1 }}>
-          DODOLIST
+          Сases are here
         </Typography>
         {!userData ? (
-          <Button sx={{ color: 'primary.contrastText' }}>Login</Button>
+          <Link component={NavLink} to='/login' sx={{ color: 'primary.contrastText' }}>
+            LOGIN
+          </Link>
         ) : (
           <Button sx={{ color: 'primary.contrastText' }} endIcon={<LogoutIcon />} onClick={logout}>
             {userData.email}
@@ -50,7 +50,7 @@ export const Header: FC<HeaderPT> = memo(({}) => {
         <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color={'warning'}>
           {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <NightsStayIcon />}
         </IconButton>
-      </Toolbar>
+      </ResponsiveToolbar>
       {status === 'loading' && (
         <LinearProgress
           color='secondary'
