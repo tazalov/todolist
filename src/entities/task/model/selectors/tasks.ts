@@ -1,4 +1,4 @@
-import { TaskT, TasksSchema, TaskModelAPI, UpdatedTaskT } from '../types/TasksSchema'
+import { TasksSchema, TaskModelAPI, UpdatedTaskT } from '../types/TasksSchema'
 
 import { StateSchema } from 'app/providers/store'
 

@@ -1,5 +1,6 @@
+import { configureStore } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux'
-import { applyMiddleware, combineReducers, compose, legacy_createStore } from 'redux'
+import { combineReducers } from 'redux'
 import thunk from 'redux-thunk'
 
 import { StateSchema, AppDispatch } from './StateSchema'
@@ -9,15 +10,13 @@ import { tasksReducer, tasksAPI } from 'entities/task'
 import { todoListReducer, todolistAPI } from 'entities/todolist'
 import { authAPI, authReducer } from 'features/auth'
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-
 export const createReduxStore = (initialState?: StateSchema) => {
-  const reducers = {
+  const reducer = combineReducers({
     todoList: todoListReducer,
     tasks: tasksReducer,
     notification: notificationReducer,
     auth: authReducer,
-  }
+  })
 
   const middleWares = [
     thunk.withExtraArgument({
@@ -27,7 +26,11 @@ export const createReduxStore = (initialState?: StateSchema) => {
     }),
   ]
 
-  return legacy_createStore(combineReducers(reducers), initialState, composeEnhancers(applyMiddleware(...middleWares)))
+  return configureStore({
+    reducer,
+    preloadedState: initialState,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(...middleWares),
+  })
 }
 
 export const useAppDispatch = () => useDispatch<AppDispatch>()

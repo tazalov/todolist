@@ -1,9 +1,10 @@
+import { AnyAction } from 'redux'
 import { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
-import { NotificationSchema, NotificationAT } from 'entities/notification'
-import { TasksSchema, TasksAPI, TasksAT } from 'entities/task'
-import { TodoListsSchema, TodolistAPI, TodoListAT } from 'entities/todolist'
-import { AuthAPI, AuthSchema, AuthAT } from 'features/auth'
+import { NotificationSchema } from 'entities/notification'
+import { TasksSchema, TasksAPI } from 'entities/task'
+import { TodoListsSchema, TodolistAPI } from 'entities/todolist'
+import { AuthAPI, AuthSchema } from 'features/auth'
 
 export interface StateSchema {
   todoList: TodoListsSchema
@@ -18,8 +19,6 @@ export type AppThunkExtra = {
   authAPI: AuthAPI
 }
 
-type ActionsType = TasksAT | TodoListAT | NotificationAT | AuthAT
+export type AppDispatch = ThunkDispatch<StateSchema, any, AnyAction>
 
-export type AppDispatch = ThunkDispatch<StateSchema, any, ActionsType>
-
-export type AppThunk<T = void, E = AppThunkExtra> = ThunkAction<T, StateSchema, E, ActionsType>
+export type AppThunk<T = void, E = AppThunkExtra> = ThunkAction<T, StateSchema, E, AnyAction>

@@ -4,8 +4,8 @@ import * as React from 'react'
 import { memo } from 'react'
 import { useSelector } from 'react-redux'
 
-import { SetStatus } from '../../model/actions/notification.actions'
 import { getStatus } from '../../model/selectors/notification'
+import { notificationActions } from '../../model/slice/notification.slice'
 
 import { useAppDispatch } from 'app/providers/store'
 
@@ -24,7 +24,7 @@ export const SuccessSnackbar = memo(() => {
     if (reason === 'clickaway') {
       return
     }
-    dispatch(SetStatus('idle'))
+    dispatch(notificationActions.setStatus('idle'))
   }
 
   return (
