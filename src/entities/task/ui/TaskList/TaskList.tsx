@@ -1,21 +1,21 @@
 import { Typography, List } from '@mui/material'
 import { FC, useMemo, memo } from 'react'
-import { useSelector } from 'react-redux'
 
 import { getSpecificTasks } from '../../model/selectors/tasks'
 
 import { TaskStatus } from '../../model/types/TasksSchema'
 import { Task } from '../Task/Task'
 
+import { useAppSelector } from 'app/providers/store'
 import { FilterT } from 'entities/todolist'
 
 interface TaskListPT {
-  todoListId: string
+  todoId: string
   filter: FilterT
 }
 
-export const TaskList: FC<TaskListPT> = memo(({ todoListId, filter }) => {
-  const tasks = useSelector(getSpecificTasks(todoListId))
+export const TaskList: FC<TaskListPT> = memo(({ todoId, filter }) => {
+  const tasks = useAppSelector(getSpecificTasks(todoId))
 
   const tasksArray = useMemo(() => {
     switch (filter) {
@@ -31,7 +31,7 @@ export const TaskList: FC<TaskListPT> = memo(({ todoListId, filter }) => {
     }
   }, [tasks, filter])
 
-  const tasksList = tasksArray.map((el) => <Task key={el.id} todoListId={todoListId} task={el} />)
+  const tasksList = tasksArray.map((el) => <Task key={el.id} todoId={todoId} task={el} />)
 
   return (
     <List sx={{ width: '100%' }}>{tasks.length ? tasksList : <Typography align={'center'}>Not found</Typography>}</List>

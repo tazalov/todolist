@@ -1,4 +1,4 @@
-import { AddTodoList } from '../../actions/todolist.actions'
+import { addTodoList } from '../../slice/todolist.slice'
 
 import { AppThunk } from 'app/providers/store'
 import { notificationActions, handleServerError, handleNetworkError } from 'entities/notification'
@@ -12,7 +12,7 @@ export const createTodolist =
     try {
       const response = await todolistAPI.createTodolist(title)
       if (response.data.resultCode === ResultCodes.Success) {
-        dispatch(AddTodoList(response.data.data.item))
+        dispatch(addTodoList(response.data.data.item))
         dispatch(notificationActions.setStatus('succeed'))
       } else {
         handleServerError(response.data, dispatch)

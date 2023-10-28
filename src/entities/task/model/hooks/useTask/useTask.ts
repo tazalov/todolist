@@ -6,18 +6,18 @@ import { TaskStatus } from '../../types/TasksSchema'
 
 import { useAppDispatch } from 'app/providers/store'
 
-export const useTask = (todoListId: string, taskId: string) => {
+export const useTask = (todoId: string, taskId: string) => {
   const dispatch = useAppDispatch()
 
   const remove = () => {
-    dispatch(deleteTask(todoListId, taskId))
+    dispatch(deleteTask(todoId, taskId))
   }
 
   const handleChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
     const model = {
       status: e.currentTarget.checked ? TaskStatus.COMPLETED : TaskStatus.NEW,
     }
-    dispatch(updateTask(todoListId, taskId, model))
+    dispatch(updateTask(todoId, taskId, model))
   }
 
   const changeTitle = useCallback(
@@ -25,9 +25,9 @@ export const useTask = (todoListId: string, taskId: string) => {
       const model = {
         title: newTitle,
       }
-      dispatch(updateTask(todoListId, taskId, model))
+      dispatch(updateTask(todoId, taskId, model))
     },
-    [dispatch, todoListId, taskId],
+    [dispatch, todoId, taskId],
   )
 
   return {

@@ -1,8 +1,7 @@
 import { styled, Container } from '@mui/material'
-
-import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 
+import { useAppSelector } from 'app/providers/store'
 import { CreateTodolistForm, TodolistList } from 'entities/todolist'
 import { getUserData } from 'features/auth'
 
@@ -14,7 +13,7 @@ const ResponsiveContainer = styled(Container)(({ theme }) => ({
 }))
 
 const TodoListsPage = () => {
-  const userData = useSelector(getUserData)
+  const userData = useAppSelector(getUserData)
 
   if (!userData) {
     return <Navigate to={'/login'} />

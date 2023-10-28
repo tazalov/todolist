@@ -6,14 +6,14 @@ import thunk from 'redux-thunk'
 import { StateSchema, AppDispatch } from './StateSchema'
 
 import { notificationReducer } from 'entities/notification'
-import { tasksReducer, tasksAPI } from 'entities/task'
+import { taskReducer, tasksAPI } from 'entities/task'
 import { todoListReducer, todolistAPI } from 'entities/todolist'
 import { authAPI, authReducer } from 'features/auth'
 
 export const createReduxStore = (initialState?: StateSchema) => {
   const reducer = combineReducers({
     todoList: todoListReducer,
-    tasks: tasksReducer,
+    tasks: taskReducer,
     notification: notificationReducer,
     auth: authReducer,
   })
@@ -32,5 +32,3 @@ export const createReduxStore = (initialState?: StateSchema) => {
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(...middleWares),
   })
 }
-
-export const useAppDispatch = () => useDispatch<AppDispatch>()

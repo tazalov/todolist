@@ -32,27 +32,27 @@ const createTask = (status: TaskStatus): UpdatedTaskT => ({
 export const New: Story = {
   args: {
     task: createTask(TaskStatus.NEW),
-    todoListId: '1',
+    todoId: '1',
   },
 }
 
 export const InProgress: Story = {
   args: {
     task: createTask(TaskStatus.IN_PROGRESS),
-    todoListId: '1',
+    todoId: '1',
   },
 }
 
 export const Completed: Story = {
   args: {
     task: createTask(TaskStatus.COMPLETED),
-    todoListId: '1',
+    todoId: '1',
   },
 }
 
 export const Draft: Story = {
   args: {
     task: createTask(TaskStatus.DRAFT),
-    todoListId: '1',
+    todoId: '1',
   },
 }

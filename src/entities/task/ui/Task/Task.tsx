@@ -10,14 +10,14 @@ import { TaskMenu } from '../TaskMenu/TaskMenu'
 import { EditableSpan } from 'shared/ui/EditableSpan/EditableSpan'
 
 interface TodoPT {
-  todoListId: string
+  todoId: string
   task: UpdatedTaskT
 }
 
-export const Task: FC<TodoPT> = memo(({ todoListId, task }) => {
+export const Task: FC<TodoPT> = memo(({ todoId, task }) => {
   const { id, title, status, priority, entityStatus } = task
 
-  const { remove, changeStatus, changeTitle } = useTask(todoListId, id)
+  const { remove, changeStatus, changeTitle } = useTask(todoId, id)
 
   const styleItem = {
     opacity: task.status === TaskStatus.DRAFT ? 0.5 : 1,

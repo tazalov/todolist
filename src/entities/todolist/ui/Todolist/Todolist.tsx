@@ -37,7 +37,7 @@ export const Todolist: FC<TodolistPT> = memo(({ todolist, demo = false }) => {
       </IconButton>
       <EditableSpan variant='h4' title={title} textAlign={'center'} changeTitle={changeTitle} />
       <AddItemForm addItem={addTask} disabled={entityStatus === 'loading'} />
-      <TaskList todoListId={id} filter={filter} />
+      <TaskList todoId={id} filter={filter} />
       <ButtonGroup size='small' variant='contained' disableElevation>
         <Button sx={getStyleFilterButton(filter, 'all')} onClick={changeFilter('all')}>
           ALL
@@ -49,7 +49,7 @@ export const Todolist: FC<TodolistPT> = memo(({ todolist, demo = false }) => {
           COMPLETED
         </Button>
       </ButtonGroup>
-      <Typography>{addedDate.toLocaleDateString('en-US', options)}</Typography>
+      <Typography>{new Date(addedDate).toLocaleDateString('en-US', options)}</Typography>
     </Stack>
   )
 })

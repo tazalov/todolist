@@ -16,7 +16,7 @@ const meta: Meta<typeof Task> = {
       description: 'Object with task info',
       control: 'object',
     },
-    todoListId: {
+    todoId: {
       description: 'Todolist id for current change status task',
       control: false,
     },
@@ -43,13 +43,13 @@ const createTask = (status: CurrentStatus) => ({
 export const Demo: Story = {
   args: {
     task: createTask('idle'),
-    todoListId: '1',
+    todoId: '1',
   },
 }
 
 export const Disabled: Story = {
   args: {
     task: createTask('loading'),
-    todoListId: '1',
+    todoId: '1',
   },
 }

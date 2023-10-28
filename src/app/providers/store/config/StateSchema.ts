@@ -20,5 +20,5 @@ export type AppThunkExtra = {
 }
 
 export type AppDispatch = ThunkDispatch<StateSchema, any, AnyAction>
-
+//export type AppDispatch = ReturnType<typeof createReduxStore>['dispatch']
 export type AppThunk<T = void, E = AppThunkExtra> = ThunkAction<T, StateSchema, E, AnyAction>

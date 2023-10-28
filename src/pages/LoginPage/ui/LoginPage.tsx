@@ -1,13 +1,12 @@
 import Grid from '@mui/material/Grid'
 import React from 'react'
-
-import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 
+import { useAppSelector } from 'app/providers/store'
 import { LoginForm, getUserData } from 'features/auth'
 
 const LoginPage = () => {
-  const userData = useSelector(getUserData)
+  const userData = useAppSelector(getUserData)
 
   if (userData) {
     return <Navigate to={'/'} />

@@ -1,5 +1,5 @@
-import { ChangeTask, ChangeTaskStatus } from '../../actions/tasks.actions'
 import { getModelSpecificTask } from '../../selectors/tasks'
+import { taskActions } from '../../slice/task.slice'
 import { TaskModel } from '../../types/TasksSchema'
 
 import { AppThunk } from 'app/providers/store'
@@ -8,30 +8,30 @@ import { notificationActions, handleServerError, handleNetworkError } from 'enti
 import { ResultCodes } from 'shared/api/types/todolist'
 
 export const updateTask =
-  (todoListId: string, taskId: string, taskModel: TaskModel): AppThunk =>
+  (todoId: string, taskId: string, taskModel: TaskModel): AppThunk =>
   async (dispatch, getState, extra) => {
     const { tasksAPI } = extra
     dispatch(notificationActions.setStatus('loading'))
-    dispatch(ChangeTaskStatus(todoListId, 'loading'))
-    const taskModelFromState = getModelSpecificTask(todoListId, taskId)(getState())
+    dispatch(taskActions.changeTaskStatus({ todoId, entityStatus: 'loading' }))
+    const taskModelFromState = getModelSpecificTask(todoId, taskId)(getState())
     if (taskModelFromState) {
       const updatedTask = {
         ...taskModelFromState,
         ...taskModel,
       }
       try {
-        const response = await tasksAPI.updateTask(todoListId, taskId, updatedTask)
+        const response = await tasksAPI.updateTask(todoId, taskId, updatedTask)
         if (response.data.resultCode === ResultCodes.Success) {
-          dispatch(ChangeTask(taskId, response.data.data.item))
-          dispatch(ChangeTaskStatus(todoListId, 'succeed'))
+          dispatch(taskActions.changeTask(response.data.data.item))
+          dispatch(taskActions.changeTaskStatus({ todoId, entityStatus: 'succeed' }))
           dispatch(notificationActions.setStatus('succeed'))
         } else {
           handleServerError(response.data, dispatch)
-          dispatch(ChangeTaskStatus(todoListId, 'failed'))
+          dispatch(taskActions.changeTaskStatus({ todoId, entityStatus: 'failed' }))
         }
       } catch (e: any) {
         handleNetworkError(e.message, dispatch)
-        dispatch(ChangeTaskStatus(todoListId, 'failed'))
+        dispatch(taskActions.changeTaskStatus({ todoId, entityStatus: 'failed' }))
       }
     }
   }

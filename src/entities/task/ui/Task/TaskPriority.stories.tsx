@@ -32,34 +32,34 @@ const createTask = (priority: TaskPriority): UpdatedTaskT => ({
 export const Low: Story = {
   args: {
     task: createTask(TaskPriority.LOW),
-    todoListId: '1',
+    todoId: '1',
   },
 }
 
 export const Middle: Story = {
   args: {
     task: createTask(TaskPriority.MIDDLE),
-    todoListId: '1',
+    todoId: '1',
   },
 }
 
 export const High: Story = {
   args: {
     task: createTask(TaskPriority.HIGH),
-    todoListId: '1',
+    todoId: '1',
   },
 }
 
 export const Urgently: Story = {
   args: {
     task: createTask(TaskPriority.URGENTLY),
-    todoListId: '1',
+    todoId: '1',
   },
 }
 
 export const Later: Story = {
   args: {
     task: createTask(TaskPriority.LATER),
-    todoListId: '1',
+    todoId: '1',
   },
 }
