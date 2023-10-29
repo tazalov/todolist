@@ -8,8 +8,6 @@ const meta: Meta<typeof CreateTodolistForm> = {
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
-  argTypes: {},
 }
 
 export default meta

@@ -8,7 +8,7 @@ import Tooltip from '@mui/material/Tooltip'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 
-import { loginUser } from '../model/services/loginUser/loginUser'
+import { loginUser } from '../../model/services/loginUser/loginUser'
 
 import { useAppDispatch } from 'app/providers/store'
 

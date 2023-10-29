@@ -1,6 +1,6 @@
 export { authReducer } from './model/slice/auth.slice'
 export { getInited, getUserData } from './model/selectors/auth'
-export { LoginForm } from './ui/LoginForm'
+export { LoginForm } from './ui/LoginForm/LoginForm'
 export { initUser } from './model/services/initUser/initUser'
 export { logoutUser } from './model/services/logoutUser/logoutUser'
 export { authAPI } from './api/auth.api'

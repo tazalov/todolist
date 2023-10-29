@@ -1,4 +1,5 @@
 import { styled, Container } from '@mui/material'
+import { FC } from 'react'
 import { Navigate } from 'react-router-dom'
 
 import { useAppSelector } from 'app/providers/store'
@@ -12,7 +13,11 @@ const ResponsiveContainer = styled(Container)(({ theme }) => ({
   },
 }))
 
-const TodoListsPage = () => {
+interface TodoListsPagePT {
+  demo?: boolean
+}
+
+const TodoListsPage: FC<TodoListsPagePT> = ({ demo = false }) => {
   const userData = useAppSelector(getUserData)
 
   if (!userData) {
@@ -22,7 +27,7 @@ const TodoListsPage = () => {
   return (
     <ResponsiveContainer fixed>
       <CreateTodolistForm />
-      <TodolistList />
+      <TodolistList demo={demo} />
     </ResponsiveContainer>
   )
 }

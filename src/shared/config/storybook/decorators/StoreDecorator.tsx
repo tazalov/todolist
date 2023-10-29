@@ -1,5 +1,7 @@
 import { StoryFn } from '@storybook/react'
 
+import { DeepPartial } from 'redux'
+
 import { StateSchema, StoreProvider } from 'app/providers/store'
 import { TaskStatus, TaskPriority } from 'entities/task'
 
@@ -100,8 +102,8 @@ const state: StateSchema = {
   },
 }
 
-export const StoreDecorator = (Story: StoryFn) => (
-  <StoreProvider initialState={state}>
+export const StoreDecorator = (initialState?: DeepPartial<StateSchema>) => (Story: StoryFn) => (
+  <StoreProvider initialState={initialState}>
     <Story />
   </StoreProvider>
 )

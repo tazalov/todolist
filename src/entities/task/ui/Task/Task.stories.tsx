@@ -5,7 +5,7 @@ import { TaskStatus, TaskPriority } from '../../model/types/TasksSchema'
 import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof Task> = {
-  title: 'entities/Task',
+  title: 'entities/Task/Task',
   component: Task,
   parameters: {
     layout: 'centered',

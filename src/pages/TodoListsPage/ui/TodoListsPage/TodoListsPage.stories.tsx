@@ -1,25 +1,19 @@
-import { TodolistList } from './TodolistList'
+import TodoListsPage from './TodoListsPage'
 
-import { TaskStatus, TaskPriority } from 'entities/task'
-import { StoreDecorator } from 'shared/config/storybook/decorators/StoreDecorator'
+import { TaskStatus, TaskPriority } from '../../../../entities/task'
+import { StoreDecorator } from '../../../../shared/config/storybook/decorators/StoreDecorator'
 
 import type { Meta, StoryObj } from '@storybook/react'
 
-const meta: Meta<typeof TodolistList> = {
-  title: 'entities/Todolist/TodolistList',
-  component: TodolistList,
+const meta: Meta<typeof TodoListsPage> = {
+  title: 'pages/TodoListsPage',
+  component: TodoListsPage,
   parameters: {
     layout: 'fullscreen',
   },
-  tags: ['autodocs'],
-  argTypes: {
-    demo: {
-      description: 'Flag for render in storybook',
-      control: false,
-    },
-  },
   decorators: [
     StoreDecorator({
+      auth: { data: { userId: 1 } },
       todoList: [
         { id: '1', filter: 'all', title: 'todolist1', order: 0, addedDate: new Date(), entityStatus: 'idle' },
         { id: '2', filter: 'all', title: 'todolist2', order: 1, addedDate: new Date(), entityStatus: 'loading' },
@@ -103,7 +97,7 @@ const meta: Meta<typeof TodolistList> = {
 }
 
 export default meta
-type Story = StoryObj<typeof TodolistList>
+type Story = StoryObj<typeof TodoListsPage>
 
 export const Demo: Story = {
   args: {

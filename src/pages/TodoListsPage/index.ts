@@ -1,1 +1,1 @@
-export { TodoListsPageLazy as TodoListsPage } from './ui/index.lazy'
+export { TodoListsPageLazy as TodoListsPage } from './ui/TodoListsPage/index.lazy'

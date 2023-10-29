@@ -1,9 +1,10 @@
 import type { Preview } from '@storybook/react'
-import { StoreDecorator } from 'shared/config/storybook/decorators/StoreDecorator'
 import { withThemeFromJSXProvider } from '@storybook/addon-themes'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { getDesignTokens } from 'app/styles/Theme'
 import CssBaseline from '@mui/material/CssBaseline'
+import { StoreDecorator } from '../src/shared/config/storybook/decorators/StoreDecorator'
+import { RouterDecorator } from '../src/shared/config/storybook/decorators/RouterDecorator'
 
 const ThemeDecorator = withThemeFromJSXProvider({
   themes: {
@@ -16,17 +17,8 @@ const ThemeDecorator = withThemeFromJSXProvider({
 })
 
 const preview: Preview = {
-  parameters: {
-    actions: { argTypesRegex: '^on[A-Z].*' },
-    controls: {
-      matchers: {
-        color: /(background|color)$/i,
-        date: /Date$/,
-      },
-    },
-  },
   // @ts-ignore
-  decorators: [StoreDecorator, ThemeDecorator],
+  decorators: [StoreDecorator({}), RouterDecorator, ThemeDecorator],
 }
 
 export default preview
