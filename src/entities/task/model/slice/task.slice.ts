@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { clearCurrentState } from '../../../../app/providers/store'
 import { TasksSchema, TaskT } from '../types/TasksSchema'
+
+import { clearCurrentState } from 'app/providers/store'
 
 import { addTodoList, setTodoLists, removeTodoList } from 'entities/todolist'
 

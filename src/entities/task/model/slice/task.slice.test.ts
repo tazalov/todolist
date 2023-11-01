@@ -2,6 +2,7 @@ import { taskReducer, taskActions } from './task.slice'
 
 import { TasksSchema, TaskStatus, TaskPriority } from '../types/TasksSchema'
 
+import { clearCurrentState } from 'app/providers/store'
 import { addTodoList, removeTodoList, TodoListsSchema, todoListReducer, setTodoLists } from 'entities/todolist'
 
 describe('task reducer', () => {
@@ -253,6 +254,14 @@ describe('task reducer', () => {
     const idFromTodoLists = endTodoListsState[0].id
 
     expect(idFromTasks).toBe(idFromTodoLists)
+  })
+
+  it('sholud return empty state', () => {
+    const initialState: TasksSchema = {}
+
+    const endTasksState = taskReducer(initialState, clearCurrentState)
+
+    expect(endTasksState).toEqual(initialState)
   })
 
   it('should return the current state for unknown actions', () => {

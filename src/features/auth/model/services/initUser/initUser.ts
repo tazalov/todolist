@@ -1,18 +1,36 @@
-import { authActions } from '../../slice/auth.slice'
+import { createAsyncThunk } from '@reduxjs/toolkit'
 
-import { AppThunk } from 'app/providers/store'
+import { UserData } from '../../types/AuthSchema'
+
+import { ThunkConfig } from 'app/providers/store'
 import { ResultCodes } from 'shared/api/types/todolist'
 
-export const initUser = (): AppThunk => async (dispatch, _, extra) => {
-  const { authAPI } = extra
-  try {
-    const response = await authAPI.authMe()
-
-    if (response.data.resultCode === ResultCodes.Success) {
-      dispatch(authActions.setUserData(response.data.data))
-    }
-    dispatch(authActions.setInited(true))
-  } catch (e) {
-    console.log(e)
-  }
+interface InitUserReturn {
+  userData: UserData | null
+  _inited: boolean
 }
+
+export const initUser = createAsyncThunk<InitUserReturn, void, ThunkConfig<null>>(
+  'auth/initUser',
+  async (_, thunkAPI) => {
+    const { extra, rejectWithValue } = thunkAPI
+    const { authAPI } = extra
+    try {
+      const response = await authAPI.authMe()
+
+      if (response.data.resultCode === ResultCodes.Success) {
+        return {
+          userData: response.data.data,
+          _inited: true,
+        }
+      } else {
+        return {
+          userData: null,
+          _inited: true,
+        }
+      }
+    } catch (e) {
+      return rejectWithValue(null)
+    }
+  },
+)

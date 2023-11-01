@@ -4,6 +4,8 @@ import { todoListReducer, removeTodoList, addTodoList, changeTodoList, setTodoLi
 
 import { TodoListsSchema } from '../types/TodolistsSchema'
 
+import { clearCurrentState } from 'app/providers/store'
+
 describe('todolist reducer', () => {
   const id1 = v1()
   const id2 = v1()
@@ -116,6 +118,14 @@ describe('todolist reducer', () => {
     expect(newState.length).toBe(2)
     expect(newState[0].title).toBe(title)
     expect(newState[0].filter).toBe('all')
+  })
+
+  it('sholud return empty state', () => {
+    const initialState: TodoListsSchema = []
+
+    const endTasksState = todoListReducer(initialState, clearCurrentState)
+
+    expect(endTasksState).toEqual(initialState)
   })
 
   it('should return the current state for unknown actions', () => {
