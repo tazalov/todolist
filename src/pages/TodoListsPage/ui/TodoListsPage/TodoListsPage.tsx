@@ -3,8 +3,10 @@ import { FC } from 'react'
 import { Navigate } from 'react-router-dom'
 
 import { useAppSelector } from 'app/providers/store'
-import { CreateTodolistForm, TodolistList } from 'entities/todolist'
+import { taskReducer } from 'entities/task'
+import { CreateTodolistForm, TodolistList, todoListReducer } from 'entities/todolist'
 import { getUserData } from 'features/auth'
+import { DynamicReducerLoader } from 'shared/lib/DynamicReducerLoader/DynamicReducerLoader'
 
 const ResponsiveContainer = styled(Container)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
@@ -12,6 +14,11 @@ const ResponsiveContainer = styled(Container)(({ theme }) => ({
     paddingRight: 10,
   },
 }))
+
+const initialReducers = {
+  tasks: taskReducer,
+  todoList: todoListReducer,
+}
 
 interface TodoListsPagePT {
   demo?: boolean
@@ -25,10 +32,12 @@ const TodoListsPage: FC<TodoListsPagePT> = ({ demo = false }) => {
   }
 
   return (
-    <ResponsiveContainer fixed>
-      <CreateTodolistForm />
-      <TodolistList demo={demo} />
-    </ResponsiveContainer>
+    <DynamicReducerLoader reducers={initialReducers}>
+      <ResponsiveContainer fixed>
+        <CreateTodolistForm />
+        <TodolistList demo={demo} />
+      </ResponsiveContainer>
+    </DynamicReducerLoader>
   )
 }
 

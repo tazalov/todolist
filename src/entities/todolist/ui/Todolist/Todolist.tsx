@@ -5,8 +5,8 @@ import { FC, memo } from 'react'
 import { TaskList } from '../../../task/ui/TaskList/TaskList'
 import { useTodolist } from '../../model/hooks/useTodolist/useTodolist'
 import { UpdatedTodoListT } from '../../model/types/TodolistsSchema'
+import { getStyleFilterButton } from '../../model/utils/getStyleFilterButton'
 
-import { getStyleFilterButton } from 'entities/todolist/model/utils/getStyleFilterButton'
 import { AddItemForm } from 'shared/ui/AddItemForm/AddItemForm'
 import { EditableSpan } from 'shared/ui/EditableSpan/EditableSpan'
 
@@ -16,9 +16,6 @@ const options: Intl.DateTimeFormatOptions = {
   day: 'numeric',
   weekday: 'long',
 }
-
-const styleClose = { position: 'absolute', right: '0', top: '0', display: 'inline-flex' }
-const styleTodolist = { p: 1.5, bgcolor: 'background.blocks', position: 'relative', boxShadow: 5 }
 
 interface TodolistPT {
   todolist: UpdatedTodoListT
@@ -31,8 +28,17 @@ export const Todolist: FC<TodolistPT> = memo(({ todolist, demo = false }) => {
   const { remove, changeTitle, changeFilter, addTask } = useTodolist(id, demo)
 
   return (
-    <Stack spacing={3} alignItems='center' sx={styleTodolist}>
-      <IconButton color='primary' sx={styleClose} onClick={remove} disabled={entityStatus === 'loading'}>
+    <Stack
+      spacing={3}
+      alignItems='center'
+      sx={{ p: 1.5, bgcolor: 'background.blocks', position: 'relative', boxShadow: 5 }}
+    >
+      <IconButton
+        color='primary'
+        sx={{ position: 'absolute', right: '0', top: '0', display: 'inline-flex' }}
+        onClick={remove}
+        disabled={entityStatus === 'loading'}
+      >
         <CloseIcon fontSize='medium' />
       </IconButton>
       <EditableSpan variant='h4' title={title} textAlign={'center'} changeTitle={changeTitle} />
