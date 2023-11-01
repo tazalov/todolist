@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunktodolist=self.webpackChunktodolist||[]).push([[435],{5435:function(e,t,n){n.r(t);var s=n(890),i=n(4554),r=n(184);t.default=function(){return(0,r.jsx)(i.Z,{sx:{height:"calc(100vh - 64px)",width:"100vw",display:"flex",alignItems:"center",justifyContent:"center"},children:(0,r.jsx)(s.Z,{variant:"h2",sx:{p:2},align:"center",children:"Are you sure this is where you wanted to go?"})})}}}]);
+//# sourceMappingURL=435.c92c65ae.chunk.js.map
