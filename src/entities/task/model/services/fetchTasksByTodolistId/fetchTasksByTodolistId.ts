@@ -1,22 +1,31 @@
-import { taskActions } from '../../slice/task.slice'
+import { createAsyncThunk } from '@reduxjs/toolkit'
 
-import { AppThunk } from 'app/providers/store'
-import { notificationActions, handleNetworkError } from 'entities/notification'
+import { TaskT } from '../../types/TasksSchema'
 
-export const fetchTasksByTodolistId =
-  (todoId: string): AppThunk =>
-  async (dispatch, _, extra) => {
-    const { tasksAPI } = extra
-    dispatch(notificationActions.setStatus('loading'))
+import { ThunkConfig } from 'app/providers/store'
+import { handleNetworkError } from 'entities/notification'
+
+interface FetchTasksReturn {
+  todoId: string
+  tasks: TaskT[]
+}
+
+export const fetchTasksByTodolistId = createAsyncThunk<FetchTasksReturn | void, string, ThunkConfig>(
+  'entities/task/fetchTasksByTodolistId',
+  async (todoId, thunkAPI) => {
+    const { extra, dispatch } = thunkAPI
     try {
-      const response = await tasksAPI.getTasks(todoId)
+      const response = await extra.tasksAPI.getTasks(todoId)
       if (!response.data.error) {
-        dispatch(taskActions.setTasks({ todoId, tasks: response.data.items }))
-        dispatch(notificationActions.setStatus('succeed'))
+        return {
+          tasks: response.data.items,
+          todoId,
+        }
       } else {
         handleNetworkError(response.data.error, dispatch)
       }
-    } catch (e: any) {
-      handleNetworkError(e.message, dispatch)
+    } catch (e) {
+      handleNetworkError((e as Error).message, dispatch)
     }
-  }
+  },
+)

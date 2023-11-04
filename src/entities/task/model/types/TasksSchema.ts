@@ -15,8 +15,13 @@ export interface UpdatedTaskT extends TaskT {
   entityStatus: CurrentStatus
 }
 
-export interface TasksSchema {
+export interface TasksObj {
   [todolistId: string]: UpdatedTaskT[]
+}
+
+export interface TasksSchema {
+  items: TasksObj
+  isLoading: boolean
 }
 
 export enum TaskStatus {

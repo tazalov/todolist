@@ -8,7 +8,7 @@ import { NavLink } from 'react-router-dom'
 
 import { useAppDispatch } from 'app/providers/store'
 import { ColorModeContext } from 'app/styles/ThemeContext'
-import { getStatus } from 'entities/notification'
+import { getNotificationStatus } from 'entities/notification'
 import { getUserData } from 'features/auth'
 import { logoutUser } from 'features/auth'
 
@@ -23,7 +23,7 @@ export const Header = memo(() => {
   const theme = useTheme()
   const colorMode = useContext(ColorModeContext)
 
-  const status = useSelector(getStatus)
+  const status = useSelector(getNotificationStatus)
   const userData = useSelector(getUserData)
 
   const dispatch = useAppDispatch()

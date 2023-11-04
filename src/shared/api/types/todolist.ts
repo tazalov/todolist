@@ -6,7 +6,7 @@ export type BaseResponseT<T = {}> = {
 }
 
 export type ItemsResponseT<T = {}> = {
-  items: T[]
+  items: T
   totalCount: number
   error: string
 }

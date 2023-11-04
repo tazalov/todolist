@@ -1,5 +1,4 @@
 export { taskReducer } from './model/slice/task.slice'
-export { Task } from './ui/Task/Task'
 export { fetchTasksByTodolistId } from './model/services/fetchTasksByTodolistId/fetchTasksByTodolistId'
 export { createTask } from './model/services/createTask/createTask'
 export { TaskStatus, TaskPriority } from './model/types/TasksSchema'

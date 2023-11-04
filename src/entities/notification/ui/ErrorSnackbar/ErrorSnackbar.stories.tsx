@@ -14,6 +14,7 @@ const meta: Meta<typeof ErrorSnackbar> = {
     StoreDecorator({
       notification: {
         error: 'some error message (autohide 6s)',
+        status: 'failed',
       },
     }),
   ],

@@ -68,7 +68,10 @@ const meta: Meta<typeof TaskList> = {
   decorators: [
     StoreDecorator({
       tasks: {
-        '1': tasks,
+        items: {
+          '1': tasks,
+        },
+        isLoading: false,
       },
     }),
   ],

@@ -1,5 +1,9 @@
 import { taskReducer, taskActions } from './task.slice'
 
+import { createTask } from '../services/createTask/createTask'
+import { deleteTask } from '../services/deleteTask/deleteTask'
+import { fetchTasksByTodolistId } from '../services/fetchTasksByTodolistId/fetchTasksByTodolistId'
+import { updateTask } from '../services/updateTask/updateTask'
 import { TasksSchema, TaskStatus, TaskPriority } from '../types/TasksSchema'
 
 import { clearCurrentState } from 'app/providers/store'
@@ -10,80 +14,57 @@ describe('task reducer', () => {
   let initialState: TasksSchema
   beforeEach(() => {
     initialState = {
-      todolistId1: [
-        {
-          id: '1',
-          title: 'CSS',
-          status: TaskStatus.NEW,
-          startDate: date,
-          todoListId: 'todolistId1',
-          order: 0,
-          priority: TaskPriority.LOW,
-          description: '',
-          deadline: date,
-          addedDate: date,
-          entityStatus: 'idle',
-        },
-      ],
-      todolistId2: [
-        {
-          id: '1',
-          title: 'bread',
-          status: TaskStatus.NEW,
-          startDate: date,
-          todoListId: 'todolistId2',
-          order: 0,
-          priority: TaskPriority.LOW,
-          description: '',
-          deadline: date,
-          addedDate: date,
-          entityStatus: 'idle',
-        },
-        {
-          id: '2',
-          title: 'milk',
-          status: TaskStatus.NEW,
-          startDate: date,
-          todoListId: 'todolistId2',
-          order: 0,
-          priority: TaskPriority.LOW,
-          description: '',
-          deadline: date,
-          addedDate: date,
-          entityStatus: 'idle',
-        },
-      ],
+      items: {
+        todolistId1: [
+          {
+            id: '1',
+            title: 'CSS',
+            status: TaskStatus.NEW,
+            startDate: date,
+            todoListId: 'todolistId1',
+            order: 0,
+            priority: TaskPriority.LOW,
+            description: '',
+            deadline: date,
+            addedDate: date,
+            entityStatus: 'idle',
+          },
+        ],
+        todolistId2: [
+          {
+            id: '1',
+            title: 'bread',
+            status: TaskStatus.NEW,
+            startDate: date,
+            todoListId: 'todolistId2',
+            order: 0,
+            priority: TaskPriority.LOW,
+            description: '',
+            deadline: date,
+            addedDate: date,
+            entityStatus: 'idle',
+          },
+          {
+            id: '2',
+            title: 'milk',
+            status: TaskStatus.NEW,
+            startDate: date,
+            todoListId: 'todolistId2',
+            order: 0,
+            priority: TaskPriority.LOW,
+            description: '',
+            deadline: date,
+            addedDate: date,
+            entityStatus: 'idle',
+          },
+        ],
+      },
+      isLoading: false,
     }
   })
 
-  it('correct task should be set', () => {
-    const todoListId = 'todolistIdFromServer'
-    const tasks = [
-      {
-        id: 'asd',
-        title: 'TASK FROM SERVER',
-        status: TaskStatus.NEW,
-        startDate: date,
-        todoListId,
-        order: 0,
-        priority: TaskPriority.LOW,
-        description: '',
-        deadline: date,
-        addedDate: date,
-      },
-    ]
-    const action = taskActions.setTasks({
-      todoId: todoListId,
-      tasks,
-    })
-    const newState = taskReducer(initialState, action)
-
-    expect(newState[todoListId].length).toBe(1)
-    expect(newState[todoListId]).toEqual([{ ...tasks[0], entityStatus: 'idle' }])
-  })
-
   it('correct task should be added to correct array', () => {
-    const action = taskActions.addTask({
+    const task = {
       id: 'asd',
       title: 'TASK FROM SERVER',
       status: TaskStatus.NEW,
@@ -94,12 +75,15 @@ describe('task reducer', () => {
       description: '',
       deadline: date,
       addedDate: date,
-    })
-    const newState = taskReducer(initialState, action)
+    }
+    const newState = taskReducer(
+      initialState,
+      createTask.fulfilled(task, 'requestId', { title: 'TASK FROM SERVER', todoId: 'todoListId1' }),
+    )
 
-    expect(newState['todolistId2'].length).toBe(2)
-    expect(newState['todolistId1'].length).toBe(2)
-    expect(newState['todolistId1'][0]).toEqual({
+    expect(newState.items['todolistId2'].length).toBe(2)
+    expect(newState.items['todolistId1'].length).toBe(2)
+    expect(newState.items['todolistId1'][0]).toEqual({
       id: 'asd',
       title: 'TASK FROM SERVER',
       status: TaskStatus.NEW,
@@ -111,47 +95,6 @@ describe('task reducer', () => {
       deadline: date,
       addedDate: date,
       entityStatus: 'idle',
-    })
-  })
-
-  it('correct task should be removed to correct array', () => {
-    const action = taskActions.removeTask({
-      todoId: 'todolistId2',
-      taskId: '2',
-    })
-    const newState = taskReducer(initialState, action)
-
-    expect(newState).toEqual({
-      todolistId1: [
-        {
-          id: '1',
-          title: 'CSS',
-          status: TaskStatus.NEW,
-          startDate: date,
-          todoListId: 'todolistId1',
-          order: 0,
-          priority: TaskPriority.LOW,
-          description: '',
-          deadline: date,
-          addedDate: date,
-          entityStatus: 'idle',
-        },
-      ],
-      todolistId2: [
-        {
-          id: '1',
-          title: 'bread',
-          status: TaskStatus.NEW,
-          startDate: date,
-          todoListId: 'todolistId2',
-          order: 0,
-          priority: TaskPriority.LOW,
-          description: '',
-          deadline: date,
-          addedDate: date,
-          entityStatus: 'idle',
-        },
-      ],
     })
   })
 
@@ -168,11 +111,18 @@ describe('task reducer', () => {
       deadline: date,
       addedDate: date,
     }
-    const action = taskActions.changeTask(updatedTask)
-    const newState = taskReducer(initialState, action)
 
-    expect(newState['todolistId1'][0].status).toBe(TaskStatus.NEW)
-    expect(newState['todolistId2'][0].status).toBe(TaskStatus.COMPLETED)
+    const newState = taskReducer(
+      initialState,
+      updateTask.fulfilled(updatedTask, 'requestId', {
+        todoId: 'todolistId2',
+        taskId: '1',
+        taskModel: { status: TaskStatus.COMPLETED },
+      }),
+    )
+
+    expect(newState.items['todolistId1'][0].status).toBe(TaskStatus.NEW)
+    expect(newState.items['todolistId2'][0].status).toBe(TaskStatus.COMPLETED)
   })
 
   it('title of specified task should be changed', () => {
@@ -188,11 +138,84 @@ describe('task reducer', () => {
       deadline: date,
       addedDate: date,
     }
-    const action = taskActions.changeTask(updatedTask)
-    const newState = taskReducer(initialState, action)
+    const newState = taskReducer(
+      initialState,
+      updateTask.fulfilled(updatedTask, 'requestId', {
+        todoId: 'todolistId2',
+        taskId: '1',
+        taskModel: { title: 'new title task' },
+      }),
+    )
 
-    expect(newState['todolistId1'][0].title).toBe('CSS')
-    expect(newState['todolistId2'][0].title).toBe('new title task')
+    expect(newState.items['todolistId1'][0].title).toBe('CSS')
+    expect(newState.items['todolistId2'][0].title).toBe('new title task')
+  })
+
+  it('correct tasks should be set', () => {
+    const todoListId = 'todolistIdFromServer'
+    const tasks = [
+      {
+        id: 'asd',
+        title: 'TASK FROM SERVER',
+        status: TaskStatus.NEW,
+        startDate: date,
+        todoListId,
+        order: 0,
+        priority: TaskPriority.LOW,
+        description: '',
+        deadline: date,
+        addedDate: date,
+      },
+    ]
+
+    const newState = taskReducer(
+      initialState,
+      fetchTasksByTodolistId.fulfilled({ todoId: todoListId, tasks }, 'requestId', todoListId),
+    )
+
+    expect(newState.items[todoListId].length).toBe(1)
+    expect(newState.items[todoListId]).toEqual([{ ...tasks[0], entityStatus: 'idle' }])
+  })
+
+  it('correct task should be removed to correct array', () => {
+    const data = { todoId: 'todolistId2', taskId: '2' }
+    const newState = taskReducer(initialState, deleteTask.fulfilled(data, 'requestId', data))
+
+    expect(newState).toEqual({
+      isLoading: false,
+      items: {
+        todolistId1: [
+          {
+            id: '1',
+            title: 'CSS',
+            status: TaskStatus.NEW,
+            startDate: date,
+            todoListId: 'todolistId1',
+            order: 0,
+            priority: TaskPriority.LOW,
+            description: '',
+            deadline: date,
+            addedDate: date,
+            entityStatus: 'idle',
+          },
+        ],
+        todolistId2: [
+          {
+            id: '1',
+            title: 'bread',
+            status: TaskStatus.NEW,
+            startDate: date,
+            todoListId: 'todolistId2',
+            order: 0,
+            priority: TaskPriority.LOW,
+            description: '',
+            deadline: date,
+            addedDate: date,
+            entityStatus: 'idle',
+          },
+        ],
+      },
+    })
   })
 
   it('new array should be added when new todolist is added', () => {
@@ -200,14 +223,14 @@ describe('task reducer', () => {
 
     const newState = taskReducer(initialState, action)
 
-    const keys = Object.keys(newState)
+    const keys = Object.keys(newState.items)
     const newKey = keys.find((k) => k !== 'todolistId1' && k !== 'todolistId2')
     if (!newKey) {
       throw Error('new key should be added')
     }
 
     expect(keys.length).toBe(3)
-    expect(newState[newKey]).toEqual([])
+    expect(newState.items[newKey]).toEqual([])
   })
 
   it('property with todolistId should be deleted', () => {
@@ -215,14 +238,17 @@ describe('task reducer', () => {
 
     const newState = taskReducer(initialState, action)
 
-    const keys = Object.keys(newState)
+    const keys = Object.keys(newState.items)
 
     expect(keys.length).toBe(1)
-    expect(newState['todolistId2']).not.toBeDefined()
+    expect(newState.items['todolistId2']).not.toBeDefined()
   })
 
   it('ids should be equals for addTodolist', () => {
-    const startTasksState: TasksSchema = {}
+    const startTasksState: TasksSchema = {
+      items: {},
+      isLoading: false,
+    }
     const startTodoListsState: TodoListsSchema = []
 
     const action = addTodoList({ id: 'some_id', title: 'new todolist', order: 0, addedDate: date })
@@ -230,7 +256,7 @@ describe('task reducer', () => {
     const endTasksState = taskReducer(startTasksState, action)
     const endTodoListsState = todoListReducer(startTodoListsState, action)
 
-    const keys = Object.keys(endTasksState)
+    const keys = Object.keys(endTasksState.items)
     const idFromTasks = keys[0]
     const idFromTodoLists = endTodoListsState[0].id
 
@@ -238,7 +264,10 @@ describe('task reducer', () => {
   })
 
   it('ids should be equals for setTodoLists', () => {
-    const startTasksState: TasksSchema = {}
+    const startTasksState: TasksSchema = {
+      items: {},
+      isLoading: false,
+    }
     const startTodoListsState: TodoListsSchema = []
 
     const action = setTodoLists([
@@ -249,7 +278,7 @@ describe('task reducer', () => {
     const endTasksState = taskReducer(startTasksState, action)
     const endTodoListsState = todoListReducer(startTodoListsState, action)
 
-    const keys = Object.keys(endTasksState)
+    const keys = Object.keys(endTasksState.items)
     const idFromTasks = keys[0]
     const idFromTodoLists = endTodoListsState[0].id
 
@@ -257,7 +286,10 @@ describe('task reducer', () => {
   })
 
   it('sholud return empty state', () => {
-    const initialState: TasksSchema = {}
+    const initialState: TasksSchema = {
+      items: {},
+      isLoading: false,
+    }
 
     const endTasksState = taskReducer(initialState, clearCurrentState)
 

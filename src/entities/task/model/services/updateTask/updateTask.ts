@@ -1,37 +1,46 @@
-import { getModelSpecificTask } from '../../selectors/tasks'
-import { taskActions } from '../../slice/task.slice'
-import { TaskModel } from '../../types/TasksSchema'
+import { createAsyncThunk } from '@reduxjs/toolkit'
 
-import { AppThunk } from 'app/providers/store'
+import { getModelSpecificTask } from '../../selectors/tasks'
+import { TaskModel, TaskT } from '../../types/TasksSchema'
+
+import { ThunkConfig } from 'app/providers/store'
 
 import { notificationActions, handleServerError, handleNetworkError } from 'entities/notification'
 import { ResultCodes } from 'shared/api/types/todolist'
 
-export const updateTask =
-  (todoId: string, taskId: string, taskModel: TaskModel): AppThunk =>
-  async (dispatch, getState, extra) => {
-    const { tasksAPI } = extra
-    dispatch(notificationActions.setStatus('loading'))
-    dispatch(taskActions.changeTaskStatus({ todoId, entityStatus: 'loading' }))
-    const taskModelFromState = getModelSpecificTask(todoId, taskId)(getState())
-    if (taskModelFromState) {
-      const updatedTask = {
-        ...taskModelFromState,
-        ...taskModel,
+interface UpdateTaskParams {
+  todoId: string
+  taskId: string
+  taskModel: TaskModel
+}
+
+export const updateTask = createAsyncThunk<
+  TaskT | undefined,
+  UpdateTaskParams,
+  ThunkConfig<{ todoId: string; taskId: string }>
+>('entities/task/updateTask', async ({ todoId, taskId, taskModel }, thunkAPI) => {
+  const { extra, dispatch, getState, rejectWithValue } = thunkAPI
+
+  dispatch(notificationActions.setNotificationData({ status: 'loading' }))
+
+  const taskModelFromState = getModelSpecificTask(todoId, taskId)(getState())
+  if (taskModelFromState) {
+    const updatedTask = {
+      ...taskModelFromState,
+      ...taskModel,
+    }
+    try {
+      const response = await extra.tasksAPI.updateTask(todoId, taskId, updatedTask)
+      if (response.data.resultCode === ResultCodes.Success) {
+        dispatch(notificationActions.setNotificationData({ status: 'succeed', success: 'Task updated!' }))
+        return response.data.data.item
+      } else {
+        handleServerError(response.data, dispatch)
+        return rejectWithValue({ todoId, taskId })
       }
-      try {
-        const response = await tasksAPI.updateTask(todoId, taskId, updatedTask)
-        if (response.data.resultCode === ResultCodes.Success) {
-          dispatch(taskActions.changeTask(response.data.data.item))
-          dispatch(taskActions.changeTaskStatus({ todoId, entityStatus: 'succeed' }))
-          dispatch(notificationActions.setStatus('succeed'))
-        } else {
-          handleServerError(response.data, dispatch)
-          dispatch(taskActions.changeTaskStatus({ todoId, entityStatus: 'failed' }))
-        }
-      } catch (e: any) {
-        handleNetworkError(e.message, dispatch)
-        dispatch(taskActions.changeTaskStatus({ todoId, entityStatus: 'failed' }))
-      }
+    } catch (e: any) {
+      handleNetworkError(e.message, dispatch)
+      return rejectWithValue({ todoId, taskId })
     }
   }
+})

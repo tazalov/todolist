@@ -52,13 +52,19 @@ export const EditMenu: FC<EditMenuPT> = memo(({ task, onClose, open }) => {
   }, [])
 
   const handleSaveChanges = () => {
-    const model = {
+    const taskModel = {
       title,
       description,
       status,
       priority,
     }
-    dispatch(updateTask(task.todoListId, task.id, model))
+    dispatch(
+      updateTask({
+        todoId: task.todoListId,
+        taskId: task.id,
+        taskModel,
+      }),
+    )
     setEditMode(false)
   }
 

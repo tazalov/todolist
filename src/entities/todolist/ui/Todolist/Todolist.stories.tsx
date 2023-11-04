@@ -68,7 +68,10 @@ const meta: Meta<typeof Todolist> = {
   decorators: [
     StoreDecorator({
       tasks: {
-        '10': tasks,
+        items: {
+          '10': tasks,
+        },
+        isLoading: false,
       },
     }),
   ],

@@ -22,7 +22,7 @@ export const TodolistList: FC<TodolistListPT> = memo(({ demo = false }) => {
     }
   }, [])
 
-  const todoListsArray = todoLists.map((el) => {
+  const todoListsArray = (todoLists || []).map((el) => {
     return (
       <Grid key={el.id} lg={4} md={6} sm={12}>
         <Todolist todolist={el} demo={demo} />

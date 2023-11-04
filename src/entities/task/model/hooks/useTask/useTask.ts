@@ -10,22 +10,22 @@ export const useTask = (todoId: string, taskId: string) => {
   const dispatch = useAppDispatch()
 
   const remove = () => {
-    dispatch(deleteTask(todoId, taskId))
+    dispatch(deleteTask({ todoId, taskId }))
   }
 
   const handleChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
-    const model = {
+    const taskModel = {
       status: e.currentTarget.checked ? TaskStatus.COMPLETED : TaskStatus.NEW,
     }
-    dispatch(updateTask(todoId, taskId, model))
+    dispatch(updateTask({ todoId, taskId, taskModel }))
   }
 
   const changeTitle = useCallback(
     (newTitle: string) => {
-      const model = {
+      const taskModel = {
         title: newTitle,
       }
-      dispatch(updateTask(todoId, taskId, model))
+      dispatch(updateTask({ todoId, taskId, taskModel }))
     },
     [dispatch, todoId, taskId],
   )

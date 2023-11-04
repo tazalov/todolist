@@ -38,7 +38,7 @@ export type AppThunkExtra = {
   authAPI: AuthAPI
 }
 
-export interface ThunkConfig<T> {
+export interface ThunkConfig<T = undefined> {
   rejectValue: T
   extra: AppThunkExtra
   state: StateSchema

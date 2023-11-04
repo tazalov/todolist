@@ -5,7 +5,7 @@ import { BaseResponseT, ItemsResponseT } from 'shared/api/types/todolist'
 
 export const tasksAPI = {
   getTasks(todolistId: string, count = 10, page = 1) {
-    return todolist.get<ItemsResponseT<TaskT>>(`todo-lists/${todolistId}/tasks?count=${count}&page=${page}`)
+    return todolist.get<ItemsResponseT<TaskT[]>>(`todo-lists/${todolistId}/tasks?count=${count}&page=${page}`)
   },
   createTask(todolistId: string, title: string) {
     return todolist.post<BaseResponseT<{ item: TaskT }>>(`todo-lists/${todolistId}/tasks`, {
