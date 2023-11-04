@@ -13,7 +13,6 @@ const meta: Meta<typeof SuccessSnackbar> = {
   decorators: [
     StoreDecorator({
       notification: {
-        error: null,
         status: 'succeed',
       },
     }),
