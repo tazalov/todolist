@@ -5,7 +5,6 @@ import { AuthSchema, UserData } from '../types/AuthSchema'
 
 const initialState: AuthSchema = {
   data: null,
-  captcha: null,
   _inited: false,
 }
 
@@ -25,14 +24,20 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) =>
     builder
+      .addCase(initUser.pending, (state, action) => {
+        state.data = null
+        state._inited = false
+        state.error = undefined
+      })
       .addCase(initUser.fulfilled, (state, action) => {
-        const { userData, _inited } = action.payload
-        state._inited = _inited
-        state.data = userData
+        state.data = action.payload
+        state._inited = true
+        state.error = undefined
       })
       .addCase(initUser.rejected, (state, action) => {
-        state.data = action.payload
-        state._inited = false
+        state.data = null
+        state._inited = true
+        state.error = action.payload
       }),
 })
 

@@ -12,9 +12,9 @@ export type LoginDataForm = {
 }
 
 export interface AuthSchema {
-  data?: UserData | null
-  captcha: string | null
-
+  data: UserData | null
+  captcha?: string
+  error?: string
   //* инициализируем юзера через auth/me, а потом меняем флаг на true
   _inited: boolean
 }

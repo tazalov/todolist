@@ -5,12 +5,7 @@ import { UserData } from '../../types/AuthSchema'
 import { ThunkConfig } from 'app/providers/store'
 import { ResultCodes } from 'shared/api/types/todolist'
 
-interface InitUserReturn {
-  userData: UserData | null
-  _inited: boolean
-}
-
-export const initUser = createAsyncThunk<InitUserReturn, void, ThunkConfig<null>>(
+export const initUser = createAsyncThunk<UserData | null, void, ThunkConfig<string>>(
   'auth/initUser',
   async (_, thunkAPI) => {
     const { extra, rejectWithValue } = thunkAPI
@@ -19,18 +14,12 @@ export const initUser = createAsyncThunk<InitUserReturn, void, ThunkConfig<null>
       const response = await authAPI.authMe()
 
       if (response.data.resultCode === ResultCodes.Success) {
-        return {
-          userData: response.data.data,
-          _inited: true,
-        }
+        return response.data.data
       } else {
-        return {
-          userData: null,
-          _inited: true,
-        }
+        return null
       }
     } catch (e) {
-      return rejectWithValue(null)
+      return rejectWithValue('Some error occurred!')
     }
   },
 )

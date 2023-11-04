@@ -1,5 +1,6 @@
 import { authReducer, authActions } from './auth.slice'
 
+import { initUser } from '../services/initUser/initUser'
 import { AuthSchema } from '../types/AuthSchema'
 
 describe('auth reducer', () => {
@@ -7,7 +8,6 @@ describe('auth reducer', () => {
   beforeEach(() => {
     initialState = {
       data: null,
-      captcha: null,
       _inited: false,
     }
   })
@@ -39,5 +39,30 @@ describe('auth reducer', () => {
     const newState = authReducer(initialState, action)
 
     expect(newState._inited).toBeTruthy()
+  })
+
+  it('correct state should be set (initUser.pending)', () => {
+    const newState = authReducer(initialState, initUser.pending)
+
+    expect(newState._inited).toBeFalsy()
+    expect(newState.data).toBe(null)
+    expect(newState.error).not.toBeDefined()
+  })
+
+  it('correct state should be set (initUser.fulfilled)', () => {
+    const userDataFromServer = { userId: 1, email: 'email', login: 'login' }
+
+    const newState = authReducer(initialState, initUser.fulfilled(userDataFromServer, ''))
+
+    expect(newState._inited).toBeTruthy()
+    expect(newState.data).toEqual(userDataFromServer)
+    expect(newState.error).not.toBeDefined()
+  })
+
+  it('correct state should be set (initUser.rejected)', () => {
+    const newState = authReducer(initialState, initUser.rejected)
+
+    expect(newState._inited).toBeTruthy()
+    expect(newState.data).toBe(null)
   })
 })
