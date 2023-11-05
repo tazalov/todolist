@@ -1,16 +1,20 @@
-import { setTodoLists } from '../../slice/todolist.slice'
+import { createAsyncThunk } from '@reduxjs/toolkit'
 
-import { AppThunk } from 'app/providers/store'
-import { notificationActions, handleNetworkError } from 'entities/notification'
+import { TodoListT } from '../../types/TodolistsSchema'
 
-export const fetchTodoLists = (): AppThunk => async (dispatch, _, extra) => {
-  const { todolistAPI } = extra
-  dispatch(notificationActions.setStatus('loading'))
-  try {
-    const response = await todolistAPI.getTodolists()
-    dispatch(setTodoLists(response.data))
-    dispatch(notificationActions.setStatus('succeed'))
-  } catch (e: any) {
-    handleNetworkError(e.message, dispatch)
-  }
-}
+import { ThunkConfig } from 'app/providers/store'
+import { handleNetworkError } from 'entities/notification'
+
+export const fetchTodoLists = createAsyncThunk<TodoListT[], undefined, ThunkConfig>(
+  'entities/todolist/fetchTodoLists',
+  async (_, thunkAPI) => {
+    const { extra, dispatch } = thunkAPI
+    try {
+      const response = await extra.todolistAPI.getTodolists()
+      return response.data
+    } catch (e: any) {
+      handleNetworkError(e.message, dispatch)
+      return []
+    }
+  },
+)

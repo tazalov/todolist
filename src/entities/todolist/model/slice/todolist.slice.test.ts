@@ -12,27 +12,33 @@ describe('todolist reducer', () => {
 
   const date = new Date(2023, 0, 1, 0, 0, 0, 0)
 
-  let initialState: TodoListsSchema = []
+  let initialState: TodoListsSchema = {
+    items: [],
+    isLoading: false,
+  }
 
   beforeEach(() => {
-    initialState = [
-      {
-        id: id1,
-        title: 'What to learn',
-        filter: 'all',
-        order: 0,
-        addedDate: date,
-        entityStatus: 'idle',
-      },
-      {
-        id: id2,
-        title: 'What to byu',
-        filter: 'active',
-        order: 0,
-        addedDate: date,
-        entityStatus: 'idle',
-      },
-    ]
+    initialState = {
+      items: [
+        {
+          id: id1,
+          title: 'What to learn',
+          filter: 'all',
+          order: 0,
+          addedDate: date,
+          entityStatus: 'idle',
+        },
+        {
+          id: id2,
+          title: 'What to byu',
+          filter: 'active',
+          order: 0,
+          addedDate: date,
+          entityStatus: 'idle',
+        },
+      ],
+      isLoading: false,
+    }
   })
 
   it('correct todolists should be set', () => {
@@ -41,10 +47,10 @@ describe('todolist reducer', () => {
       { id: id2, title: 'What to byu', order: 0, addedDate: date },
     ]
     const action = setTodoLists(todoListsFromServer)
-    const newState = todoListReducer([], action)
+    const newState = todoListReducer({ items: [], isLoading: false }, action)
 
-    expect(newState.length).toBe(2)
-    expect(newState).toEqual([
+    expect(newState.items.length).toBe(2)
+    expect(newState.items).toEqual([
       {
         id: id1,
         title: 'What to learn',
@@ -69,20 +75,20 @@ describe('todolist reducer', () => {
     const action = addTodoList(todolistFromServer)
     const newState = todoListReducer(initialState, action)
 
-    expect(newState.length).toBe(3)
-    expect(newState[0].id).toBe(id1)
-    expect(newState[0].title).toBe('new title todolist')
-    expect(newState[0].filter).toBe('all')
+    expect(newState.items.length).toBe(3)
+    expect(newState.items[0].id).toBe(id1)
+    expect(newState.items[0].title).toBe('new title todolist')
+    expect(newState.items[0].filter).toBe('all')
   })
 
   it('correct todolist should be removed', () => {
     const action = removeTodoList(id1)
     const newState = todoListReducer(initialState, action)
 
-    expect(newState.length).toBe(1)
-    expect(newState[0].id).toBe(id2)
-    expect(newState[0].title).toBe('What to byu')
-    expect(newState[0].filter).toBe('active')
+    expect(newState.items.length).toBe(1)
+    expect(newState.items[0].id).toBe(id2)
+    expect(newState.items[0].title).toBe('What to byu')
+    expect(newState.items[0].filter).toBe('active')
   })
 
   it('todolist entityStatus should be changed', () => {
@@ -92,8 +98,8 @@ describe('todolist reducer', () => {
     })
     const newState = todoListReducer(initialState, action)
 
-    expect(newState.length).toBe(2)
-    expect(newState[0].entityStatus).toBe('loading')
+    expect(newState.items.length).toBe(2)
+    expect(newState.items[0].entityStatus).toBe('loading')
   })
 
   it('todolist filter should be changed', () => {
@@ -103,8 +109,8 @@ describe('todolist reducer', () => {
     })
     const newState = todoListReducer(initialState, action)
 
-    expect(newState.length).toBe(2)
-    expect(newState[0].filter).toBe('active')
+    expect(newState.items.length).toBe(2)
+    expect(newState.items[0].filter).toBe('active')
   })
 
   it('todolist title should be changed', () => {
@@ -115,13 +121,16 @@ describe('todolist reducer', () => {
     })
     const newState = todoListReducer(initialState, action)
 
-    expect(newState.length).toBe(2)
-    expect(newState[0].title).toBe(title)
-    expect(newState[0].filter).toBe('all')
+    expect(newState.items.length).toBe(2)
+    expect(newState.items[0].title).toBe(title)
+    expect(newState.items[0].filter).toBe('all')
   })
 
   it('sholud return empty state', () => {
-    const initialState: TodoListsSchema = []
+    const initialState: TodoListsSchema = {
+      items: [],
+      isLoading: false,
+    }
 
     const endTasksState = todoListReducer(initialState, clearCurrentState)
 

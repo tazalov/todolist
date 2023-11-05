@@ -1,37 +1,44 @@
+import { Typography } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
-import { useEffect, memo, FC } from 'react'
+import { useMemo, memo, FC } from 'react'
 
-import { getTodolists } from '../../model/selectors/todolists'
-import { fetchTodoLists } from '../../model/services/fetchTodoLists/fetchTodoLists'
+import { UpdatedTodoListT } from '../../model/types/TodolistsSchema'
 import { Todolist } from '../Todolist/Todolist'
 
-import { useAppDispatch, useAppSelector } from 'app/providers/store'
+import { TodolistSkeleton } from '../Todolist/TodolistSkeleton'
 
 interface TodolistListPT {
   demo?: boolean
+  todoLists: UpdatedTodoListT[]
+  isLoading: boolean
 }
 
-export const TodolistList: FC<TodolistListPT> = memo(({ demo = false }) => {
-  const todoLists = useAppSelector(getTodolists)
+export const TodolistList: FC<TodolistListPT> = memo(({ demo = false, todoLists, isLoading }) => {
+  const skeletonsTodoLists = useMemo(() => new Array(3).fill(0).map((_, i) => <TodolistSkeleton key={i} />), [])
 
-  const dispatch = useAppDispatch()
+  const todoListsArray = useMemo(
+    () =>
+      todoLists.map((el) => {
+        return (
+          <Grid key={el.id} lg={4} md={6} sm={12}>
+            <Todolist todolist={el} demo={demo} />
+          </Grid>
+        )
+      }),
+    [todoLists],
+  )
 
-  useEffect(() => {
-    if (!demo) {
-      dispatch(fetchTodoLists())
-    }
-  }, [])
+  const todoListsNotExist = todoLists.length === 0 && !isLoading
 
-  const todoListsArray = (todoLists || []).map((el) => {
-    return (
-      <Grid key={el.id} lg={4} md={6} sm={12}>
-        <Todolist todolist={el} demo={demo} />
-      </Grid>
-    )
-  })
   return (
     <Grid container spacing={2}>
-      {todoListsArray}
+      {todoLists.length > 0 && todoListsArray}
+      {todoListsNotExist && (
+        <Typography align={'center'} variant={'h3'} sx={{ width: '100%' }}>
+          There are no Todolists yet :) Create your first list!
+        </Typography>
+      )}
+      {isLoading && skeletonsTodoLists}
     </Grid>
   )
 })

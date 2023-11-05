@@ -2,5 +2,7 @@ export { todoListReducer, addTodoList, removeTodoList, setTodoLists } from './mo
 export { TodolistList } from './ui/TodolistList/TodolistList'
 export { CreateTodolistForm } from './ui/CreateTodolistForm/CreateTodolistForm'
 export { todolistAPI } from './api/todolists.api'
+export { getTodolistsIsLoading, getTodolistsItems } from './model/selectors/todolists'
+export { fetchTodoLists } from './model/services/fetchTodoLists/fetchTodoLists'
 export type { TodoListsSchema, FilterT } from './model/types/TodolistsSchema'
 export type { TodolistAPI } from './api/todolists.api'

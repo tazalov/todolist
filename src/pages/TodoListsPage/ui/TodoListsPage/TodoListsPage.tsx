@@ -1,9 +1,10 @@
 import { styled, Container } from '@mui/material'
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
 
-import { useAppSelector } from 'app/providers/store'
+import { useAppSelector, useAppDispatch } from 'app/providers/store'
 import { taskReducer } from 'entities/task'
+import { getTodolistsItems, getTodolistsIsLoading, fetchTodoLists } from 'entities/todolist'
 import { CreateTodolistForm, TodolistList, todoListReducer } from 'entities/todolist'
 import { getUserData } from 'features/auth'
 import { DynamicReducerLoader } from 'shared/lib/DynamicReducerLoader/DynamicReducerLoader'
@@ -26,6 +27,16 @@ interface TodoListsPagePT {
 
 const TodoListsPage: FC<TodoListsPagePT> = ({ demo = false }) => {
   const userData = useAppSelector(getUserData)
+  const todoLists = useAppSelector(getTodolistsItems)
+  const isLoading = useAppSelector(getTodolistsIsLoading)
+
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    if (!demo) {
+      dispatch(fetchTodoLists())
+    }
+  }, [])
 
   if (!userData) {
     return <Navigate to={'/login'} />
@@ -35,7 +46,7 @@ const TodoListsPage: FC<TodoListsPagePT> = ({ demo = false }) => {
     <DynamicReducerLoader reducers={initialReducers}>
       <ResponsiveContainer fixed>
         <CreateTodolistForm />
-        <TodolistList demo={demo} />
+        <TodolistList demo={demo} todoLists={todoLists} isLoading={isLoading} />
       </ResponsiveContainer>
     </DynamicReducerLoader>
   )

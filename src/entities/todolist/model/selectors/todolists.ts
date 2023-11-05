@@ -1,3 +1,5 @@
 import { StateSchema } from 'app/providers/store'
 
-export const getTodolists = (state: StateSchema) => state.todoList
+export const getTodolistsItems = (state: StateSchema) => state.todoList?.items ?? []
+
+export const getTodolistsIsLoading = (state: StateSchema) => state.todoList?.isLoading ?? false

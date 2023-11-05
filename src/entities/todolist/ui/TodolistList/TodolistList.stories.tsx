@@ -17,14 +17,17 @@ const meta: Meta<typeof TodolistList> = {
       description: 'Flag for render in storybook',
       control: false,
     },
+    todoLists: {
+      description: 'Array todolists',
+      control: false,
+    },
+    isLoading: {
+      description: 'Flag to show skeletons',
+      control: 'boolean',
+    },
   },
   decorators: [
     StoreDecorator({
-      todoList: [
-        { id: '1', filter: 'all', title: 'todolist1', order: 0, addedDate: new Date(), entityStatus: 'idle' },
-        { id: '2', filter: 'all', title: 'todolist2', order: 1, addedDate: new Date(), entityStatus: 'loading' },
-        { id: '3', filter: 'all', title: 'todolist3', order: 2, addedDate: new Date(), entityStatus: 'idle' },
-      ],
       tasks: {
         items: {
           '1': [
@@ -111,5 +114,18 @@ type Story = StoryObj<typeof TodolistList>
 export const Demo: Story = {
   args: {
     demo: true,
+    todoLists: [
+      { id: '1', filter: 'all', title: 'todolist1', order: 0, addedDate: new Date(), entityStatus: 'idle' },
+      { id: '2', filter: 'all', title: 'todolist2', order: 1, addedDate: new Date(), entityStatus: 'loading' },
+      { id: '3', filter: 'all', title: 'todolist3', order: 2, addedDate: new Date(), entityStatus: 'idle' },
+    ],
+  },
+}
+
+export const isLoading: Story = {
+  args: {
+    demo: true,
+    todoLists: [],
+    isLoading: true,
   },
 }

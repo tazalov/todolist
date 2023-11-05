@@ -249,7 +249,10 @@ describe('task reducer', () => {
       items: {},
       isLoading: false,
     }
-    const startTodoListsState: TodoListsSchema = []
+    const startTodoListsState: TodoListsSchema = {
+      items: [],
+      isLoading: false,
+    }
 
     const action = addTodoList({ id: 'some_id', title: 'new todolist', order: 0, addedDate: date })
 
@@ -258,7 +261,7 @@ describe('task reducer', () => {
 
     const keys = Object.keys(endTasksState.items)
     const idFromTasks = keys[0]
-    const idFromTodoLists = endTodoListsState[0].id
+    const idFromTodoLists = endTodoListsState.items[0].id
 
     expect(idFromTasks).toBe(idFromTodoLists)
   })
@@ -268,7 +271,10 @@ describe('task reducer', () => {
       items: {},
       isLoading: false,
     }
-    const startTodoListsState: TodoListsSchema = []
+    const startTodoListsState: TodoListsSchema = {
+      items: [],
+      isLoading: false,
+    }
 
     const action = setTodoLists([
       { id: 'some_id1', title: 'new todolist', order: 0, addedDate: date },
@@ -280,7 +286,7 @@ describe('task reducer', () => {
 
     const keys = Object.keys(endTasksState.items)
     const idFromTasks = keys[0]
-    const idFromTodoLists = endTodoListsState[0].id
+    const idFromTodoLists = endTodoListsState.items[0].id
 
     expect(idFromTasks).toBe(idFromTodoLists)
   })

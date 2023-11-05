@@ -18,4 +18,7 @@ export interface UpdateModelTodoList {
   entityStatus?: CurrentStatus
 }
 
-export type TodoListsSchema = UpdatedTodoListT[]
+export type TodoListsSchema = {
+  items: UpdatedTodoListT[]
+  isLoading: boolean
+}
