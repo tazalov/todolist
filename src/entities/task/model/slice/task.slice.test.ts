@@ -1,4 +1,4 @@
-import { taskReducer, taskActions } from './task.slice'
+import { taskReducer } from './task.slice'
 
 import { createTask } from '../services/createTask/createTask'
 import { deleteTask } from '../services/deleteTask/deleteTask'
@@ -7,7 +7,7 @@ import { updateTask } from '../services/updateTask/updateTask'
 import { TasksSchema, TaskStatus, TaskPriority } from '../types/TasksSchema'
 
 import { clearCurrentState } from 'app/providers/store'
-import { addTodoList, removeTodoList, TodoListsSchema, todoListReducer, setTodoLists } from 'entities/todolist'
+import { deleteTodolist, TodoListsSchema, todoListReducer, createTodolist, fetchTodoLists } from 'entities/todolist'
 
 describe('task reducer', () => {
   const date = new Date(2023, 0, 1, 0, 0, 0, 0)
@@ -219,9 +219,10 @@ describe('task reducer', () => {
   })
 
   it('new array should be added when new todolist is added', () => {
-    const action = addTodoList({ id: 'some_id', title: 'new title todolist', order: 0, addedDate: date })
+    const title = 'new title todolist'
+    const todoList = { id: 'some_id', title, order: 0, addedDate: date }
 
-    const newState = taskReducer(initialState, action)
+    const newState = taskReducer(initialState, createTodolist.fulfilled(todoList, 'requestId', title))
 
     const keys = Object.keys(newState.items)
     const newKey = keys.find((k) => k !== 'todolistId1' && k !== 'todolistId2')
@@ -234,9 +235,7 @@ describe('task reducer', () => {
   })
 
   it('property with todolistId should be deleted', () => {
-    const action = removeTodoList('todolistId2')
-
-    const newState = taskReducer(initialState, action)
+    const newState = taskReducer(initialState, deleteTodolist.fulfilled('todolistId2', 'requestId', 'todolistId2'))
 
     const keys = Object.keys(newState.items)
 
@@ -254,7 +253,11 @@ describe('task reducer', () => {
       isLoading: false,
     }
 
-    const action = addTodoList({ id: 'some_id', title: 'new todolist', order: 0, addedDate: date })
+    const action = createTodolist.fulfilled(
+      { id: 'some_id', title: 'new todolist', order: 0, addedDate: date },
+      'requestId',
+      'new todolist',
+    )
 
     const endTasksState = taskReducer(startTasksState, action)
     const endTodoListsState = todoListReducer(startTodoListsState, action)
@@ -276,10 +279,14 @@ describe('task reducer', () => {
       isLoading: false,
     }
 
-    const action = setTodoLists([
-      { id: 'some_id1', title: 'new todolist', order: 0, addedDate: date },
-      { id: 'some_id2', title: 'new todolist', order: 0, addedDate: date },
-    ])
+    const action = fetchTodoLists.fulfilled(
+      [
+        { id: 'some_id1', title: 'new todolist', order: 0, addedDate: date },
+        { id: 'some_id2', title: 'new todolist', order: 0, addedDate: date },
+      ],
+      'requestId',
+      undefined,
+    )
 
     const endTasksState = taskReducer(startTasksState, action)
     const endTodoListsState = todoListReducer(startTodoListsState, action)

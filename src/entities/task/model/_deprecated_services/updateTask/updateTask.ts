@@ -1,6 +1,6 @@
-import { getModelSpecificTask } from '../../../selectors/tasks'
-import { taskActions } from '../../../slice/task.slice'
-import { TaskModel } from '../../../types/TasksSchema'
+import { getModelSpecificTask } from '../../selectors/tasks'
+import { taskActions } from '../../slice/task.slice'
+import { TaskModel } from '../../types/TasksSchema'
 
 import { AppThunk } from 'app/providers/store'
 
@@ -12,7 +12,7 @@ export const updateTask =
   async (dispatch, getState, extra) => {
     const { tasksAPI } = extra
     dispatch(notificationActions.setStatus('loading'))
-    //dispatch(taskActions.changeTaskStatus({ todoId, entityStatus: 'loading' }))
+    dispatch(taskActions.changeTaskStatus({ todoId, entityStatus: 'loading' }))
     const taskModelFromState = getModelSpecificTask(todoId, taskId)(getState())
     if (taskModelFromState) {
       const updatedTask = {
@@ -22,16 +22,16 @@ export const updateTask =
       try {
         const response = await tasksAPI.updateTask(todoId, taskId, updatedTask)
         if (response.data.resultCode === ResultCodes.Success) {
-          //dispatch(taskActions.changeTask(response.data.data.item))
-          //dispatch(taskActions.changeTaskStatus({ todoId, entityStatus: 'succeed' }))
+          dispatch(taskActions.changeTask(response.data.data.item))
+          dispatch(taskActions.changeTaskStatus({ todoId, entityStatus: 'succeed' }))
           dispatch(notificationActions.setStatus('succeed'))
         } else {
           handleServerError(response.data, dispatch)
-          //dispatch(taskActions.changeTaskStatus({ todoId, entityStatus: 'failed' }))
+          dispatch(taskActions.changeTaskStatus({ todoId, entityStatus: 'failed' }))
         }
       } catch (e: any) {
         handleNetworkError(e.message, dispatch)
-        //dispatch(taskActions.changeTaskStatus({ todoId, entityStatus: 'failed' }))
+        dispatch(taskActions.changeTaskStatus({ todoId, entityStatus: 'failed' }))
       }
     }
   }

@@ -1,15 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { createTask } from '../services/createTask/createTask'
 import { deleteTask } from '../services/deleteTask/deleteTask'
 import { fetchTasksByTodolistId } from '../services/fetchTasksByTodolistId/fetchTasksByTodolistId'
 import { updateTask } from '../services/updateTask/updateTask'
-import { TasksSchema, TasksObj } from '../types/TasksSchema'
-
+import { TasksSchema, TasksObj, TaskT } from '../types/TasksSchema'
 import { findIdxTaskByTodoId } from '../utils/findIdxTaskByTodoId'
 
 import { clearCurrentState } from 'app/providers/store'
-import { addTodoList, setTodoLists, removeTodoList } from 'entities/todolist'
+import { deleteTodolist, createTodolist, fetchTodoLists } from 'entities/todolist'
 
 export const initialState: TasksSchema = {
   items: {},
@@ -19,7 +18,34 @@ export const initialState: TasksSchema = {
 const taskSlice = createSlice({
   name: 'task',
   initialState,
-  reducers: {},
+  reducers: {
+    setTasks: (state, action: PayloadAction<{ todoId: string; tasks: TaskT[] }>) => {
+      const { todoId, tasks } = action.payload
+      state.items[todoId] = tasks.map((el) => ({ ...el, entityStatus: 'idle' }))
+    },
+    addTask: (state, action: PayloadAction<TaskT>) => {
+      const task = action.payload
+      state.items[task.todoListId].unshift({ ...task, entityStatus: 'idle' })
+    },
+    removeTask: (state, action: PayloadAction<{ todoId: string; taskId: string }>) => {
+      const { todoId, taskId } = action.payload
+      const idx = state.items[todoId].findIndex((el) => el.id === taskId)
+      if (idx !== -1) {
+        state.items[todoId].splice(idx, 1)
+      }
+    },
+    changeTask: (state, action: PayloadAction<TaskT>) => {
+      const task = action.payload
+      const idx = state.items[task.todoListId].findIndex((el) => el.id === task.id)
+      if (idx !== -1) {
+        state.items[task.todoListId][idx] = { ...state.items[task.todoListId][idx], ...task }
+      }
+    },
+    changeTaskStatus: (state, action: PayloadAction<{ todoId: string; entityStatus: CurrentStatus }>) => {
+      const { todoId, entityStatus } = action.payload
+      state.items[todoId] = state.items[todoId].map((el) => ({ ...el, entityStatus }))
+    },
+  },
   extraReducers: (builder) =>
     builder
       .addCase(clearCurrentState, () => initialState)
@@ -52,9 +78,6 @@ const taskSlice = createSlice({
           }
         }
       })
-      /*.addCase(deleteTask.rejected, (state, { payload }) => {
-      
-      })*/
       .addCase(createTask.fulfilled, (state, { payload: task }) => {
         if (task) {
           state.items[task.todoListId].unshift({ ...task, entityStatus: 'idle' })
@@ -88,18 +111,17 @@ const taskSlice = createSlice({
           }
         }
       })
-      .addCase(setTodoLists, (state, { payload: todoLists }) => {
+      .addCase(fetchTodoLists.fulfilled, (state, { payload: todoLists }) => {
         state.items = todoLists.reduce((acc: TasksObj, el) => {
           acc[el.id] = []
           return acc
         }, {})
       })
-      .addCase(addTodoList, (state, { payload: todoList }) => {
-        const { id } = todoList
-        state.items[id] = []
+      .addCase(createTodolist.fulfilled, (state, { payload: todoList }) => {
+        if (todoList) state.items[todoList.id] = []
       })
-      .addCase(removeTodoList, (state, { payload: todoListId }) => {
-        delete state.items[todoListId]
+      .addCase(deleteTodolist.fulfilled, (state, { payload: todoListId }) => {
+        if (todoListId) delete state.items[todoListId]
       }),
 })
 

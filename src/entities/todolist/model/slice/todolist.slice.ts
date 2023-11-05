@@ -1,7 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
+import { createTodolist } from '../services/createTodolist/createTodolist'
+import { deleteTodolist } from '../services/deleteTodolist/deleteTodolist'
 import { fetchTodoLists } from '../services/fetchTodoLists/fetchTodoLists'
 import { TodoListsSchema, TodoListT, UpdateModelTodoList } from '../types/TodolistsSchema'
+
+import { findIdxTodoById } from '../utils/findIdxTodoById'
 
 import { clearCurrentState } from 'app/providers/store'
 
@@ -54,8 +58,21 @@ const todolistSlice = createSlice({
       })
       .addCase(fetchTodoLists.rejected, (state) => {
         state.isLoading = false
+      })
+      .addCase(deleteTodolist.fulfilled, (state, { payload }) => {
+        if (payload) {
+          const idx = findIdxTodoById(state, payload)
+          if (idx !== -1) {
+            state.items.splice(idx, 1)
+          }
+        }
+      })
+      .addCase(createTodolist.fulfilled, (state, { payload: todoList }) => {
+        if (todoList) {
+          state.items.unshift({ ...todoList, filter: 'all', entityStatus: 'idle' })
+        }
       }),
 })
 
 export const todoListReducer = todolistSlice.reducer
-export const { setTodoLists, addTodoList, removeTodoList, changeTodoList } = todolistSlice.actions
+export const { changeTodoList, addTodoList, removeTodoList, setTodoLists } = todolistSlice.actions

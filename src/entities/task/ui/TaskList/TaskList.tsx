@@ -21,13 +21,13 @@ export const TaskList: FC<TaskListPT> = memo(({ todoId, filter }) => {
   const tasksArray = useMemo(() => {
     switch (filter) {
       case 'active': {
-        return tasks?.filter((el) => el.status === TaskStatus.NEW) || []
+        return tasks?.filter((el) => el.status === TaskStatus.NEW)
       }
       case 'completed': {
-        return tasks?.filter((el) => el.status === TaskStatus.COMPLETED) || []
+        return tasks?.filter((el) => el.status === TaskStatus.COMPLETED)
       }
       default: {
-        return tasks || []
+        return tasks
       }
     }
   }, [tasks, filter])

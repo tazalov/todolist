@@ -1,18 +1,18 @@
-import { taskActions } from '../../../slice/task.slice'
+import { taskActions } from '../../slice/task.slice'
 
 import { AppThunk } from 'app/providers/store'
 import { notificationActions, handleServerError, handleNetworkError } from 'entities/notification'
 import { ResultCodes } from 'shared/api/types/todolist'
 
-export const createTask =
-  (todoId: string, title: string): AppThunk =>
+export const deleteTask =
+  (todoId: string, taskId: string): AppThunk =>
   async (dispatch, _, extra) => {
     const { tasksAPI } = extra
     dispatch(notificationActions.setStatus('loading'))
     try {
-      const response = await tasksAPI.createTask(todoId, title)
+      const response = await tasksAPI.deleteTask(todoId, taskId)
       if (response.data.resultCode === ResultCodes.Success) {
-        //dispatch(taskActions.addTask(response.data.data.item))
+        dispatch(taskActions.removeTask({ todoId, taskId }))
         dispatch(notificationActions.setStatus('succeed'))
       } else {
         handleServerError(response.data, dispatch)

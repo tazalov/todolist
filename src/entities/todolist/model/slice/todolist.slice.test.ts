@@ -1,7 +1,10 @@
 import { v1 } from 'uuid'
 
-import { todoListReducer, removeTodoList, addTodoList, changeTodoList, setTodoLists } from './todolist.slice'
+import { todoListReducer, changeTodoList } from './todolist.slice'
 
+import { createTodolist } from '../services/createTodolist/createTodolist'
+import { deleteTodolist } from '../services/deleteTodolist/deleteTodolist'
+import { fetchTodoLists } from '../services/fetchTodoLists/fetchTodoLists'
 import { TodoListsSchema } from '../types/TodolistsSchema'
 
 import { clearCurrentState } from 'app/providers/store'
@@ -46,7 +49,7 @@ describe('todolist reducer', () => {
       { id: id1, title: 'What to learn', order: 0, addedDate: date },
       { id: id2, title: 'What to byu', order: 0, addedDate: date },
     ]
-    const action = setTodoLists(todoListsFromServer)
+    const action = fetchTodoLists.fulfilled(todoListsFromServer, 'requestId', undefined)
     const newState = todoListReducer({ items: [], isLoading: false }, action)
 
     expect(newState.items.length).toBe(2)
@@ -72,7 +75,7 @@ describe('todolist reducer', () => {
 
   it('correct todolist should be added', () => {
     const todolistFromServer = { id: id1, title: 'new title todolist', order: 0, addedDate: date }
-    const action = addTodoList(todolistFromServer)
+    const action = createTodolist.fulfilled(todolistFromServer, 'requestId', 'new title todolist')
     const newState = todoListReducer(initialState, action)
 
     expect(newState.items.length).toBe(3)
@@ -82,8 +85,7 @@ describe('todolist reducer', () => {
   })
 
   it('correct todolist should be removed', () => {
-    const action = removeTodoList(id1)
-    const newState = todoListReducer(initialState, action)
+    const newState = todoListReducer(initialState, deleteTodolist.fulfilled(id1, 'requestId', id1))
 
     expect(newState.items.length).toBe(1)
     expect(newState.items[0].id).toBe(id2)
