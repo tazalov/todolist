@@ -3,6 +3,7 @@ import { authReducer, authActions } from './auth.slice'
 import { initUser } from '../services/initUser/initUser'
 import { AuthSchema } from '../types/AuthSchema'
 
+// TODO если вспомнишь, сделай тесты на все остальные экшены, которые из санок возвращаются
 describe('auth reducer', () => {
   let initialState: AuthSchema
   beforeEach(() => {
@@ -12,19 +13,6 @@ describe('auth reducer', () => {
     }
   })
 
-  it('correct user data should be set', () => {
-    const userData = {
-      email: 'email',
-      login: 'login',
-      userId: 1,
-    }
-
-    const action = authActions.setUserData(userData)
-    const newState = authReducer(initialState, action)
-
-    expect(newState.data).toEqual(userData)
-  })
-
   it('correct captcha should be set', () => {
     const captcha = 'some url with captcha img'
 
@@ -32,13 +20,6 @@ describe('auth reducer', () => {
     const newState = authReducer(initialState, action)
 
     expect(newState.captcha).toBe(captcha)
-  })
-
-  it('correct _inited value should be set', () => {
-    const action = authActions.setInited(true)
-    const newState = authReducer(initialState, action)
-
-    expect(newState._inited).toBeTruthy()
   })
 
   it('correct state should be set (initUser.pending)', () => {

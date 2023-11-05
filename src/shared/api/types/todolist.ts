@@ -1,7 +1,7 @@
 export type BaseResponseT<T = {}> = {
   resultCode: ResultCodes
   messages: string[]
-  fieldsErrors: string[]
+  fieldsErrors: { field: string; error: string }[]
   data: T
 }
 

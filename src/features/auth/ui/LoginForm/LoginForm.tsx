@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
 import FormControl from '@mui/material/FormControl'
@@ -25,11 +26,22 @@ export const LoginForm = () => {
       email: 'free@samuraijs.com',
       password: 'free',
       rememberMe: false,
+      serverError: undefined,
     },
     validationSchema,
-    onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 2))
-      dispatch(loginUser(values))
+    onSubmit: async (values, formikHelpers) => {
+      const action = await dispatch(loginUser(values))
+      if (loginUser.rejected.match(action)) {
+        const fieldsErrors = action.payload?.fieldsErrors
+        const serverErrors = action.payload?.errors
+        if (fieldsErrors?.length) {
+          const fieldName = fieldsErrors[0].field
+          const fieldError = fieldsErrors[0].error
+          formikHelpers.setFieldError(fieldName, fieldError)
+        } else if (serverErrors?.length) {
+          formikHelpers.setFieldError('serverError', serverErrors[0])
+        }
+      }
     },
   })
 
@@ -70,6 +82,9 @@ export const LoginForm = () => {
           <Button color='primary' variant='contained' type='submit'>
             Login
           </Button>
+          <Typography color={'error'} sx={{ mt: 1 }}>
+            {formik.errors.serverError}
+          </Typography>
         </FormGroup>
       </FormControl>
     </form>

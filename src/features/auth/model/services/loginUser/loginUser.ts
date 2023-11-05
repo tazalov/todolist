@@ -1,24 +1,40 @@
-import { authActions } from '../../slice/auth.slice'
-import { LoginDataForm } from '../../types/AuthSchema'
+import { createAsyncThunk } from '@reduxjs/toolkit'
 
-import { AppThunk } from 'app/providers/store'
+import { LoginDataForm, UserData } from '../../types/AuthSchema'
+
+import { ThunkConfig } from 'app/providers/store'
 import { handleServerError, handleNetworkError, notificationActions } from 'entities/notification'
 import { ResultCodes } from 'shared/api/types/todolist'
 
-export const loginUser =
-  (loginDataForm: LoginDataForm): AppThunk =>
-  async (dispatch, _, extra) => {
-    const { authAPI } = extra
-    dispatch(notificationActions.setStatus('loading'))
+interface RejectValues {
+  errors: string[]
+  fieldsErrors?: { field: string; error: string }[]
+}
+
+export const loginUser = createAsyncThunk<UserData, LoginDataForm, ThunkConfig<RejectValues>>(
+  'features/auth/loginUser',
+  async (loginDataForm, thunkAPI) => {
+    const { extra, dispatch, rejectWithValue } = thunkAPI
+
+    dispatch(notificationActions.setNotificationData({ status: 'loading' }))
     try {
-      const response = await authAPI.loginUser(loginDataForm)
+      const response = await extra.authAPI.loginUser(loginDataForm)
       if (response.data.resultCode === ResultCodes.Success) {
-        dispatch(authActions.setUserData({ userId: response.data.data.userId, email: loginDataForm.email }))
-        dispatch(notificationActions.setStatus('succeed'))
+        dispatch(notificationActions.setNotificationData({ status: 'succeed', success: 'Success login!' }))
+        return { userId: response.data.data.userId, email: loginDataForm.email }
       } else {
         handleServerError(response.data, dispatch)
+        return rejectWithValue({
+          errors: response.data.messages,
+          fieldsErrors: response.data.fieldsErrors,
+        })
       }
     } catch (e: any) {
       handleNetworkError(e.message, dispatch)
+      return rejectWithValue({
+        errors: [e.message],
+        fieldsErrors: undefined,
+      })
     }
-  }
+  },
+)

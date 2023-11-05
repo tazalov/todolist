@@ -24,8 +24,7 @@ export const ErrorSnackbar = memo(() => {
     if (reason === 'clickaway') {
       return
     }
-    dispatch(notificationActions.setError(undefined))
-    dispatch(notificationActions.setStatus('idle'))
+    dispatch(notificationActions.setNotificationData({ status: 'idle' }))
   }
 
   return (

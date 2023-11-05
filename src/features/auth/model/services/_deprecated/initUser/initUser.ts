@@ -9,9 +9,9 @@ export const initUser = (): AppThunk => async (dispatch, _, extra) => {
     const response = await authAPI.authMe()
 
     if (response.data.resultCode === ResultCodes.Success) {
-      dispatch(authActions.setUserData(response.data.data))
+      //dispatch(authActions.setUserData(response.data.data))
     }
-    dispatch(authActions.setInited(true))
+    //dispatch(authActions.setInited(true))
   } catch (e) {
     console.log(e)
   }

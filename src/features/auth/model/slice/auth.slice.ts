@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { initUser } from '../services/initUser/initUser'
-import { AuthSchema, UserData } from '../types/AuthSchema'
+import { loginUser } from '../services/loginUser/loginUser'
+import { logoutUser } from '../services/logoutUser/logoutUser'
+import { AuthSchema } from '../types/AuthSchema'
 
 const initialState: AuthSchema = {
   data: null,
@@ -12,19 +14,13 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setUserData: (state, action: PayloadAction<UserData | null>) => {
-      state.data = action.payload
-    },
     setCaptcha: (state, action: PayloadAction<string>) => {
       state.captcha = action.payload
-    },
-    setInited: (state, action: PayloadAction<boolean>) => {
-      state._inited = action.payload
     },
   },
   extraReducers: (builder) =>
     builder
-      .addCase(initUser.pending, (state, action) => {
+      .addCase(initUser.pending, (state) => {
         state.data = null
         state._inited = false
         state.error = undefined
@@ -38,6 +34,18 @@ const authSlice = createSlice({
         state.data = null
         state._inited = true
         state.error = action.payload
+      })
+      .addCase(loginUser.pending, (state) => {
+        state.data = null
+      })
+      .addCase(loginUser.fulfilled, (state, { payload }) => {
+        state.data = payload
+      })
+      .addCase(loginUser.rejected, (state) => {
+        state.data = null
+      })
+      .addCase(logoutUser.fulfilled, (state, { payload }) => {
+        state.data = null
       }),
 })
 
