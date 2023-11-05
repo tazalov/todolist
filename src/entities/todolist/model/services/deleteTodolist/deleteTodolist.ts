@@ -9,7 +9,7 @@ import { ResultCodes } from 'shared/api/types/todolist'
 export const deleteTodolist = createAsyncThunk<string | void, string, ThunkConfig>(
   'entities/todoList/deleteTodolist',
   async (todoId, thunkAPI) => {
-    const { extra, dispatch } = thunkAPI
+    const { extra, dispatch, rejectWithValue } = thunkAPI
     dispatch(notificationActions.setNotificationData({ status: 'loading' }))
     dispatch(changeTodoList({ todoId, model: { entityStatus: 'loading' } }))
     try {
@@ -19,9 +19,13 @@ export const deleteTodolist = createAsyncThunk<string | void, string, ThunkConfi
         return todoId
       } else {
         handleServerError(response.data, dispatch)
+        //? надо ли? вопрос остается открытым:)
+        return rejectWithValue(undefined)
       }
     } catch (e: any) {
       handleNetworkError(e.message, dispatch)
+      //? надо ли? вопрос остается открытым:)
+      return rejectWithValue(undefined)
     }
   },
 )

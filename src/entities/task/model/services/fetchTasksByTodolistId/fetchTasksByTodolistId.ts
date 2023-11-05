@@ -13,7 +13,7 @@ interface FetchTasksReturn {
 export const fetchTasksByTodolistId = createAsyncThunk<FetchTasksReturn | void, string, ThunkConfig>(
   'entities/task/fetchTasksByTodolistId',
   async (todoId, thunkAPI) => {
-    const { extra, dispatch } = thunkAPI
+    const { extra, dispatch, rejectWithValue } = thunkAPI
     try {
       const response = await extra.tasksAPI.getTasks(todoId)
       if (!response.data.error) {
@@ -23,9 +23,13 @@ export const fetchTasksByTodolistId = createAsyncThunk<FetchTasksReturn | void, 
         }
       } else {
         handleNetworkError(response.data.error, dispatch)
+        //? надо ли? вопрос остается открытым:)
+        return rejectWithValue(undefined)
       }
     } catch (e) {
       handleNetworkError((e as Error).message, dispatch)
+      //? надо ли? вопрос остается открытым:)
+      return rejectWithValue(undefined)
     }
   },
 )
