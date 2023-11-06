@@ -17,8 +17,21 @@ const ThemeDecorator = withThemeFromJSXProvider({
 })
 
 const preview: Preview = {
-  // @ts-ignore
-  decorators: [StoreDecorator({}), RouterDecorator, ThemeDecorator],
+  decorators: [
+    StoreDecorator({
+      auth: {
+        data: {
+          userId: 1,
+          login: 'login',
+          email: 'email',
+        },
+        _inited: true,
+      },
+    }),
+    RouterDecorator,
+    // @ts-ignore
+    ThemeDecorator,
+  ],
 }
 
 export default preview

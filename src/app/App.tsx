@@ -31,7 +31,7 @@ export const App = () => {
   return (
     <>
       <Header />
-      <AppRouter />
+      {_inited && <AppRouter />}
       <ErrorSnackbar />
       <SuccessSnackbar />
     </>
