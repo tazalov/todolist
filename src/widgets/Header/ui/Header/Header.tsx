@@ -9,7 +9,7 @@ import { NavLink } from 'react-router-dom'
 import { useAppDispatch } from 'app/providers/store'
 import { ColorModeContext } from 'app/styles/ThemeContext'
 import { getNotificationStatus } from 'entities/notification'
-import { getUserData } from 'features/auth'
+import { getAuthUserData } from 'features/auth'
 import { logoutUser } from 'features/auth'
 
 const ResponsiveToolbar = styled(Toolbar)(({ theme }) => ({
@@ -24,7 +24,7 @@ export const Header = memo(() => {
   const colorMode = useContext(ColorModeContext)
 
   const status = useSelector(getNotificationStatus)
-  const userData = useSelector(getUserData)
+  const userData = useSelector(getAuthUserData)
 
   const dispatch = useAppDispatch()
 

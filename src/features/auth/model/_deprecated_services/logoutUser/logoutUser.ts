@@ -1,4 +1,4 @@
-import { authActions } from '../../../slice/auth.slice'
+import { authActions } from '../../slice/auth.slice'
 
 import { AppThunk, clearCurrentState } from 'app/providers/store'
 import { notificationActions, handleServerError, handleNetworkError } from 'entities/notification'
@@ -11,7 +11,7 @@ export const logoutUser = (): AppThunk => async (dispatch, _, extra) => {
     const response = await authAPI.logoutUser()
     if (response.data.resultCode === ResultCodes.Success) {
       dispatch(clearCurrentState())
-      //dispatch(authActions.setUserData(null))
+      dispatch(authActions.setUserData(null))
       dispatch(notificationActions.setStatus('succeed'))
     } else {
       handleServerError(response.data, dispatch)

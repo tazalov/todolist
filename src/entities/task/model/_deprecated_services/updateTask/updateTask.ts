@@ -1,4 +1,4 @@
-import { getModelSpecificTask } from '../../selectors/tasks'
+import { getTasksItemModel } from '../../selectors/tasks'
 import { taskActions } from '../../slice/task.slice'
 import { TaskModel } from '../../types/TasksSchema'
 
@@ -13,7 +13,7 @@ export const updateTask =
     const { tasksAPI } = extra
     dispatch(notificationActions.setStatus('loading'))
     dispatch(taskActions.changeTaskStatus({ todoId, entityStatus: 'loading' }))
-    const taskModelFromState = getModelSpecificTask(todoId, taskId)(getState())
+    const taskModelFromState = getTasksItemModel(todoId, taskId)(getState())
     if (taskModelFromState) {
       const updatedTask = {
         ...taskModelFromState,

@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { initUser } from '../services/initUser/initUser'
 import { loginUser } from '../services/loginUser/loginUser'
 import { logoutUser } from '../services/logoutUser/logoutUser'
-import { AuthSchema } from '../types/AuthSchema'
+import { AuthSchema, UserData } from '../types/AuthSchema'
 
 const initialState: AuthSchema = {
   data: null,
@@ -14,8 +14,14 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    setUserData: (state, action: PayloadAction<UserData | null>) => {
+      state.data = action.payload
+    },
     setCaptcha: (state, action: PayloadAction<string>) => {
       state.captcha = action.payload
+    },
+    setInited: (state, action: PayloadAction<boolean>) => {
+      state._inited = action.payload
     },
   },
   extraReducers: (builder) =>

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
-import { getModelSpecificTask } from '../../selectors/tasks'
+import { getTasksItemModel } from '../../selectors/tasks'
 import { TaskModel, TaskT } from '../../types/TasksSchema'
 
 import { ThunkConfig } from 'app/providers/store'
@@ -23,7 +23,7 @@ export const updateTask = createAsyncThunk<
 
   dispatch(notificationActions.setNotificationData({ status: 'loading' }))
 
-  const taskModelFromState = getModelSpecificTask(todoId, taskId)(getState())
+  const taskModelFromState = getTasksItemModel(todoId, taskId)(getState())
   if (taskModelFromState) {
     const updatedTask = {
       ...taskModelFromState,

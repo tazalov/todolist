@@ -5,12 +5,12 @@ import { Route, Routes, Navigate } from 'react-router-dom'
 
 import { routeConfig, RoutePath, AppRoutesObj } from '../config/routes'
 
-import { getUserData } from 'features/auth'
+import { getAuthUserData } from 'features/auth'
 import { PageLoader } from 'shared/ui/PageLoader/PageLoader'
 
 //* Защищаем роуты, пример из доки
 export const RequireAuth = ({ children }: { children: ReactNode }) => {
-  const auth = useSelector(getUserData)
+  const auth = useSelector(getAuthUserData)
 
   if (!auth) {
     /*

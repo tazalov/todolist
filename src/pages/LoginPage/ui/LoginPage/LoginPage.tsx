@@ -3,10 +3,10 @@ import React from 'react'
 import { Navigate } from 'react-router-dom'
 
 import { useAppSelector } from 'app/providers/store'
-import { LoginForm, getUserData } from 'features/auth'
+import { LoginForm, getAuthUserData } from 'features/auth'
 
 const LoginPage = () => {
-  const userData = useAppSelector(getUserData)
+  const userData = useAppSelector(getAuthUserData)
 
   if (userData) {
     return <Navigate to={'/'} />

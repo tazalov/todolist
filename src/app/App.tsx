@@ -6,12 +6,12 @@ import { useAppDispatch, useAppSelector } from './providers/store'
 import { PageError } from '../widgets/PageError'
 
 import { ErrorSnackbar, SuccessSnackbar } from 'entities/notification'
-import { getInited, initUser, getAuthError } from 'features/auth'
+import { getAuthInited, initUser, getAuthError } from 'features/auth'
 import { PageLoader } from 'shared/ui/PageLoader/PageLoader'
 import { Header } from 'widgets/Header'
 
 export const App = () => {
-  const _inited = useAppSelector(getInited)
+  const _inited = useAppSelector(getAuthInited)
   const error = useAppSelector(getAuthError)
 
   const dispatch = useAppDispatch()

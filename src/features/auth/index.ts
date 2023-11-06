@@ -1,5 +1,5 @@
 export { authReducer } from './model/slice/auth.slice'
-export { getInited, getUserData, getAuthError } from './model/selectors/auth'
+export { getAuthInited, getAuthUserData, getAuthError } from './model/selectors/auth'
 export { LoginForm } from './ui/LoginForm/LoginForm'
 export { initUser } from './model/services/initUser/initUser'
 export { logoutUser } from './model/services/logoutUser/logoutUser'

@@ -1,13 +1,13 @@
 import { Typography, List } from '@mui/material'
 import { FC, useMemo, memo } from 'react'
 
-import { Loader } from '../../../../shared/ui/Loader/Loader'
-import { getSpecificTasks, getTaskIsLoading } from '../../model/selectors/tasks'
+import { getTasksIsLoading, getTasksItems } from '../../model/selectors/tasks'
 import { TaskStatus } from '../../model/types/TasksSchema'
 import { Task } from '../Task/Task'
 
 import { useAppSelector } from 'app/providers/store'
 import { FilterT } from 'entities/todolist'
+import { Loader } from 'shared/ui/Loader/Loader'
 
 interface TaskListPT {
   todoId: string
@@ -15,8 +15,8 @@ interface TaskListPT {
 }
 
 export const TaskList: FC<TaskListPT> = memo(({ todoId, filter }) => {
-  const tasks = useAppSelector(getSpecificTasks(todoId))
-  const isLoading = useAppSelector(getTaskIsLoading)
+  const tasks = useAppSelector(getTasksItems(todoId))
+  const isLoading = useAppSelector(getTasksIsLoading)
 
   const tasksArray = useMemo(() => {
     switch (filter) {

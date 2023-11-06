@@ -1,8 +1,8 @@
 import { StateSchema } from 'app/providers/store'
 
-export const getSpecificTasks = (todoId: string) => (state: StateSchema) => state.tasks?.items[todoId] ?? []
+export const getTasksItems = (todoId: string) => (state: StateSchema) => state.tasks?.items[todoId] ?? []
 
-export const getModelSpecificTask = (todoId: string, taskId: string) => (state: StateSchema) => {
+export const getTasksItemModel = (todoId: string, taskId: string) => (state: StateSchema) => {
   const task = state.tasks?.items[todoId].find((el) => el.id === taskId)
   return task
     ? {
@@ -16,4 +16,4 @@ export const getModelSpecificTask = (todoId: string, taskId: string) => (state: 
     : undefined
 }
 
-export const getTaskIsLoading = (state: StateSchema) => state.tasks?.isLoading || false
+export const getTasksIsLoading = (state: StateSchema) => state.tasks?.isLoading || false
