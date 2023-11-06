@@ -1,26 +1,36 @@
-import { changeTodoList } from '../../slice/todolist.slice'
+import { createAsyncThunk } from '@reduxjs/toolkit'
 
-import { AppThunk } from 'app/providers/store'
+import { UpdateModelTodoList } from '../../types/TodolistsSchema'
+
+import { ThunkConfig } from 'app/providers/store'
 import { notificationActions, handleServerError, handleNetworkError } from 'entities/notification'
 import { ResultCodes } from 'shared/api/types/todolist'
 
-export const updateTitleTodolist =
-  (todoId: string, title: string): AppThunk =>
-  async (dispatch, _, extra) => {
-    const { todolistAPI } = extra
-    dispatch(notificationActions.setStatus('loading'))
-    dispatch(changeTodoList({ todoId, model: { entityStatus: 'loading' } }))
-    try {
-      const response = await todolistAPI.updateTodolist(todoId, title)
-      if (response.data.resultCode === ResultCodes.Success) {
-        dispatch(changeTodoList({ todoId, model: { title, entityStatus: 'succeed' } }))
-        dispatch(notificationActions.setStatus('succeed'))
-      } else {
-        handleServerError(response.data, dispatch)
-        dispatch(changeTodoList({ todoId, model: { entityStatus: 'failed' } }))
-      }
-    } catch (e: any) {
-      handleNetworkError(e.message, dispatch)
-      dispatch(changeTodoList({ todoId, model: { entityStatus: 'failed' } }))
+interface UpdateTitleParams {
+  todoId: string
+  model: UpdateModelTodoList
+}
+
+export const updateTitleTodolist = createAsyncThunk<
+  UpdateTitleParams,
+  { todoId: string; title: string },
+  ThunkConfig<string>
+>('entities/todolist/updateTitleTodolist', async ({ todoId, title }, thunkAPI) => {
+  const { extra, dispatch, rejectWithValue } = thunkAPI
+  dispatch(notificationActions.setNotificationData({ status: 'loading' }))
+  try {
+    const response = await extra.todolistAPI.updateTodolist(todoId, title)
+    if (response.data.resultCode === ResultCodes.Success) {
+      dispatch(notificationActions.setNotificationData({ status: 'succeed', success: `Title updated!` }))
+      return { todoId, model: { title, entityStatus: 'succeed' } }
+    } else {
+      handleServerError(response.data, dispatch)
+      //? надо ли? вопрос остается открытым:)
+      return rejectWithValue(todoId)
     }
+  } catch (e: any) {
+    handleNetworkError(e.message, dispatch)
+    //? надо ли? вопрос остается открытым:)
+    return rejectWithValue(todoId)
   }
+})

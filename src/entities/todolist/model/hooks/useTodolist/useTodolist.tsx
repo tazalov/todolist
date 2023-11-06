@@ -23,7 +23,7 @@ export const useTodolist = (todoId: string, demo: boolean) => {
 
   const changeTitle = useCallback(
     (title: string) => {
-      dispatch(updateTitleTodolist(todoId, title))
+      dispatch(updateTitleTodolist({ todoId, title }))
     },
     [todoId, dispatch],
   )

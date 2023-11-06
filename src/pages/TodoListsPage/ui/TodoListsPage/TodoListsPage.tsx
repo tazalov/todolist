@@ -33,7 +33,7 @@ const TodoListsPage: FC<TodoListsPagePT> = ({ demo = false }) => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    if (!demo) {
+    if (!demo && userData) {
       dispatch(fetchTodoLists())
     }
   }, [])

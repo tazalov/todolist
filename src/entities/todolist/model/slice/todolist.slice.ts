@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { createTodolist } from '../services/createTodolist/createTodolist'
 import { deleteTodolist } from '../services/deleteTodolist/deleteTodolist'
 import { fetchTodoLists } from '../services/fetchTodoLists/fetchTodoLists'
+import { updateTitleTodolist } from '../services/updateTitleTodolist/updateTitleTodolist'
 import { TodoListsSchema, TodoListT, UpdateModelTodoList } from '../types/TodolistsSchema'
 
 import { findIdxTodoById } from '../utils/findIdxTodoById'
@@ -59,9 +60,9 @@ const todolistSlice = createSlice({
       .addCase(fetchTodoLists.rejected, (state) => {
         state.isLoading = false
       })
-      .addCase(deleteTodolist.fulfilled, (state, { payload }) => {
-        if (payload) {
-          const idx = findIdxTodoById(state, payload)
+      .addCase(deleteTodolist.fulfilled, (state, { payload: todoId }) => {
+        if (todoId) {
+          const idx = findIdxTodoById(state, todoId)
           if (idx !== -1) {
             state.items.splice(idx, 1)
           }
@@ -70,6 +71,28 @@ const todolistSlice = createSlice({
       .addCase(createTodolist.fulfilled, (state, { payload: todoList }) => {
         if (todoList) {
           state.items.unshift({ ...todoList, filter: 'all', entityStatus: 'idle' })
+        }
+      })
+      .addCase(updateTitleTodolist.pending, (state, { meta }) => {
+        const { arg } = meta
+        const idx = findIdxTodoById(state, arg.todoId)
+        if (idx !== -1) {
+          state.items[idx] = { ...state.items[idx], entityStatus: 'loading' }
+        }
+      })
+      .addCase(updateTitleTodolist.fulfilled, (state, { payload }) => {
+        const { todoId, model } = payload
+        const idx = findIdxTodoById(state, todoId)
+        if (idx !== -1) {
+          state.items[idx] = { ...state.items[idx], ...model }
+        }
+      })
+      .addCase(updateTitleTodolist.rejected, (state, { payload: todoId }) => {
+        if (todoId) {
+          const idx = findIdxTodoById(state, todoId)
+          if (idx !== -1) {
+            state.items[idx] = { ...state.items[idx], entityStatus: 'failed' }
+          }
         }
       }),
 })
