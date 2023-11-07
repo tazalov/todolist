@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
 
 import { AppRouter } from './providers/routes/ui/AppRouter'
-import { useAppDispatch, useAppSelector } from './providers/store'
 
 import { PageError } from '../widgets/PageError'
 
 import { ErrorSnackbar, SuccessSnackbar } from 'entities/notification'
 import { getAuthInited, initUser, getAuthError } from 'features/auth'
+import { useAppSelector, useAction } from 'shared/lib/hooks'
 import { PageLoader } from 'shared/ui/PageLoader/PageLoader'
 import { Header } from 'widgets/Header'
 
@@ -14,10 +14,10 @@ export const App = () => {
   const _inited = useAppSelector(getAuthInited)
   const error = useAppSelector(getAuthError)
 
-  const dispatch = useAppDispatch()
+  const actions = useAction({ initUser })
 
   useEffect(() => {
-    dispatch(initUser())
+    actions.initUser()
   }, [])
 
   if (!_inited) {

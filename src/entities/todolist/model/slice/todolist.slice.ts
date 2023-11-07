@@ -97,5 +97,4 @@ const todolistSlice = createSlice({
       }),
 })
 
-export const todoListReducer = todolistSlice.reducer
-export const { changeTodoList, addTodoList, removeTodoList, setTodoLists } = todolistSlice.actions
+export const { reducer: todoListReducer, actions } = todolistSlice

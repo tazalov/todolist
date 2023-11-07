@@ -11,7 +11,7 @@ import * as yup from 'yup'
 
 import { loginUser } from '../../model/services/loginUser/loginUser'
 
-import { useAppDispatch } from 'app/providers/store'
+import { useAppDispatch } from 'shared/lib/hooks'
 
 const validationSchema = yup.object({
   email: yup.string().email('Enter a valid email').required('Email is required'),

@@ -1,10 +1,10 @@
 import { Typography, Stack, Box, Chip } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
-import { useCallback, memo } from 'react'
+import { memo } from 'react'
 
-import { createTodolist } from '../../model/services/createTodolist/createTodolist'
+import { todoListActions } from '../../model/services'
 
-import { useAppDispatch } from 'app/providers/store'
+import { useAction } from 'shared/lib/hooks'
 import { AddItemForm } from 'shared/ui/AddItemForm/AddItemForm'
 
 const hints = [
@@ -15,18 +15,14 @@ const hints = [
 ]
 
 export const CreateTodolistForm = memo(() => {
-  const dispatch = useAppDispatch()
-
-  const handleCreateTodolist = useCallback((title: string) => {
-    dispatch(createTodolist(title))
-  }, [])
+  const { createTodolist } = useAction(todoListActions)
 
   return (
     <Grid container sx={{ pt: '40px', pb: '40px' }}>
       <Box sx={{ bgcolor: 'background.blocks', boxShadow: 5, width: '100%' }}>
         <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent='center' alignItems='center' spacing={2}>
           <Typography variant='h6'>CREATE NEW TODOLIST</Typography>
-          <AddItemForm addItem={handleCreateTodolist} />
+          <AddItemForm addItem={createTodolist} />
         </Stack>
         <Stack gap={1} direction={{ xs: 'column', sm: 'row' }} justifyContent={'center'} sx={{ p: 1 }}>
           {hints.map((el) => (

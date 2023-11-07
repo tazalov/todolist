@@ -2,16 +2,15 @@ import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault'
 import EditIcon from '@mui/icons-material/Edit'
 import SaveIcon from '@mui/icons-material/Save'
 import { Button, Dialog, DialogTitle, List, ListItem, TextField, SelectChangeEvent } from '@mui/material'
-import React, { FC, useState, ChangeEvent, useEffect, useCallback, memo } from 'react'
+import { FC, useState, ChangeEvent, useEffect, useCallback, memo } from 'react'
 
 import { tasksStatus, tasksPriority } from '../../model/const/colorsEditMenuItems'
 import { editMenuPriorityItems, editMenuStatusItems } from '../../model/const/editMenuItems'
-import { updateTask } from '../../model/services/updateTask/updateTask'
+import { taskActions } from '../../model/services'
 import { TaskStatus, TaskPriority, UpdatedTaskT } from '../../model/types/TasksSchema'
-
 import { SelectNum } from '../SelectNum/SelectNum'
 
-import { useAppDispatch } from 'app/providers/store'
+import { useAction } from 'shared/lib/hooks'
 
 export interface EditMenuPT {
   task: UpdatedTaskT
@@ -31,7 +30,7 @@ export const EditMenu: FC<EditMenuPT> = memo(({ task, onClose, open }) => {
     setTitle(task.title)
   }, [task])
 
-  const dispatch = useAppDispatch()
+  const { updateTask } = useAction(taskActions)
 
   const activateEditMode = () => setEditMode(true)
 
@@ -58,13 +57,7 @@ export const EditMenu: FC<EditMenuPT> = memo(({ task, onClose, open }) => {
       status,
       priority,
     }
-    dispatch(
-      updateTask({
-        todoId: task.todoListId,
-        taskId: task.id,
-        taskModel,
-      }),
-    )
+    updateTask({ todoId: task.todoListId, taskId: task.id, taskModel })
     setEditMode(false)
   }
 

@@ -1,11 +1,17 @@
 import { styled, Container } from '@mui/material'
 import { FC, useEffect } from 'react'
 
-import { useAppSelector, useAppDispatch } from 'app/providers/store'
 import { taskReducer } from 'entities/task'
-import { getTodolistsItems, getTodolistsIsLoading, fetchTodoLists } from 'entities/todolist'
-import { CreateTodolistForm, TodolistList, todoListReducer } from 'entities/todolist'
+import {
+  getTodolistsItems,
+  getTodolistsIsLoading,
+  CreateTodolistForm,
+  TodolistList,
+  todoListReducer,
+  todoListActions,
+} from 'entities/todolist'
 import { DynamicReducerLoader } from 'shared/lib/DynamicReducerLoader/DynamicReducerLoader'
+import { useAppSelector, useAction } from 'shared/lib/hooks'
 
 const ResponsiveContainer = styled(Container)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
@@ -27,12 +33,10 @@ const TodoListsPage: FC<TodoListsPagePT> = ({ demo = false }) => {
   const todoLists = useAppSelector(getTodolistsItems)
   const isLoading = useAppSelector(getTodolistsIsLoading)
 
-  const dispatch = useAppDispatch()
+  const { fetchTodoLists } = useAction(todoListActions)
 
   useEffect(() => {
-    if (!demo) {
-      dispatch(fetchTodoLists())
-    }
+    if (!demo) fetchTodoLists()
   }, [])
 
   return (

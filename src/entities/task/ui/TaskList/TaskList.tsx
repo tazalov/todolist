@@ -5,8 +5,8 @@ import { getTasksIsLoading, getTasksItems } from '../../model/selectors/tasks'
 import { TaskStatus } from '../../model/types/TasksSchema'
 import { Task } from '../Task/Task'
 
-import { useAppSelector } from 'app/providers/store'
 import { FilterT } from 'entities/todolist'
+import { useAppSelector } from 'shared/lib/hooks'
 import { Loader } from 'shared/ui/Loader/Loader'
 
 interface TaskListPT {

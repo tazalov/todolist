@@ -1,6 +1,6 @@
 import { v1 } from 'uuid'
 
-import { todoListReducer, changeTodoList } from './todolist.slice'
+import { todoListReducer, actions } from './todolist.slice'
 
 import { createTodolist } from '../services/createTodolist/createTodolist'
 import { deleteTodolist } from '../services/deleteTodolist/deleteTodolist'
@@ -94,7 +94,7 @@ describe('todolist reducer', () => {
   })
 
   it('todolist entityStatus should be changed', () => {
-    const action = changeTodoList({
+    const action = actions.changeTodoList({
       todoId: id1,
       model: { entityStatus: 'loading' },
     })
@@ -105,7 +105,7 @@ describe('todolist reducer', () => {
   })
 
   it('todolist filter should be changed', () => {
-    const action = changeTodoList({
+    const action = actions.changeTodoList({
       todoId: id1,
       model: { filter: 'active' },
     })
@@ -117,7 +117,7 @@ describe('todolist reducer', () => {
 
   it('todolist title should be changed', () => {
     const title = 'new title todolist'
-    const action = changeTodoList({
+    const action = actions.changeTodoList({
       todoId: id1,
       model: { title },
     })

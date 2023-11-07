@@ -1,46 +1,40 @@
 import { useCallback, useEffect } from 'react'
 
-import { deleteTodolist } from '../../services/deleteTodolist/deleteTodolist'
-import { updateTitleTodolist } from '../../services/updateTitleTodolist/updateTitleTodolist'
-import { changeTodoList } from '../../slice/todolist.slice'
+import { todoListActions } from '../../services'
 import { FilterT } from '../../types/TodolistsSchema'
 
-import { useAppDispatch } from 'app/providers/store'
-import { fetchTasksByTodolistId, createTask } from 'entities/task'
+import { taskActions } from 'entities/task'
+import { useAction } from 'shared/lib/hooks'
 
 export const useTodolist = (todoId: string, demo: boolean) => {
-  const dispatch = useAppDispatch()
+  const { fetchTasksByTodolistId, createTask } = useAction(taskActions)
+  const { updateTitleTodolist, deleteTodolist, changeTodoList } = useAction(todoListActions)
 
   useEffect(() => {
-    if (!demo) {
-      dispatch(fetchTasksByTodolistId(todoId))
-    }
+    if (!demo) fetchTasksByTodolistId(todoId)
   }, [])
 
-  const remove = () => {
-    dispatch(deleteTodolist(todoId))
-  }
+  const remove = () => deleteTodolist(todoId)
 
   const changeTitle = useCallback(
     (title: string) => {
-      dispatch(updateTitleTodolist({ todoId, title }))
+      updateTitleTodolist({ todoId, title })
     },
-    [todoId, dispatch],
+    [todoId, updateTitleTodolist],
   )
 
   const changeFilter = useCallback(
     (filter: FilterT) => () => {
-      const model = { filter }
-      dispatch(changeTodoList({ todoId, model }))
+      changeTodoList({ todoId, model: { filter } })
     },
-    [dispatch, todoId],
+    [todoId, changeTodoList],
   )
 
   const addTask = useCallback(
     (title: string) => {
-      dispatch(createTask({ todoId, title }))
+      createTask({ todoId, title })
     },
-    [todoId, dispatch],
+    [todoId, createTask],
   )
 
   return {

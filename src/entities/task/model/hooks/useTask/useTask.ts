@@ -1,33 +1,27 @@
 import { ChangeEvent, useCallback } from 'react'
 
-import { deleteTask } from '../../services/deleteTask/deleteTask'
-import { updateTask } from '../../services/updateTask/updateTask'
+import { taskActions } from '../../services'
 import { TaskStatus } from '../../types/TasksSchema'
 
-import { useAppDispatch } from 'app/providers/store'
+import { useAction } from 'shared/lib/hooks'
 
 export const useTask = (todoId: string, taskId: string) => {
-  const dispatch = useAppDispatch()
+  const { updateTask, deleteTask } = useAction(taskActions)
 
   const remove = () => {
-    dispatch(deleteTask({ todoId, taskId }))
+    deleteTask({ todoId, taskId })
   }
 
   const handleChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
-    const taskModel = {
-      status: e.currentTarget.checked ? TaskStatus.COMPLETED : TaskStatus.NEW,
-    }
-    dispatch(updateTask({ todoId, taskId, taskModel }))
+    const status = e.currentTarget.checked ? TaskStatus.COMPLETED : TaskStatus.NEW
+    updateTask({ todoId, taskId, taskModel: { status } })
   }
 
   const changeTitle = useCallback(
-    (newTitle: string) => {
-      const taskModel = {
-        title: newTitle,
-      }
-      dispatch(updateTask({ todoId, taskId, taskModel }))
+    (title: string) => {
+      updateTask({ todoId, taskId, taskModel: { title } })
     },
-    [dispatch, todoId, taskId],
+    [todoId, taskId, updateTask],
   )
 
   return {

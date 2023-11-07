@@ -6,17 +6,17 @@ import { memo } from 'react'
 import { getNotificationError, getNotificationStatus } from '../../model/selectors/notification'
 import { notificationActions } from '../../model/slice/notification.slice'
 
-import { useAppDispatch, useAppSelector } from 'app/providers/store'
+import { useAppSelector, useAction } from 'shared/lib/hooks'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />
 })
 
 export const ErrorSnackbar = memo(() => {
-  const dispatch = useAppDispatch()
-
   const errorMessage = useAppSelector(getNotificationError)
   const status = useAppSelector(getNotificationStatus)
+
+  const { setNotificationData } = useAction(notificationActions)
 
   const isOpen = errorMessage !== undefined && status === 'failed'
 
@@ -24,7 +24,7 @@ export const ErrorSnackbar = memo(() => {
     if (reason === 'clickaway') {
       return
     }
-    dispatch(notificationActions.setNotificationData({ status: 'idle' }))
+    setNotificationData({ status: 'idle' })
   }
 
   return (
