@@ -8,7 +8,16 @@ export const TodolistSkeleton = memo(() => {
       <Stack
         spacing={2}
         alignItems='center'
-        sx={{ pt: 4, pb: 1.5, pl: 1.5, pr: 1.5, bgcolor: 'background.blocks', position: 'relative', boxShadow: 5 }}
+        sx={{
+          pt: 4,
+          pb: 1.5,
+          pl: 1.5,
+          pr: 1.5,
+          bgcolor: 'background.blocks',
+          position: 'relative',
+          boxShadow: 5,
+          minWidth: 284,
+        }}
       >
         <Skeleton variant='rectangular' width={'100%'} height={50} sx={{ animationDuration: '0.7s' }} />
         <Skeleton variant='rectangular' width={'80%'} height={55} sx={{ animationDuration: '0.7s' }} />
