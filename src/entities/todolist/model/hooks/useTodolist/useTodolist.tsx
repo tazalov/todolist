@@ -7,12 +7,12 @@ import { taskActions } from 'entities/task'
 import { useAction } from 'shared/lib/hooks'
 
 export const useTodolist = (todoId: string, demo: boolean) => {
-  const { fetchTasksByTodolistId, createTask } = useAction(taskActions)
+  const { fetchTasksByTodolistId } = useAction(taskActions)
   const { updateTitleTodolist, deleteTodolist, changeTodoList } = useAction(todoListActions)
 
   useEffect(() => {
     if (!demo) fetchTasksByTodolistId(todoId)
-  }, [])
+  }, [fetchTasksByTodolistId, todoId, demo])
 
   const remove = () => deleteTodolist(todoId)
 
@@ -30,17 +30,9 @@ export const useTodolist = (todoId: string, demo: boolean) => {
     [todoId, changeTodoList],
   )
 
-  const addTask = useCallback(
-    (title: string) => {
-      createTask({ todoId, title })
-    },
-    [todoId, createTask],
-  )
-
   return {
     remove,
     changeTitle,
     changeFilter,
-    addTask,
   }
 }

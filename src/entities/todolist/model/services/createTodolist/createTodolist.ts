@@ -6,7 +6,7 @@ import { ThunkConfig } from 'app/providers/store'
 import { notificationActions, handleServerError, handleNetworkError } from 'entities/notification'
 import { ResultCodes } from 'shared/api/types/todolist'
 
-export const createTodolist = createAsyncThunk<TodoListT | void, string, ThunkConfig>(
+export const createTodolist = createAsyncThunk<TodoListT | void, string, ThunkConfig<string>>(
   'entities/todolist/createTodolist',
   async (title, thunkAPI) => {
     const { extra, dispatch, rejectWithValue } = thunkAPI
@@ -21,12 +21,12 @@ export const createTodolist = createAsyncThunk<TodoListT | void, string, ThunkCo
       } else {
         handleServerError(response.data, dispatch)
         //? надо ли? вопрос остается открытым:)
-        return rejectWithValue(undefined)
+        return rejectWithValue(response.data.messages[0])
       }
     } catch (e: any) {
       handleNetworkError(e.message, dispatch)
       //? надо ли? вопрос остается открытым:)
-      return rejectWithValue(undefined)
+      return rejectWithValue(e.message)
     }
   },
 )

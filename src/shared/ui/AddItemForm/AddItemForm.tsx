@@ -3,7 +3,7 @@ import { Stack, TextField, Tooltip, IconButton } from '@mui/material'
 import { FC, memo, useState, ChangeEvent, KeyboardEvent } from 'react'
 
 interface AddItemFormPT {
-  addItem: (title: string) => void
+  addItem: (title: string) => void | Promise<any>
   disabled?: boolean
 }
 
@@ -20,13 +20,17 @@ export const AddItemForm: FC<AddItemFormPT> = memo(({ addItem, disabled = false 
     setError('')
   }
 
-  const addNewItem = () => {
+  const addNewItem = async () => {
     const newTitle = title.trim()
     if (!newTitle.length) {
       setError("Value can't be empty")
     } else {
-      setTitle('')
-      addItem(newTitle)
+      const serverError = await addItem(newTitle)
+      if (serverError) {
+        setError('Error')
+      } else {
+        setTitle('')
+      }
     }
   }
 

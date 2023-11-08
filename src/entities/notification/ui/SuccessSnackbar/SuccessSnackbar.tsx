@@ -28,7 +28,7 @@ export const SuccessSnackbar = memo(() => {
   }
 
   return (
-    <Snackbar open={isOpen} autoHideDuration={1000} onClose={handleClose}>
+    <Snackbar open={isOpen} autoHideDuration={2000} onClose={handleClose}>
       <Alert onClose={handleClose} severity='success' sx={{ width: '100%' }}>
         {successMessage}
       </Alert>
