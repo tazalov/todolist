@@ -1,7 +1,7 @@
 import { ReducersMapObject, CombinedState, Reducer } from '@reduxjs/toolkit'
 import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore'
 import { AnyAction } from 'redux'
-import { ThunkAction, ThunkDispatch } from 'redux-thunk'
+import { ThunkDispatch } from 'redux-thunk'
 
 import { NotificationSchema } from 'entities/notification'
 import { TasksSchema, TasksAPI } from 'entities/task'
@@ -45,5 +45,3 @@ export interface ThunkConfig<T = undefined> {
 }
 
 export type AppDispatch = ThunkDispatch<StateSchema, any, AnyAction>
-//export type AppDispatch = ReturnType<typeof createReduxStore>['dispatch']
-export type AppThunk<T = void, E = AppThunkExtra> = ThunkAction<T, StateSchema, E, AnyAction>
