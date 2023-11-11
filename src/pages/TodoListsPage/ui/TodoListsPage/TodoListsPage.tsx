@@ -3,8 +3,7 @@ import { FC, useEffect } from 'react'
 
 import { taskReducer } from 'entities/task'
 import {
-  getTodolistsItems,
-  getTodolistsIsLoading,
+  todoListSelectors,
   CreateTodolistForm,
   TodolistList,
   todoListReducer,
@@ -30,8 +29,8 @@ interface TodoListsPagePT {
 }
 
 const TodoListsPage: FC<TodoListsPagePT> = ({ demo = false }) => {
-  const todoLists = useAppSelector(getTodolistsItems)
-  const isLoading = useAppSelector(getTodolistsIsLoading)
+  const todoLists = useAppSelector(todoListSelectors.items)
+  const isLoading = useAppSelector(todoListSelectors.isLoading)
 
   const { fetchTodoLists } = useAction(todoListActions)
 

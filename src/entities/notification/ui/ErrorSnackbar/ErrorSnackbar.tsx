@@ -1,20 +1,19 @@
 import { Snackbar } from '@mui/material'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
-import * as React from 'react'
-import { memo } from 'react'
+import { memo, forwardRef } from 'react'
 
-import { getNotificationError, getNotificationStatus } from '../../model/selectors/notification'
+import { notificationSelectors } from '../../model/selectors'
 import { notificationActions } from '../../model/slice/notification.slice'
 
 import { useAppSelector, useAction } from 'shared/lib/hooks'
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
+const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />
 })
 
 export const ErrorSnackbar = memo(() => {
-  const errorMessage = useAppSelector(getNotificationError)
-  const status = useAppSelector(getNotificationStatus)
+  const errorMessage = useAppSelector(notificationSelectors.error)
+  const status = useAppSelector(notificationSelectors.status)
 
   const { setNotificationData } = useAction(notificationActions)
 
