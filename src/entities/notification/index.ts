@@ -1,5 +1,5 @@
 export { notificationReducer, notificationActions } from './model/slice/notification.slice'
-export { getNotificationStatus } from './model/selectors/notification'
+export { notificationSelectors } from './model/selectors'
 export { ErrorSnackbar } from './ui/ErrorSnackbar/ErrorSnackbar'
 export { SuccessSnackbar } from './ui/SuccessSnackbar/SuccessSnackbar'
 export { handleServerError } from './model/utils/handleServerError'

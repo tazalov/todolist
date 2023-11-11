@@ -7,8 +7,8 @@ import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
 import { ColorModeContext } from 'app/styles/ThemeContext'
-import { getNotificationStatus } from 'entities/notification'
-import { getAuthUserData, logoutUser } from 'features/auth'
+import { notificationSelectors } from 'entities/notification'
+import { authSelectors, logoutUser } from 'features/auth'
 import { useAppDispatch } from 'shared/lib/hooks'
 
 const ResponsiveToolbar = styled(Toolbar)(({ theme }) => ({
@@ -22,8 +22,8 @@ export const Header = memo(() => {
   const theme = useTheme()
   const colorMode = useContext(ColorModeContext)
 
-  const status = useSelector(getNotificationStatus)
-  const userData = useSelector(getAuthUserData)
+  const status = useSelector(notificationSelectors.status)
+  const userData = useSelector(authSelectors.userData)
 
   const dispatch = useAppDispatch()
 
