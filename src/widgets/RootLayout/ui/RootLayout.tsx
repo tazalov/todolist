@@ -1,16 +1,15 @@
 import { useEffect } from 'react'
 
-import { AppRouter } from './providers/routes/ui/AppRouter'
-
-import { PageError } from '../widgets/PageError'
+import { Outlet } from 'react-router-dom'
 
 import { ErrorSnackbar, SuccessSnackbar } from 'entities/notification'
 import { authSelectors, initUser } from 'features/auth'
 import { useAppSelector, useAction } from 'shared/lib/hooks'
 import { PageLoader } from 'shared/ui/PageLoader/PageLoader'
 import { Header } from 'widgets/Header'
+import { PageError } from 'widgets/PageError'
 
-export const App = () => {
+export const RootLayout = () => {
   const _inited = useAppSelector(authSelectors.inited)
   const error = useAppSelector(authSelectors.error)
 
@@ -31,7 +30,7 @@ export const App = () => {
   return (
     <>
       <Header />
-      {_inited && <AppRouter />}
+      <Outlet />
       <ErrorSnackbar />
       <SuccessSnackbar />
     </>

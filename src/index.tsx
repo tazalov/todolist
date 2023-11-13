@@ -1,10 +1,10 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { HashRouter } from 'react-router-dom'
+import { RouterProvider } from 'react-router-dom'
 
+import { router } from './app/providers/routes/config/routes'
 import * as serviceWorker from './serviceWorker'
 
-import { App } from 'app/App'
 import { StoreProvider } from 'app/providers/store'
 import { ThemeContext } from 'app/styles/ThemeContext'
 
@@ -12,11 +12,9 @@ const container = document.getElementById('root')
 const root = createRoot(container!)
 root.render(
   <StoreProvider>
-    <HashRouter>
-      <ThemeContext>
-        <App />
-      </ThemeContext>
-    </HashRouter>
+    <ThemeContext>
+      <RouterProvider router={router} />
+    </ThemeContext>
   </StoreProvider>,
 )
 
