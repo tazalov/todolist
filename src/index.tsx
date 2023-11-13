@@ -2,9 +2,9 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 
-import { router } from './app/providers/routes/config/routes'
 import * as serviceWorker from './serviceWorker'
 
+import { router } from 'app/providers/routes'
 import { StoreProvider } from 'app/providers/store'
 import { ThemeContext } from 'app/styles/ThemeContext'
 

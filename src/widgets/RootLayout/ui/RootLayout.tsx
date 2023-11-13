@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, Suspense } from 'react'
 
 import { Outlet } from 'react-router-dom'
 
@@ -30,7 +30,9 @@ export const RootLayout = () => {
   return (
     <>
       <Header />
-      <Outlet />
+      <Suspense fallback={<PageLoader />}>
+        <Outlet />
+      </Suspense>
       <ErrorSnackbar />
       <SuccessSnackbar />
     </>

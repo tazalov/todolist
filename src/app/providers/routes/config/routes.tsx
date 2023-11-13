@@ -1,4 +1,3 @@
-import { Suspense } from 'react'
 import { createHashRouter } from 'react-router-dom'
 
 import { ProtectedAuth } from '../ui/ProtectedAuth'
@@ -6,7 +5,6 @@ import { ProtectedAuth } from '../ui/ProtectedAuth'
 import { LoginPage } from 'pages/LoginPage'
 import { NotFound } from 'pages/NotFound'
 import { TodoListsPage } from 'pages/TodoListsPage'
-import { PageLoader } from 'shared/ui/PageLoader/PageLoader'
 import { RootLayout } from 'widgets/RootLayout'
 
 export enum AppRoutes {
@@ -23,11 +21,7 @@ export const RoutePath: Record<AppRoutes, string> = {
 
 export const router = createHashRouter([
   {
-    element: (
-      <Suspense fallback={<PageLoader />}>
-        <RootLayout />
-      </Suspense>
-    ),
+    element: <RootLayout />,
     children: [
       {
         path: RoutePath.main,
