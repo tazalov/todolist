@@ -2,7 +2,7 @@ import { Snackbar } from '@mui/material'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import { memo, forwardRef } from 'react'
 
-import { notificationSelectors } from '../../model/selectors'
+import { notificationSelectors } from '../../model/selectors/notification'
 import { notificationActions } from '../../model/slice/notification.slice'
 
 import { useAppSelector, useAction } from 'shared/lib/hooks'

@@ -1,7 +1,7 @@
 import { Typography, List } from '@mui/material'
 import { FC, useMemo, memo } from 'react'
 
-import { taskSelectors } from '../../model/selectors'
+import { taskSelectors } from '../../model/selectors/tasks'
 import { TaskStatus } from '../../model/types/TasksSchema'
 import { Task } from '../Task/Task'
 
@@ -15,7 +15,7 @@ interface TaskListPT {
 }
 
 export const TaskList: FC<TaskListPT> = memo(({ todoId, filter }) => {
-  const tasks = useAppSelector(taskSelectors.items(todoId))
+  const tasks = useAppSelector(taskSelectors.itemsByTodoId(todoId))
   const isLoading = useAppSelector(taskSelectors.isLoading)
 
   const tasksArray = useMemo(() => {

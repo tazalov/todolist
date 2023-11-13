@@ -1,5 +1,5 @@
 export { authReducer } from './model/slice/auth.slice'
-export { authSelectors } from './model/selectors'
+export { authSelectors } from './model/selectors/auth'
 export { LoginForm } from './ui/LoginForm/LoginForm'
 export { initUser } from './model/services/initUser/initUser'
 export { logoutUser } from './model/services/logoutUser/logoutUser'

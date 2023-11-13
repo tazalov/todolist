@@ -1,7 +1,13 @@
 import { StateSchema } from 'app/providers/store'
 
-export const error = (state: StateSchema) => state.notification.error
+const error = (state: StateSchema) => state.notification.error
 
-export const success = (state: StateSchema) => state.notification.success
+const success = (state: StateSchema) => state.notification.success
 
-export const status = (state: StateSchema) => state.notification.status
+const status = (state: StateSchema) => state.notification.status
+
+export const notificationSelectors = {
+  error,
+  success,
+  status,
+}
