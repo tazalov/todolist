@@ -61,17 +61,13 @@ const todolistSlice = createSlice({
         state.isLoading = false
       })
       .addCase(deleteTodolist.fulfilled, (state, { payload: todoId }) => {
-        if (todoId) {
-          const idx = findIdxTodoById(state, todoId)
-          if (idx !== -1) {
-            state.items.splice(idx, 1)
-          }
+        const idx = findIdxTodoById(state, todoId)
+        if (idx !== -1) {
+          state.items.splice(idx, 1)
         }
       })
       .addCase(createTodolist.fulfilled, (state, { payload: todoList }) => {
-        if (todoList) {
-          state.items.unshift({ ...todoList, filter: 'all', entityStatus: 'idle' })
-        }
+        state.items.unshift({ ...todoList, filter: 'all', entityStatus: 'idle' })
       })
       .addCase(updateTitleTodolist.pending, (state, { meta }) => {
         const { arg } = meta

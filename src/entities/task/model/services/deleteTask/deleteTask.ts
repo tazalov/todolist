@@ -9,7 +9,7 @@ interface DeleteTaskParams {
   taskId: string
 }
 
-export const deleteTask = createAsyncThunk<DeleteTaskParams | void, DeleteTaskParams, ThunkConfig>(
+export const deleteTask = createAsyncThunk<DeleteTaskParams, DeleteTaskParams, ThunkConfig>(
   'entities/task/deleteTask',
   async ({ todoId, taskId }, thunkAPI) => {
     const { extra, dispatch, rejectWithValue } = thunkAPI
@@ -20,14 +20,12 @@ export const deleteTask = createAsyncThunk<DeleteTaskParams | void, DeleteTaskPa
         dispatch(notificationActions.setNotificationData({ status: 'succeed', success: 'Task deleted!' }))
       } else {
         handleServerError(response.data, dispatch)
-        //? надо ли? вопрос остается открытым:)
-        return rejectWithValue(undefined)
+        return rejectWithValue(null)
       }
       return { todoId, taskId }
     } catch (e: any) {
       handleNetworkError(e.message, dispatch)
-      //? надо ли? вопрос остается открытым:)
-      return rejectWithValue(undefined)
+      return rejectWithValue(null)
     }
   },
 )

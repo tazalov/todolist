@@ -54,10 +54,8 @@ const taskSlice = createSlice({
       })
       .addCase(fetchTasksByTodolistId.fulfilled, (state, { payload }) => {
         state.isLoading = false
-        if (payload) {
-          const { tasks, todoId } = payload
-          state.items[todoId] = tasks.map((el) => ({ ...el, entityStatus: 'idle' }))
-        }
+        const { tasks, todoId } = payload
+        state.items[todoId] = tasks.map((el) => ({ ...el, entityStatus: 'idle' }))
       })
       .addCase(fetchTasksByTodolistId.rejected, (state) => {
         state.isLoading = false
@@ -70,18 +68,14 @@ const taskSlice = createSlice({
         }
       })
       .addCase(deleteTask.fulfilled, (state, { payload }) => {
-        if (payload) {
-          const { todoId, taskId } = payload
-          const idx = findIdxTaskByTodoId(state, todoId, taskId)
-          if (idx !== -1) {
-            state.items[todoId].splice(idx, 1)
-          }
+        const { todoId, taskId } = payload
+        const idx = findIdxTaskByTodoId(state, todoId, taskId)
+        if (idx !== -1) {
+          state.items[todoId].splice(idx, 1)
         }
       })
       .addCase(createTask.fulfilled, (state, { payload: task }) => {
-        if (task) {
-          state.items[task.todoListId].unshift({ ...task, entityStatus: 'idle' })
-        }
+        state.items[task.todoListId].unshift({ ...task, entityStatus: 'idle' })
       })
       .addCase(updateTask.pending, (state, { meta }) => {
         const { arg } = meta
@@ -118,10 +112,10 @@ const taskSlice = createSlice({
         }, {})
       })
       .addCase(todoListActions.createTodolist.fulfilled, (state, { payload: todoList }) => {
-        if (todoList) state.items[todoList.id] = []
+        state.items[todoList.id] = []
       })
       .addCase(todoListActions.deleteTodolist.fulfilled, (state, { payload: todoListId }) => {
-        if (todoListId) delete state.items[todoListId]
+        delete state.items[todoListId]
       }),
 })
 

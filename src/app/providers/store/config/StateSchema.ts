@@ -38,10 +38,11 @@ export type AppThunkExtra = {
   authAPI: AuthAPI
 }
 
-export interface ThunkConfig<T = undefined> {
+export type AppDispatch = ThunkDispatch<StateSchema, any, AnyAction>
+
+export interface ThunkConfig<T = null> {
   rejectValue: T
   extra: AppThunkExtra
   state: StateSchema
+  dispatch: AppDispatch
 }
-
-export type AppDispatch = ThunkDispatch<StateSchema, any, AnyAction>

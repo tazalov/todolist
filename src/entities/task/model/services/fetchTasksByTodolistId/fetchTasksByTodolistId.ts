@@ -10,7 +10,7 @@ interface FetchTasksReturn {
   tasks: TaskT[]
 }
 
-export const fetchTasksByTodolistId = createAsyncThunk<FetchTasksReturn | void, string, ThunkConfig>(
+export const fetchTasksByTodolistId = createAsyncThunk<FetchTasksReturn, string, ThunkConfig>(
   'entities/task/fetchTasksByTodolistId',
   async (todoId, thunkAPI) => {
     const { extra, dispatch, rejectWithValue } = thunkAPI
@@ -23,13 +23,11 @@ export const fetchTasksByTodolistId = createAsyncThunk<FetchTasksReturn | void, 
         }
       } else {
         handleNetworkError(response.data.error, dispatch)
-        //? надо ли? вопрос остается открытым:)
-        return rejectWithValue(undefined)
+        return rejectWithValue(null)
       }
     } catch (e) {
       handleNetworkError((e as Error).message, dispatch)
-      //? надо ли? вопрос остается открытым:)
-      return rejectWithValue(undefined)
+      return rejectWithValue(null)
     }
   },
 )

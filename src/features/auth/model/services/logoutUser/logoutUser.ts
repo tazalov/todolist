@@ -23,13 +23,11 @@ export const logoutUser = createAsyncThunk<void, undefined, ThunkConfig>(
         )
       } else {
         handleServerError(response.data, dispatch)
-        //? надо ли? вопрос остается открытым:)
-        return rejectWithValue(undefined)
+        return rejectWithValue(null)
       }
     } catch (e: any) {
       handleNetworkError(e.message, dispatch)
-      //? надо ли? вопрос остается открытым:)
-      return rejectWithValue(undefined)
+      return rejectWithValue(null)
     }
   },
 )

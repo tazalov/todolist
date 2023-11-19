@@ -6,7 +6,7 @@ import { ThunkConfig } from 'app/providers/store'
 import { notificationActions, handleServerError, handleNetworkError } from 'entities/notification'
 import { ResultCodes } from 'shared/api/types/todolist'
 
-export const deleteTodolist = createAsyncThunk<string | void, string, ThunkConfig>(
+export const deleteTodolist = createAsyncThunk<string, string, ThunkConfig>(
   'entities/todoList/deleteTodolist',
   async (todoId, thunkAPI) => {
     const { extra, dispatch, rejectWithValue } = thunkAPI
@@ -19,13 +19,11 @@ export const deleteTodolist = createAsyncThunk<string | void, string, ThunkConfi
         return todoId
       } else {
         handleServerError(response.data, dispatch)
-        //? надо ли? вопрос остается открытым:)
-        return rejectWithValue(undefined)
+        return rejectWithValue(null)
       }
     } catch (e: any) {
       handleNetworkError(e.message, dispatch)
-      //? надо ли? вопрос остается открытым:)
-      return rejectWithValue(undefined)
+      return rejectWithValue(null)
     }
   },
 )

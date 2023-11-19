@@ -25,12 +25,10 @@ export const updateTitleTodolist = createAsyncThunk<
       return { todoId, model: { title, entityStatus: 'succeed' } }
     } else {
       handleServerError(response.data, dispatch)
-      //? надо ли? вопрос остается открытым:)
       return rejectWithValue(todoId)
     }
   } catch (e: any) {
     handleNetworkError(e.message, dispatch)
-    //? надо ли? вопрос остается открытым:)
     return rejectWithValue(todoId)
   }
 })

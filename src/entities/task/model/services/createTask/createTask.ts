@@ -11,7 +11,7 @@ interface CreateTaskParams {
   title: string
 }
 
-export const createTask = createAsyncThunk<TaskT | void, CreateTaskParams, ThunkConfig<string>>(
+export const createTask = createAsyncThunk<TaskT, CreateTaskParams, ThunkConfig>(
   'entities/task/createTask',
   async ({ todoId, title }, thunkAPI) => {
     const { extra, dispatch, rejectWithValue } = thunkAPI
@@ -23,13 +23,11 @@ export const createTask = createAsyncThunk<TaskT | void, CreateTaskParams, Thunk
         return response.data.data.item
       } else {
         handleServerError(response.data, dispatch)
-        //? надо ли? вопрос остается открытым:)
-        return rejectWithValue(response.data.messages[0])
+        return rejectWithValue(null)
       }
     } catch (e: any) {
       handleNetworkError(e.message, dispatch)
-      //? надо ли? вопрос остается открытым:)
-      return rejectWithValue(e.message)
+      return rejectWithValue(null)
     }
   },
 )
