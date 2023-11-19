@@ -25,12 +25,12 @@ export const updateTask = createAsyncThunk<
 
   const taskModelFromState = taskSelectors.itemModelById(todoId, taskId)(getState())
   if (taskModelFromState) {
-    const updatedTask = {
+    const model = {
       ...taskModelFromState,
       ...taskModel,
     }
     try {
-      const response = await extra.tasksAPI.updateTask(todoId, taskId, updatedTask)
+      const response = await extra.tasksAPI.updateTask({ todoId, taskId, model })
       if (response.data.resultCode === ResultCodes.Success) {
         dispatch(notificationActions.setNotificationData({ status: 'succeed', success: 'Task updated!' }))
         return response.data.data.item
