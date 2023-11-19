@@ -3,6 +3,7 @@ import SaveIcon from '@mui/icons-material/Save'
 import { TextField, Tooltip, Typography, InputAdornment, IconButton } from '@mui/material'
 import { TypographyOwnProps } from '@mui/material/Typography/Typography'
 import { FC, memo, useState, ChangeEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const inheritStyleInput: any = {
   lineHeight: 'inherit',
@@ -19,6 +20,8 @@ interface EditableSpanPT extends TypographyOwnProps {
 }
 
 export const EditableSpan: FC<EditableSpanPT> = memo(({ title, changeTitle, disabled = false, ...rest }) => {
+  const { t } = useTranslation()
+
   const [editMode, setEditMode] = useState<boolean>(false)
   const [currentTitle, setCurrentTitle] = useState<string>('')
   const [error, setError] = useState<boolean>(false)
@@ -47,7 +50,7 @@ export const EditableSpan: FC<EditableSpanPT> = memo(({ title, changeTitle, disa
   }
 
   return (
-    <Tooltip title='Double click for edit'>
+    <Tooltip title={t('Double click for edit')}>
       <Typography
         width='100%'
         onDoubleClick={activateEditMode}

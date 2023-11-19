@@ -7,6 +7,7 @@ import FormGroup from '@mui/material/FormGroup'
 import TextField from '@mui/material/TextField'
 import Tooltip from '@mui/material/Tooltip'
 import { useFormik } from 'formik'
+import { useTranslation } from 'react-i18next'
 import * as yup from 'yup'
 
 import { loginUser } from '../../model/services/loginUser/loginUser'
@@ -19,6 +20,8 @@ const validationSchema = yup.object({
 })
 
 export const LoginForm = () => {
+  const { t } = useTranslation()
+
   const dispatch = useAppDispatch()
 
   const formik = useFormik({
@@ -51,14 +54,14 @@ export const LoginForm = () => {
         <FormGroup sx={{ alignItems: 'center' }}>
           <Tooltip title='free@samuraijs.com:free'>
             <Button href={'https://social-network.samuraijs.com/'} target={'_blank'}>
-              Register here
+              {t('Register here')}
             </Button>
           </Tooltip>
           <TextField
             fullWidth
             margin='normal'
             id='email'
-            label='Email'
+            label={t('Email')}
             error={formik.touched.email && Boolean(formik.errors.email)}
             helperText={formik.touched.email && formik.errors.email}
             {...formik.getFieldProps('email')}
@@ -67,7 +70,7 @@ export const LoginForm = () => {
             fullWidth
             margin='normal'
             id='password'
-            label='Password'
+            label={t('Password')}
             type='password'
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
@@ -75,12 +78,12 @@ export const LoginForm = () => {
           />
           <FormControlLabel
             id='rememberMe'
-            label={'Remember me'}
+            label={t('Remember me')}
             control={<Checkbox />}
             {...formik.getFieldProps('rememberMe')}
           />
           <Button color='primary' variant='contained' type='submit'>
-            Login
+            {t('Login')}
           </Button>
           <Typography color={'error'} sx={{ mt: 1 }}>
             {formik.errors.serverError}

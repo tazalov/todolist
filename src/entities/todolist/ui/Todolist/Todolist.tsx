@@ -2,6 +2,8 @@ import CloseIcon from '@mui/icons-material/Close'
 import { ButtonGroup, IconButton, Stack, Button, Typography } from '@mui/material'
 import { FC, memo } from 'react'
 
+import { useTranslation } from 'react-i18next'
+
 import { useTodolist } from '../../model/hooks/useTodolist/useTodolist'
 import { UpdatedTodoListT } from '../../model/types/TodolistsSchema'
 import { getStyleFilterButton } from '../../model/utils/getStyleFilterButton'
@@ -24,6 +26,8 @@ interface TodolistPT {
 export const Todolist: FC<TodolistPT> = memo(({ todolist, demo = false }) => {
   const { id, title, addedDate, filter, entityStatus } = todolist
 
+  const { t, i18n } = useTranslation()
+
   const { remove, changeTitle, changeFilter } = useTodolist(id, demo)
 
   return (
@@ -45,16 +49,18 @@ export const Todolist: FC<TodolistPT> = memo(({ todolist, demo = false }) => {
       <TaskList todoId={id} filter={filter} />
       <ButtonGroup size='small' variant='contained' disableElevation>
         <Button sx={getStyleFilterButton(filter, 'all')} onClick={changeFilter('all')}>
-          ALL
+          {t('ALL')}
         </Button>
         <Button sx={getStyleFilterButton(filter, 'active')} onClick={changeFilter('active')}>
-          ACTIVE
+          {t('ACTIVE')}
         </Button>
         <Button sx={getStyleFilterButton(filter, 'completed')} onClick={changeFilter('completed')}>
-          COMPLETED
+          {t('COMPLETED')}
         </Button>
       </ButtonGroup>
-      <Typography>{new Date(addedDate).toLocaleDateString('en-US', options)}</Typography>
+      <Typography>
+        {new Date(addedDate).toLocaleDateString(i18n.language === 'en' ? 'en-US' : 'ru-RU', options)}
+      </Typography>
     </Stack>
   )
 })

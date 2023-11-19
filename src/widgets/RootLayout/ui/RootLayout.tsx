@@ -28,6 +28,7 @@ export const RootLayout = () => {
   }
 
   return (
+    //* Suspense for i18n
     <Suspense fallback={<PageLoader />}>
       <Header />
       <Suspense fallback={<PageLoader />}>

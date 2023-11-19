@@ -46,7 +46,7 @@ export const AddItemForm: FC<AddItemFormPT> = memo(({ addItem, disabled = false 
   return (
     <Stack direction='row' justifyContent='center' alignItems='center' spacing={1}>
       <TextField
-        label={error || 'New title'}
+        label={error || t('Enter title')}
         variant='outlined'
         size='small'
         error={!!error}

@@ -2,6 +2,8 @@ import { Typography } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 import { useMemo, memo, FC } from 'react'
 
+import { useTranslation } from 'react-i18next'
+
 import { UpdatedTodoListT } from '../../model/types/TodolistsSchema'
 import { Todolist } from '../Todolist/Todolist'
 
@@ -14,6 +16,8 @@ interface TodolistListPT {
 }
 
 export const TodolistList: FC<TodolistListPT> = memo(({ demo = false, todoLists, isLoading }) => {
+  const { t } = useTranslation()
+
   const skeletonsTodoLists = useMemo(() => new Array(3).fill(0).map((_, i) => <TodolistSkeleton key={i} />), [])
 
   const todoListsArray = useMemo(
@@ -35,7 +39,7 @@ export const TodolistList: FC<TodolistListPT> = memo(({ demo = false, todoLists,
       {todoLists.length > 0 && todoListsArray}
       {todoListsNotExist && (
         <Typography align={'center'} variant={'h3'} sx={{ width: '100%' }}>
-          There are no Todolists yet :) Create your first list!
+          {t('There are no TodoLists yet. Create your first list!')}
         </Typography>
       )}
       {isLoading && skeletonsTodoLists}

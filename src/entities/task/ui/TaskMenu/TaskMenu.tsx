@@ -4,6 +4,8 @@ import ReadMoreIcon from '@mui/icons-material/ReadMore'
 import { IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material'
 import { FC, MouseEvent, useState, memo } from 'react'
 
+import { useTranslation } from 'react-i18next'
+
 import { UpdatedTaskT } from '../../model/types/TasksSchema'
 import { EditMenu } from '../EditMenu/EditMenu'
 
@@ -14,6 +16,8 @@ interface TodoMenuPT {
 }
 
 export const TaskMenu: FC<TodoMenuPT> = memo(({ task, remove, disabled = false }) => {
+  const { t } = useTranslation()
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
 
@@ -51,13 +55,13 @@ export const TaskMenu: FC<TodoMenuPT> = memo(({ task, remove, disabled = false }
           <ListItemIcon>
             <ReadMoreIcon fontSize={'small'} />
           </ListItemIcon>
-          Show more
+          {t('Show more')}
         </MenuItem>
         <MenuItem onClick={handleDelete} disableRipple color='default'>
           <ListItemIcon>
             <DeleteIcon fontSize={'small'} />
           </ListItemIcon>
-          Remove
+          {t('Remove')}
         </MenuItem>
       </Menu>
       <EditMenu task={task} open={openEditMenu} onClose={handleCloseEditMenu} />

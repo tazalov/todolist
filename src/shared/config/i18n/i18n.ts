@@ -13,6 +13,7 @@ i18n
     interpolation: {
       escapeValue: false,
     },
+    //! /todolist/ - reponame - homepage - react-gh-pages
     backend: {
       loadPath: '/todolist/locales/{{lng}}/translation.json',
     },

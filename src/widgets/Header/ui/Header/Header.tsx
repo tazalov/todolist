@@ -3,15 +3,15 @@ import LogoutIcon from '@mui/icons-material/Logout'
 import NightsStayIcon from '@mui/icons-material/NightsStay'
 import { AppBar, Button, IconButton, LinearProgress, Toolbar, Typography, useTheme, styled, Link } from '@mui/material'
 import { useContext, memo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-
-import { LangSwitcher } from '../../../../shared/ui/LangSwitcher/LangSwitcher'
 
 import { ColorModeContext } from 'app/styles/ThemeContext'
 import { notificationSelectors } from 'entities/notification'
 import { authSelectors, logoutUser } from 'features/auth'
 import { useAppDispatch } from 'shared/lib/hooks'
+import { LangSwitcher } from 'shared/ui/LangSwitcher/LangSwitcher'
 
 const ResponsiveToolbar = styled(Toolbar)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
@@ -20,7 +20,8 @@ const ResponsiveToolbar = styled(Toolbar)(({ theme }) => ({
 }))
 
 export const Header = memo(() => {
-  //! ---------- work with theme
+  const { t } = useTranslation()
+
   const theme = useTheme()
   const colorMode = useContext(ColorModeContext)
 
@@ -37,13 +38,9 @@ export const Header = memo(() => {
     <AppBar position='static' enableColorOnDark sx={{ bgcolor: 'background.header', position: 'relative' }}>
       <ResponsiveToolbar>
         <Typography variant='h4' sx={{ flexGrow: 1 }}>
-          Сases are here
+          {t('Plan here')}
         </Typography>
-        {!userData ? (
-          <Link component={NavLink} to='/login' sx={{ color: 'primary.contrastText' }}>
-            LOGIN
-          </Link>
-        ) : (
+        {userData && (
           <Button sx={{ color: 'primary.contrastText' }} endIcon={<LogoutIcon />} onClick={logout}>
             {userData.email}
           </Button>
