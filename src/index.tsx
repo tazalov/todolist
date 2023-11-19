@@ -8,6 +8,8 @@ import { router } from 'app/providers/routes'
 import { StoreProvider } from 'app/providers/store'
 import { ThemeContext } from 'app/styles/ThemeContext'
 
+import 'shared/config/i18n/i18n'
+
 const container = document.getElementById('root')
 const root = createRoot(container!)
 root.render(

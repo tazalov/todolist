@@ -28,13 +28,13 @@ export const RootLayout = () => {
   }
 
   return (
-    <>
+    <Suspense fallback={<PageLoader />}>
       <Header />
       <Suspense fallback={<PageLoader />}>
         <Outlet />
       </Suspense>
       <ErrorSnackbar />
       <SuccessSnackbar />
-    </>
+    </Suspense>
   )
 }

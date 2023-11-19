@@ -1,6 +1,7 @@
 import AddBoxIcon from '@mui/icons-material/AddBox'
 import { Stack, TextField, Tooltip, IconButton } from '@mui/material'
 import { FC, memo, useState, ChangeEvent, KeyboardEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 
 interface AddItemFormPT {
   addItem: (title: string) => void | Promise<any>
@@ -8,6 +9,8 @@ interface AddItemFormPT {
 }
 
 export const AddItemForm: FC<AddItemFormPT> = memo(({ addItem, disabled = false }) => {
+  const { t } = useTranslation()
+
   const [title, setTitle] = useState<string>('')
   const [error, setError] = useState<string>('')
 
@@ -53,7 +56,7 @@ export const AddItemForm: FC<AddItemFormPT> = memo(({ addItem, disabled = false 
         onBlur={handleBlur}
         disabled={disabled}
       />
-      <Tooltip title='Click to create new item'>
+      <Tooltip title={t('Create new item')}>
         <IconButton onClick={addNewItem} color={'success'} disabled={!!error || disabled}>
           <AddBoxIcon fontSize='large' />
         </IconButton>

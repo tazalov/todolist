@@ -6,6 +6,8 @@ import { useContext, memo } from 'react'
 import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
+import { LangSwitcher } from '../../../../shared/ui/LangSwitcher/LangSwitcher'
+
 import { ColorModeContext } from 'app/styles/ThemeContext'
 import { notificationSelectors } from 'entities/notification'
 import { authSelectors, logoutUser } from 'features/auth'
@@ -49,6 +51,7 @@ export const Header = memo(() => {
         <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color={'warning'}>
           {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <NightsStayIcon />}
         </IconButton>
+        <LangSwitcher />
       </ResponsiveToolbar>
       {status === 'loading' && (
         <LinearProgress
