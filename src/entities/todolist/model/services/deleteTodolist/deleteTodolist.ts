@@ -21,8 +21,8 @@ export const deleteTodolist = createAsyncThunk<string, string, ThunkConfig>(
         handleServerError(response.data, dispatch)
         return rejectWithValue(null)
       }
-    } catch (e: any) {
-      handleNetworkError(e.message, dispatch)
+    } catch (e) {
+      handleNetworkError(e, dispatch)
       return rejectWithValue(null)
     }
   },

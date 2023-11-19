@@ -12,8 +12,8 @@ export const fetchTodoLists = createAsyncThunk<TodoListT[], undefined, ThunkConf
     try {
       const response = await extra.todolistAPI.getTodolists()
       return response.data
-    } catch (e: any) {
-      handleNetworkError(e.message, dispatch)
+    } catch (e) {
+      handleNetworkError(e, dispatch)
       return []
     }
   },

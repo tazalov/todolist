@@ -38,8 +38,8 @@ export const updateTask = createAsyncThunk<
         handleServerError(response.data, dispatch)
         return rejectWithValue({ todoId, taskId })
       }
-    } catch (e: any) {
-      handleNetworkError(e.message, dispatch)
+    } catch (e) {
+      handleNetworkError(e, dispatch)
       return rejectWithValue({ todoId, taskId })
     }
   }

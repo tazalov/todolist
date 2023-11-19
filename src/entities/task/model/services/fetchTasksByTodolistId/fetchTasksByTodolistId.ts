@@ -26,7 +26,7 @@ export const fetchTasksByTodolistId = createAsyncThunk<FetchTasksReturn, string,
         return rejectWithValue(null)
       }
     } catch (e) {
-      handleNetworkError((e as Error).message, dispatch)
+      handleNetworkError(e, dispatch)
       return rejectWithValue(null)
     }
   },

@@ -19,7 +19,7 @@ export const updateTitleTodolist = createAsyncThunk<
   const { extra, dispatch, rejectWithValue } = thunkAPI
   dispatch(notificationActions.setNotificationData({ status: 'loading' }))
   try {
-    const response = await extra.todolistAPI.updateTodolist(todoId, title)
+    const response = await extra.todolistAPI.updateTodolist({ todoId, title })
     if (response.data.resultCode === ResultCodes.Success) {
       dispatch(notificationActions.setNotificationData({ status: 'succeed', success: `Title updated!` }))
       return { todoId, model: { title, entityStatus: 'succeed' } }
@@ -27,8 +27,8 @@ export const updateTitleTodolist = createAsyncThunk<
       handleServerError(response.data, dispatch)
       return rejectWithValue(todoId)
     }
-  } catch (e: any) {
-    handleNetworkError(e.message, dispatch)
+  } catch (e) {
+    handleNetworkError(e, dispatch)
     return rejectWithValue(todoId)
   }
 })

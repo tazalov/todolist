@@ -20,8 +20,8 @@ export const deleteTask = createAsyncThunk<DeleteTaskParams, DeleteTaskParams, T
         return rejectWithValue(null)
       }
       return args
-    } catch (e: any) {
-      handleNetworkError(e.message, dispatch)
+    } catch (e) {
+      handleNetworkError(e, dispatch)
       return rejectWithValue(null)
     }
   },

@@ -3,9 +3,14 @@ import { TodoListT } from '../model/types/TodolistsSchema'
 import { todolist } from 'shared/api/config/todolist'
 import { BaseResponseT } from 'shared/api/types/todolist'
 
+interface UpdateTodolistParams {
+  todoId: string
+  title: string
+}
+
 export const todolistAPI = {
-  updateTodolist(todolistId: string, title: string) {
-    return todolist.put<BaseResponseT>(`todo-lists/${todolistId}`, { title })
+  updateTodolist({ todoId, title }: UpdateTodolistParams) {
+    return todolist.put<BaseResponseT>(`todo-lists/${todoId}`, { title })
   },
   getTodolists() {
     return todolist.get<TodoListT[]>(`todo-lists/`)

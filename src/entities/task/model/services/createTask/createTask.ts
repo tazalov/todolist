@@ -23,8 +23,8 @@ export const createTask = createAsyncThunk<TaskT, CreateTaskParams, ThunkConfig>
         handleServerError(response.data, dispatch)
         return rejectWithValue(null)
       }
-    } catch (e: any) {
-      handleNetworkError(e.message, dispatch)
+    } catch (e) {
+      handleNetworkError(e, dispatch)
       return rejectWithValue(null)
     }
   },
