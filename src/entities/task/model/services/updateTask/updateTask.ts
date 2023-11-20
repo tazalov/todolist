@@ -7,6 +7,7 @@ import { ThunkConfig } from 'app/providers/store'
 
 import { notificationActions, handleServerError, handleNetworkError } from 'entities/notification'
 import { ResultCodes } from 'shared/api/types/todolist'
+import { getCurrentLang } from 'shared/lib/i18n/getCurrentLang'
 
 interface UpdateTaskParams {
   todoId: string
@@ -21,6 +22,8 @@ export const updateTask = createAsyncThunk<
 >('entities/task/updateTask', async ({ todoId, taskId, taskModel }, thunkAPI) => {
   const { extra, dispatch, getState, rejectWithValue } = thunkAPI
 
+  const currentLang = getCurrentLang()
+
   dispatch(notificationActions.setNotificationData({ status: 'loading' }))
 
   const taskModelFromState = taskSelectors.itemModelById(todoId, taskId)(getState())
@@ -32,7 +35,10 @@ export const updateTask = createAsyncThunk<
     try {
       const response = await extra.tasksAPI.updateTask({ todoId, taskId, model })
       if (response.data.resultCode === ResultCodes.Success) {
-        dispatch(notificationActions.setNotificationData({ status: 'succeed', success: 'Task updated!' }))
+        const successMsg = currentLang === 'en' ? 'Task updated!' : `Задача обновлена!`
+
+        dispatch(notificationActions.setNotificationData({ status: 'succeed', success: successMsg }))
+
         return response.data.data.item
       } else {
         handleServerError(response.data, dispatch)

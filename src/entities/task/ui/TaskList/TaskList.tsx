@@ -1,6 +1,8 @@
 import { Typography, List } from '@mui/material'
 import { FC, useMemo, memo } from 'react'
 
+import { useTranslation } from 'react-i18next'
+
 import { taskSelectors } from '../../model/selectors/tasks'
 import { TaskStatus } from '../../model/types/TasksSchema'
 import { Task } from '../Task/Task'
@@ -15,6 +17,8 @@ interface TaskListPT {
 }
 
 export const TaskList: FC<TaskListPT> = memo(({ todoId, filter }) => {
+  const { t } = useTranslation()
+
   const tasks = useAppSelector(taskSelectors.itemsByTodoId(todoId))
   const isLoading = useAppSelector(taskSelectors.isLoading)
 
@@ -40,7 +44,7 @@ export const TaskList: FC<TaskListPT> = memo(({ todoId, filter }) => {
 
   return (
     <List sx={{ width: '100%' }}>
-      {tasks && tasks.length ? tasksList : <Typography align={'center'}>Not found</Typography>}
+      {tasks && tasks.length ? tasksList : <Typography align={'center'}>{t('Not found')}</Typography>}
     </List>
   )
 })

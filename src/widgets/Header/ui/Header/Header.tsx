@@ -1,11 +1,10 @@
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 import LogoutIcon from '@mui/icons-material/Logout'
 import NightsStayIcon from '@mui/icons-material/NightsStay'
-import { AppBar, Button, IconButton, LinearProgress, Toolbar, Typography, useTheme, styled, Link } from '@mui/material'
+import { AppBar, Button, IconButton, LinearProgress, Toolbar, Typography, useTheme, styled } from '@mui/material'
 import { useContext, memo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
 
 import { ColorModeContext } from 'app/styles/ThemeContext'
 import { notificationSelectors } from 'entities/notification'

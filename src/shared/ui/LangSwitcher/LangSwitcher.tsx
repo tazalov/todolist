@@ -8,7 +8,7 @@ export const LangSwitcher = memo(() => {
   const toggleLanguage = async () => i18n.changeLanguage(i18n.language === 'en' ? 'ru' : 'en')
 
   return (
-    <Button sx={{ color: 'secondary.contrastText' }} onClick={toggleLanguage}>
+    <Button sx={{ color: 'primary.contrastText' }} onClick={toggleLanguage}>
       {t('Lang')}
     </Button>
   )

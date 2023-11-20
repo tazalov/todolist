@@ -25,5 +25,6 @@
   "Name": "Название",
   "Description": "Описание",
   "Status": "Статус",
-  "Priority": "Приоритет"
+  "Priority": "Приоритет",
+  "Not found": "Не найдено"
 }
