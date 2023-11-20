@@ -112,6 +112,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-//! ---------- work with theme
+//! /todolist/ - reponame - homepage - react-gh-pages
 
 //! далее идем в store.ts и подключаем нашего красавчика там
