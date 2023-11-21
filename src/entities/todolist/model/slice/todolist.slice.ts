@@ -10,6 +10,7 @@ import { clearCurrentState, StateSchema } from 'app/providers/store'
 
 const adapter = createEntityAdapter<UpdatedTodoT>({
   selectId: (todolist) => todolist.id,
+  sortComparer: (a, b) => a.order - b.order,
 })
 
 export const selectorsTodo = adapter.getSelectors<StateSchema>((state) => state.todoList || adapter.getInitialState())
