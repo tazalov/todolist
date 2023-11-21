@@ -24,7 +24,7 @@ export const Task: FC<TodoPT> = memo(({ todoId, task }) => {
     backgroundColor: getBgForStatus(task.status),
     borderColor: `${tasksPriority[priority]}.main`,
     borderStyle: 'solid',
-    borderWidth: '0 0 0 8px',
+    borderWidth: '0 0 0 10px',
     mt: 1,
     p: 0.5,
   }

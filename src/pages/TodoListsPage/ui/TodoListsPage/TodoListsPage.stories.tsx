@@ -15,11 +15,12 @@ const meta: Meta<typeof TodoListsPage> = {
     StoreDecorator({
       auth: { data: { userId: 1 } },
       todoList: {
-        items: [
-          { id: '1', filter: 'all', title: 'todolist1', order: 0, addedDate: new Date(), entityStatus: 'idle' },
-          { id: '2', filter: 'all', title: 'todolist2', order: 1, addedDate: new Date(), entityStatus: 'loading' },
-          { id: '3', filter: 'all', title: 'todolist3', order: 2, addedDate: new Date(), entityStatus: 'idle' },
-        ],
+        ids: ['1', '2', '3'],
+        entities: {
+          1: { id: '1', filter: 'all', title: 'todolist1', order: 0, addedDate: new Date(), entityStatus: 'idle' },
+          2: { id: '2', filter: 'all', title: 'todolist2', order: 1, addedDate: new Date(), entityStatus: 'loading' },
+          3: { id: '3', filter: 'all', title: 'todolist3', order: 2, addedDate: new Date(), entityStatus: 'idle' },
+        },
         isLoading: false,
       },
       tasks: {

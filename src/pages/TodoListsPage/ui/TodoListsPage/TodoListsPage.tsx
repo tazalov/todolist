@@ -3,11 +3,12 @@ import { FC, useEffect } from 'react'
 
 import { taskReducer } from 'entities/task'
 import {
-  todolistSelectors,
   CreateTodolistForm,
   TodolistList,
   todoListReducer,
   todoListActions,
+  selectorsTodo,
+  getTodolistLoading,
 } from 'entities/todolist'
 import { DynamicReducerLoader } from 'shared/lib/DynamicReducerLoader/DynamicReducerLoader'
 import { useAppSelector, useAction } from 'shared/lib/hooks'
@@ -29,8 +30,8 @@ interface TodoListsPagePT {
 }
 
 const TodoListsPage: FC<TodoListsPagePT> = ({ demo = false }) => {
-  const todoLists = useAppSelector(todolistSelectors.items)
-  const isLoading = useAppSelector(todolistSelectors.isLoading)
+  const todoLists = useAppSelector(selectorsTodo.selectAll)
+  const isLoading = useAppSelector(getTodolistLoading)
 
   const { fetchTodoLists } = useAction(todoListActions)
 

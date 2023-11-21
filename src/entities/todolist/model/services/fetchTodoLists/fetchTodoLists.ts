@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
-import { TodoListT } from '../../types/TodolistsSchema'
+import { TodoT } from '../../types/TodolistsSchema'
 
 import { ThunkConfig } from 'app/providers/store'
 import { handleNetworkError } from 'entities/notification'
 
-export const fetchTodoLists = createAsyncThunk<TodoListT[], undefined, ThunkConfig>(
+export const fetchTodoLists = createAsyncThunk<TodoT[], undefined, ThunkConfig>(
   'entities/todolist/fetchTodoLists',
   async (_, thunkAPI) => {
     const { extra, dispatch } = thunkAPI

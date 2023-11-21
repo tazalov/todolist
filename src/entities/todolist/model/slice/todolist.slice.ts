@@ -1,96 +1,95 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction, createEntityAdapter } from '@reduxjs/toolkit'
 
 import { createTodolist } from '../services/createTodolist/createTodolist'
 import { deleteTodolist } from '../services/deleteTodolist/deleteTodolist'
 import { fetchTodoLists } from '../services/fetchTodoLists/fetchTodoLists'
 import { updateTitleTodolist } from '../services/updateTitleTodolist/updateTitleTodolist'
-import { TodoListsSchema, TodoListT, UpdateModelTodoList } from '../types/TodolistsSchema'
+import { TodoT, UpdateModelTodo, UpdatedTodoT, FilterT, TodoListsSchema } from '../types/TodolistsSchema'
 
-import { findIdxTodoById } from '../utils/findIdxTodoById'
+import { clearCurrentState, StateSchema } from 'app/providers/store'
 
-import { clearCurrentState } from 'app/providers/store'
+const adapter = createEntityAdapter<UpdatedTodoT>({
+  selectId: (todolist) => todolist.id,
+})
 
-export const initialState: TodoListsSchema = {
-  items: [],
-  isLoading: false,
-}
+export const selectorsTodo = adapter.getSelectors<StateSchema>((state) => state.todoList || adapter.getInitialState())
 
-const todolistSlice = createSlice({
-  name: 'todoList',
-  initialState,
+const slice = createSlice({
+  name: 'todolist',
+  initialState: adapter.getInitialState<TodoListsSchema>({
+    ids: [],
+    entities: {},
+    isLoading: false,
+  }),
   reducers: {
-    setTodoLists: (state, action: PayloadAction<TodoListT[]>) => {
-      state.items = action.payload.map((el) => ({
+    setTodoLists: (state, action: PayloadAction<TodoT[]>) => {
+      const todoLists = action.payload.map((el) => ({
         ...el,
+        filter: 'all' as FilterT,
+        entityStatus: 'idle' as CurrentStatus,
+      }))
+      adapter.setAll(state, todoLists)
+    },
+    addTodoList: (state, action: PayloadAction<TodoT>) => {
+      adapter.addOne(state, {
+        ...action.payload,
         filter: 'all',
         entityStatus: 'idle',
-      }))
+      })
     },
-    addTodoList: (state, action: PayloadAction<TodoListT>) => {
-      state.items.unshift({ ...action.payload, filter: 'all', entityStatus: 'idle' })
+    removeTodoList: (state, { payload: todoId }: PayloadAction<string>) => {
+      adapter.removeOne(state, todoId)
     },
-    removeTodoList: (state, action: PayloadAction<string>) => {
-      const idx = state.items.findIndex((el) => (el.id = action.payload))
-      if (idx !== -1) {
-        state.items.splice(idx, 1)
-      }
-    },
-    changeTodoList: (state, action: PayloadAction<{ todoId: string; model: UpdateModelTodoList }>) => {
+    changeTodoList: (state, action: PayloadAction<{ todoId: string; model: UpdateModelTodo }>) => {
       const { todoId, model } = action.payload
-      const idx = state.items.findIndex((el) => el.id === todoId)
-      if (idx !== -1) {
-        state.items[idx] = { ...state.items[idx], ...model }
-      }
+      adapter.updateOne(state, { id: todoId, changes: model })
     },
   },
   extraReducers: (builder) =>
     builder
-      .addCase(clearCurrentState, () => initialState)
+      .addCase(clearCurrentState, () => ({
+        ids: [],
+        entities: {},
+        isLoading: false,
+      }))
       .addCase(fetchTodoLists.pending, (state) => {
         state.isLoading = true
       })
       .addCase(fetchTodoLists.fulfilled, (state, { payload }) => {
-        state.items = payload.map((el) => ({
+        const todoLists = payload.map((el) => ({
           ...el,
-          filter: 'all',
-          entityStatus: 'idle',
+          filter: 'all' as FilterT,
+          entityStatus: 'idle' as CurrentStatus,
         }))
+        adapter.setAll(state, todoLists)
         state.isLoading = false
       })
       .addCase(fetchTodoLists.rejected, (state) => {
         state.isLoading = false
       })
       .addCase(deleteTodolist.fulfilled, (state, { payload: todoId }) => {
-        const idx = findIdxTodoById(state, todoId)
-        if (idx !== -1) {
-          state.items.splice(idx, 1)
-        }
+        adapter.removeOne(state, todoId)
       })
       .addCase(createTodolist.fulfilled, (state, { payload: todoList }) => {
-        state.items.unshift({ ...todoList, filter: 'all', entityStatus: 'idle' })
+        adapter.addOne(state, {
+          ...todoList,
+          filter: 'all',
+          entityStatus: 'idle',
+        })
       })
       .addCase(updateTitleTodolist.pending, (state, { meta }) => {
         const { arg } = meta
-        const idx = findIdxTodoById(state, arg.todoId)
-        if (idx !== -1) {
-          state.items[idx] = { ...state.items[idx], entityStatus: 'loading' }
-        }
+        adapter.updateOne(state, { id: arg.todoId, changes: { entityStatus: 'loading' } })
       })
       .addCase(updateTitleTodolist.fulfilled, (state, { payload }) => {
         const { todoId, model } = payload
-        const idx = findIdxTodoById(state, todoId)
-        if (idx !== -1) {
-          state.items[idx] = { ...state.items[idx], ...model }
-        }
+        adapter.updateOne(state, { id: todoId, changes: model })
       })
       .addCase(updateTitleTodolist.rejected, (state, { payload: todoId }) => {
         if (todoId) {
-          const idx = findIdxTodoById(state, todoId)
-          if (idx !== -1) {
-            state.items[idx] = { ...state.items[idx], entityStatus: 'failed' }
-          }
+          adapter.updateOne(state, { id: todoId, changes: { entityStatus: 'failed' } })
         }
       }),
 })
 
-export const { reducer: todoListReducer, actions } = todolistSlice
+export const { reducer: todoListReducer, actions } = slice

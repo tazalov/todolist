@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
-import { UpdateModelTodoList } from '../../types/TodolistsSchema'
+import { UpdateModelTodo } from '../../types/TodolistsSchema'
 
 import { ThunkConfig } from 'app/providers/store'
 import { notificationActions, handleServerError, handleNetworkError } from 'entities/notification'
@@ -9,7 +9,7 @@ import { getCurrentLang } from 'shared/lib/i18n/getCurrentLang'
 
 interface UpdateTitleParams {
   todoId: string
-  model: UpdateModelTodoList
+  model: UpdateModelTodo
 }
 
 export const updateTitleTodolist = createAsyncThunk<

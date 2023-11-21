@@ -1,11 +1,11 @@
 import { v1 } from 'uuid'
 
-import { todoListReducer, actions } from './todolist.slice'
+import { todoListReducer, actions } from './_todolist.slice'
 
 import { createTodolist } from '../services/createTodolist/createTodolist'
 import { deleteTodolist } from '../services/deleteTodolist/deleteTodolist'
 import { fetchTodoLists } from '../services/fetchTodoLists/fetchTodoLists'
-import { TodoListsSchema } from '../types/TodolistsSchema'
+import { TodoListsSchema } from '../types/_TodolistsSchema'
 
 import { clearCurrentState } from 'app/providers/store'
 

@@ -1,5 +1,3 @@
-import { EntityState } from '@reduxjs/toolkit'
-
 export type FilterT = 'all' | 'active' | 'completed'
 
 export interface TodoT {
@@ -20,6 +18,7 @@ export interface UpdateModelTodo {
   entityStatus?: CurrentStatus
 }
 
-export interface TodoListsSchema extends EntityState<UpdatedTodoT> {
+export type TodoListsSchema = {
+  items: UpdatedTodoT[]
   isLoading: boolean
 }

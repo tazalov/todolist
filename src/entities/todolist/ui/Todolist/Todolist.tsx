@@ -5,7 +5,7 @@ import { FC, memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useTodolist } from '../../model/hooks/useTodolist/useTodolist'
-import { UpdatedTodoListT } from '../../model/types/TodolistsSchema'
+import { UpdatedTodoT } from '../../model/types/TodolistsSchema'
 import { getStyleFilterButton } from '../../model/utils/getStyleFilterButton'
 
 import { TaskList, CreateTaskForm } from 'entities/task'
@@ -19,7 +19,7 @@ const options: Intl.DateTimeFormatOptions = {
 }
 
 interface TodolistPT {
-  todolist: UpdatedTodoListT
+  todolist: UpdatedTodoT
   demo?: boolean
 }
 
