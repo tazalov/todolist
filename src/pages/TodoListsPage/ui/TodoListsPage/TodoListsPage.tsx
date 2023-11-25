@@ -6,9 +6,9 @@ import {
   CreateTodolistForm,
   TodolistList,
   todoListReducer,
-  todoListActions,
   selectorsTodo,
   getTodolistLoading,
+  todoListThunks,
 } from 'entities/todolist'
 import { DynamicReducerLoader } from 'shared/lib/DynamicReducerLoader/DynamicReducerLoader'
 import { useAppSelector, useAction } from 'shared/lib/hooks'
@@ -33,7 +33,7 @@ const TodoListsPage: FC<TodoListsPagePT> = ({ demo = false }) => {
   const todoLists = useAppSelector(selectorsTodo.selectAll)
   const isLoading = useAppSelector(getTodolistLoading)
 
-  const { fetchTodoLists } = useAction(todoListActions)
+  const { fetchTodoLists } = useAction(todoListThunks)
 
   useEffect(() => {
     if (!demo) fetchTodoLists()

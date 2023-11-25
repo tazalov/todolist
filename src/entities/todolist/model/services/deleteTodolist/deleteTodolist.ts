@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
-import { actions } from '../../slice/todolist.slice'
+import { todoListActions } from '../../slice/todolist.slice'
 
 import { ThunkConfig } from 'app/providers/store'
 import { notificationActions, handleServerError, handleNetworkError } from 'entities/notification'
@@ -16,7 +16,7 @@ export const deleteTodolist = createAsyncThunk<string, string, ThunkConfig>(
 
     dispatch(notificationActions.setNotificationData({ status: 'loading' }))
 
-    dispatch(actions.changeTodoList({ todoId, model: { entityStatus: 'loading' } }))
+    dispatch(todoListActions.changeTodoList({ todoId, model: { entityStatus: 'loading' } }))
 
     try {
       const response = await extra.todolistAPI.deleteTodolist(todoId)

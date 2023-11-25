@@ -1,6 +1,6 @@
 import { FC, useCallback, memo } from 'react'
 
-import { taskActions } from '../../model/services'
+import { taskThunks } from '../../model/services'
 
 import { useAppDispatch } from 'shared/lib/hooks'
 import { AddItemForm } from 'shared/ui/AddItemForm/AddItemForm'
@@ -15,8 +15,8 @@ export const CreateTaskForm: FC<CreateTaskFormPT> = memo(({ todoId, disabled = f
 
   const addTask = useCallback(
     async (title: string) => {
-      const action = await dispatch(taskActions.createTask({ todoId, title }))
-      return taskActions.createTask.rejected.match(action) ? action.payload : undefined
+      const action = await dispatch(taskThunks.createTask({ todoId, title }))
+      return taskThunks.createTask.rejected.match(action) ? action.payload : undefined
     },
     [todoId, dispatch],
   )

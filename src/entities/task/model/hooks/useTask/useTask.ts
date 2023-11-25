@@ -1,12 +1,12 @@
 import { ChangeEvent, useCallback } from 'react'
 
-import { taskActions } from '../../services'
+import { taskThunks } from '../../services'
 import { TaskStatus } from '../../types/TasksSchema'
 
 import { useAction } from 'shared/lib/hooks'
 
 export const useTask = (todoId: string, taskId: string) => {
-  const { updateTask, deleteTask } = useAction(taskActions)
+  const { updateTask, deleteTask } = useAction(taskThunks)
 
   const remove = () => {
     deleteTask({ todoId, taskId })

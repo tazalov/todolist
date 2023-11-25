@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next'
 
 import { tasksStatus, tasksPriority } from '../../model/const/colorsEditMenuItems'
 import { editMenuPriorityItems, editMenuStatusItems } from '../../model/const/editMenuItems'
-import { taskActions } from '../../model/services'
+import { taskThunks } from '../../model/services'
 import { TaskStatus, TaskPriority, UpdatedTaskT } from '../../model/types/TasksSchema'
 import { SelectNum } from '../SelectNum/SelectNum'
 
@@ -35,7 +35,7 @@ export const EditMenu: FC<EditMenuPT> = memo(({ task, onClose, open }) => {
     setTitle(task.title)
   }, [task])
 
-  const { updateTask } = useAction(taskActions)
+  const { updateTask } = useAction(taskThunks)
 
   const activateEditMode = () => setEditMode(true)
 

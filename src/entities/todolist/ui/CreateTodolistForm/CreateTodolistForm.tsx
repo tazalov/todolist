@@ -4,7 +4,7 @@ import { memo, useCallback } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
-import { todoListActions } from '../../model/services'
+import { todoListThunks } from '../../model/services'
 
 import { useAppDispatch } from 'shared/lib/hooks'
 import { AddItemForm } from 'shared/ui/AddItemForm/AddItemForm'
@@ -16,8 +16,8 @@ export const CreateTodolistForm = memo(() => {
 
   const createTodolist = useCallback(
     async (title: string) => {
-      const action = await dispatch(todoListActions.createTodolist(title))
-      return todoListActions.createTodolist.rejected.match(action) ? action.payload : undefined
+      const action = await dispatch(todoListThunks.createTodolist(title))
+      return todoListThunks.createTodolist.rejected.match(action) ? action.payload : undefined
     },
     [dispatch],
   )

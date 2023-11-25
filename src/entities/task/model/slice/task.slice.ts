@@ -8,7 +8,7 @@ import { TasksSchema, TasksObj, TaskT } from '../types/TasksSchema'
 import { findIdxTaskByTodoId } from '../utils/findIdxTaskByTodoId'
 
 import { clearCurrentState } from 'app/providers/store'
-import { todoListActions } from 'entities/todolist'
+import { todoListThunks } from 'entities/todolist'
 
 export const initialState: TasksSchema = {
   items: {},
@@ -105,16 +105,16 @@ const taskSlice = createSlice({
           }
         }
       })
-      .addCase(todoListActions.fetchTodoLists.fulfilled, (state, { payload: todoLists }) => {
+      .addCase(todoListThunks.fetchTodoLists.fulfilled, (state, { payload: todoLists }) => {
         state.items = todoLists.reduce((acc: TasksObj, el) => {
           acc[el.id] = []
           return acc
         }, {})
       })
-      .addCase(todoListActions.createTodolist.fulfilled, (state, { payload: todoList }) => {
+      .addCase(todoListThunks.createTodolist.fulfilled, (state, { payload: todoList }) => {
         state.items[todoList.id] = []
       })
-      .addCase(todoListActions.deleteTodolist.fulfilled, (state, { payload: todoListId }) => {
+      .addCase(todoListThunks.deleteTodolist.fulfilled, (state, { payload: todoListId }) => {
         delete state.items[todoListId]
       }),
 })

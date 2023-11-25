@@ -3,12 +3,9 @@ import { deleteTodolist } from './deleteTodolist/deleteTodolist'
 import { fetchTodoLists } from './fetchTodoLists/fetchTodoLists'
 import { updateTitleTodolist } from './updateTitleTodolist/updateTitleTodolist'
 
-import { actions } from '../slice/todolist.slice'
-
-export const todoListActions = {
+export const todoListThunks = {
   fetchTodoLists,
   deleteTodolist,
   createTodolist,
   updateTitleTodolist,
-  ...actions,
 }

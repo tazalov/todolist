@@ -93,4 +93,4 @@ const slice = createSlice({
       }),
 })
 
-export const { reducer: todoListReducer, actions } = slice
+export const { reducer: todoListReducer, actions: todoListActions } = slice

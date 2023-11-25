@@ -7,7 +7,7 @@ import { updateTask } from '../services/updateTask/updateTask'
 import { TasksSchema, TaskStatus, TaskPriority } from '../types/TasksSchema'
 
 import { clearCurrentState } from 'app/providers/store'
-import { TodoListsSchema, todoListReducer, todoListActions } from 'entities/todolist'
+import { TodoListsSchema, todoListReducer, todoListThunks } from 'entities/todolist'
 
 describe('task reducer', () => {
   const date = new Date(2023, 0, 1, 0, 0, 0, 0)
@@ -222,7 +222,7 @@ describe('task reducer', () => {
     const title = 'new title todolist'
     const todoList = { id: 'some_id', title, order: 0, addedDate: date }
 
-    const newState = taskReducer(initialState, todoListActions.createTodolist.fulfilled(todoList, 'requestId', title))
+    const newState = taskReducer(initialState, todoListThunks.createTodolist.fulfilled(todoList, 'requestId', title))
 
     const keys = Object.keys(newState.items)
     const newKey = keys.find((k) => k !== 'todolistId1' && k !== 'todolistId2')
@@ -237,7 +237,7 @@ describe('task reducer', () => {
   it('property with todolistId should be deleted', () => {
     const newState = taskReducer(
       initialState,
-      todoListActions.deleteTodolist.fulfilled('todolistId2', 'requestId', 'todolistId2'),
+      todoListThunks.deleteTodolist.fulfilled('todolistId2', 'requestId', 'todolistId2'),
     )
 
     const keys = Object.keys(newState.items)
@@ -257,7 +257,7 @@ describe('task reducer', () => {
       isLoading: false,
     }
 
-    const action = todoListActions.createTodolist.fulfilled(
+    const action = todoListThunks.createTodolist.fulfilled(
       { id: 'some_id', title: 'new todolist', order: 0, addedDate: date },
       'requestId',
       'new todolist',
@@ -286,7 +286,7 @@ describe('task reducer', () => {
       isLoading: false,
     }
 
-    const action = todoListActions.fetchTodoLists.fulfilled(
+    const action = todoListThunks.fetchTodoLists.fulfilled(
       [
         { id: 'some_id1', title: 'new todolist', order: 0, addedDate: date },
         { id: 'some_id2', title: 'new todolist', order: 0, addedDate: date },
@@ -302,7 +302,7 @@ describe('task reducer', () => {
     const idFromTasks = keys[0]
     //const idFromTodoLists = endTodoListsState.items[0].id
     // @ts-ignore
-    const idFromTodoLists = endTodoListsState.entities['some_id'].id
+    const idFromTodoLists = endTodoListsState.entities['some_id1'].id
 
     expect(idFromTasks).toBe(idFromTodoLists)
   })

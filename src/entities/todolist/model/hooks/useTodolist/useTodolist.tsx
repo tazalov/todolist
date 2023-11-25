@@ -1,14 +1,15 @@
 import { useCallback, useEffect } from 'react'
 
-import { todoListActions } from '../../services'
+import { todoListThunks } from '../../services'
+import { todoListActions } from '../../slice/todolist.slice'
 import { FilterT } from '../../types/TodolistsSchema'
 
-import { taskActions } from 'entities/task'
+import { taskThunks } from 'entities/task'
 import { useAction } from 'shared/lib/hooks'
 
 export const useTodolist = (todoId: string, demo: boolean) => {
-  const { fetchTasksByTodolistId } = useAction(taskActions)
-  const { updateTitleTodolist, deleteTodolist, changeTodoList } = useAction(todoListActions)
+  const { fetchTasksByTodolistId } = useAction(taskThunks)
+  const { updateTitleTodolist, deleteTodolist, changeTodoList } = useAction({ ...todoListActions, ...todoListThunks })
 
   useEffect(() => {
     if (!demo) fetchTasksByTodolistId(todoId)
