@@ -8,7 +8,7 @@ import { TasksSchema, TasksAPI } from 'entities/task'
 import { TodoListsSchema, TodolistAPI } from 'entities/todolist'
 import { AuthAPI, AuthSchema } from 'features/auth'
 
-//* ? - асинхронные редюсеры
+//* ? - async reducers
 export interface StateSchema {
   todoList?: TodoListsSchema
   tasks?: TasksSchema
@@ -16,10 +16,8 @@ export interface StateSchema {
   auth: AuthSchema
 }
 
-//* тип для ключей наших редюсеров, нужен для менеджера
 export type KeysReducers = keyof StateSchema
 
-//* сами описали тип для возвращаемого объекта нашего менеджера
 export interface ReducerManager {
   getReducerMap: () => ReducersMapObject<StateSchema>
   reduce: (state: StateSchema, action: AnyAction) => CombinedState<StateSchema>
@@ -27,7 +25,6 @@ export interface ReducerManager {
   remove: (key: KeysReducers) => void
 }
 
-//* прописали тип для нашего строа, в который добавили менеджера, нужен для вызова useStore
 export interface StoreWithManager extends ToolkitStore<StateSchema> {
   reducerManager: ReducerManager
 }

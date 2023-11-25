@@ -4,14 +4,9 @@ import { LoginDataForm, UserData } from '../../types/AuthSchema'
 
 import { ThunkConfig } from 'app/providers/store'
 import { handleServerError, handleNetworkError, notificationActions } from 'entities/notification'
-import { ResultCodes } from 'shared/api/types/todolist'
+import { ResultCodes, BaseResponseT } from 'shared/api/types/todolist'
 
-interface RejectValues {
-  errors: string[]
-  fieldsErrors?: { field: string; error: string }[]
-}
-
-export const loginUser = createAsyncThunk<UserData, LoginDataForm, ThunkConfig<RejectValues>>(
+export const loginUser = createAsyncThunk<UserData, LoginDataForm, ThunkConfig<BaseResponseT | null>>(
   'features/auth/loginUser',
   async (loginDataForm, thunkAPI) => {
     const { extra, dispatch, rejectWithValue } = thunkAPI
@@ -23,18 +18,13 @@ export const loginUser = createAsyncThunk<UserData, LoginDataForm, ThunkConfig<R
         dispatch(notificationActions.setNotificationData({ status: 'succeed', success: 'Success login!' }))
         return { userId: response.data.data.userId, email: loginDataForm.email }
       } else {
-        handleServerError(response.data, dispatch)
-        return rejectWithValue({
-          errors: response.data.messages,
-          fieldsErrors: response.data.fieldsErrors,
-        })
+        const isShowAppError = !response.data.fieldsErrors.length
+        handleServerError(response.data, dispatch, isShowAppError)
+        return rejectWithValue(response.data)
       }
     } catch (e: any) {
       handleNetworkError(e.message, dispatch)
-      return rejectWithValue({
-        errors: [e.message],
-        fieldsErrors: undefined,
-      })
+      return rejectWithValue(null)
     }
   },
 )

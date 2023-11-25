@@ -30,7 +30,7 @@ export const AddItemForm: FC<AddItemFormPT> = memo(({ addItem, disabled = false 
     } else {
       const serverError = await addItem(newTitle)
       if (serverError) {
-        setError('Error')
+        setError('Check error')
       } else {
         setTitle('')
       }

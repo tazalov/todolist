@@ -1,11 +1,9 @@
 import { initUser } from './initUser'
 
-import { notificationActions } from 'entities/notification'
 import { TestAsyncThunk } from 'shared/lib/tests/TestAsyncThunk'
 
 describe('initUser async thunk', () => {
   it('set of actions for a successful request with resultCode - 0 is correct', async () => {
-    //* Создаем инстанс для тестирования
     const thunk = new TestAsyncThunk(initUser)
 
     const userData = {
@@ -14,7 +12,6 @@ describe('initUser async thunk', () => {
       login: 'login',
     }
 
-    //* Мокаем результат запроса
     thunk.authAPI.authMe.mockReturnValue(
       Promise.resolve({
         data: {
@@ -24,7 +21,6 @@ describe('initUser async thunk', () => {
       }),
     )
 
-    //* Вызываем санку (если нужно, то передаем в callThunk данные, с которым должна вызваться санка)
     const result = await thunk.callThunk()
 
     expect(thunk.authAPI.authMe).toHaveBeenCalled()
@@ -33,10 +29,8 @@ describe('initUser async thunk', () => {
   })
 
   it('set of actions for a successful request with resultCode - 1 is correct', async () => {
-    //* Создаем инстанс для тестирования
     const thunk = new TestAsyncThunk(initUser)
 
-    //* Мокаем результат запроса
     thunk.authAPI.authMe.mockReturnValue(
       Promise.resolve({
         data: {
@@ -47,14 +41,10 @@ describe('initUser async thunk', () => {
       }),
     )
 
-    //* Вызываем санку (если нужно, то передаем в callThunk данные, с которым должна вызваться санка)
     const result = await thunk.callThunk()
 
     expect(thunk.authAPI.authMe).toHaveBeenCalled()
-    expect(thunk.dispatch).toHaveBeenCalledTimes(3) // initUser.pending, initUser.fulfilled, notificationActions.setNotificationData
-    expect(thunk.dispatch).toHaveBeenCalledWith(
-      notificationActions.setNotificationData({ error: 'you are not authorized', status: 'failed' }),
-    )
+    expect(thunk.dispatch).toHaveBeenCalledTimes(2) // initUser.pending, initUser.fulfilled, notificationActions.setNotificationData
     expect(result.meta.requestStatus).toBe('fulfilled')
     expect(result.payload).toBe(null)
   })

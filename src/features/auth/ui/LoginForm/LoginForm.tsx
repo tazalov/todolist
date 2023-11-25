@@ -12,6 +12,8 @@ import * as yup from 'yup'
 
 import { loginUser } from '../../model/services/loginUser/loginUser'
 
+import { notificationActions } from 'entities/notification'
+import { BaseResponseT } from 'shared/api/types/todolist'
 import { useAppDispatch } from 'shared/lib/hooks'
 
 const validationSchema = yup.object({
@@ -32,19 +34,13 @@ export const LoginForm = () => {
       serverError: undefined,
     },
     validationSchema,
-    onSubmit: async (values, formikHelpers) => {
-      const action = await dispatch(loginUser(values))
-      if (loginUser.rejected.match(action)) {
-        const fieldsErrors = action.payload?.fieldsErrors
-        const serverErrors = action.payload?.errors
-        if (fieldsErrors?.length) {
-          const fieldName = fieldsErrors[0].field
-          const fieldError = fieldsErrors[0].error
-          formikHelpers.setFieldError(fieldName, fieldError)
-        } else if (serverErrors?.length) {
-          formikHelpers.setFieldError('serverError', serverErrors[0])
-        }
-      }
+    onSubmit: (values, formikHelpers) => {
+      dispatch(loginUser(values))
+        .unwrap()
+        .catch((res: BaseResponseT) => {
+          res.fieldsErrors?.forEach((el: any) => formikHelpers.setFieldError(el.field, el.error))
+        })
+        .finally(() => dispatch(notificationActions.setStatus('idle')))
     },
   })
 

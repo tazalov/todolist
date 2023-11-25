@@ -7,7 +7,7 @@ import { notificationActions, handleServerError, handleNetworkError } from 'enti
 import { ResultCodes } from 'shared/api/types/todolist'
 import { getCurrentLang } from 'shared/lib/i18n/getCurrentLang'
 
-export const createTodolist = createAsyncThunk<TodoT, string, ThunkConfig>(
+export const createTodolist = createAsyncThunk<TodoT, string, ThunkConfig<string | null>>(
   'entities/todolist/createTodolist',
   async (title, thunkAPI) => {
     const { extra, dispatch, rejectWithValue } = thunkAPI
@@ -26,7 +26,7 @@ export const createTodolist = createAsyncThunk<TodoT, string, ThunkConfig>(
         return response.data.data.item
       } else {
         handleServerError(response.data, dispatch)
-        return rejectWithValue(null)
+        return rejectWithValue(response.data.messages[0])
       }
     } catch (e) {
       handleNetworkError(e, dispatch)
