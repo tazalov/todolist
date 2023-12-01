@@ -1,6 +1,5 @@
 import { Reducer } from '@reduxjs/toolkit'
-
-import { FC, useEffect, ReactNode } from 'react'
+import { useEffect, ReactNode } from 'react'
 import { useStore, useDispatch } from 'react-redux'
 
 import { KeysReducers, StoreWithManager } from 'app/providers/store'
@@ -9,7 +8,7 @@ export type ReducersList = {
   [key in KeysReducers]?: Reducer
 }
 
-interface DynamicReducerLoaderPT {
+interface Props {
   reducers: ReducersList
   removeAfterUnmount?: boolean
   children: ReactNode
@@ -22,7 +21,7 @@ interface DynamicReducerLoaderPT {
  * @param children - children component (page with lazy)
  */
 
-export const DynamicReducerLoader: FC<DynamicReducerLoaderPT> = ({ reducers, removeAfterUnmount = true, children }) => {
+export const DynamicReducerLoader = ({ reducers, removeAfterUnmount = true, children }: Props) => {
   const store = useStore() as StoreWithManager
 
   const dispatch = useDispatch()

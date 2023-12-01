@@ -1,5 +1,5 @@
 import { Checkbox, ListItem } from '@mui/material'
-import { FC, memo } from 'react'
+import { memo } from 'react'
 
 import { tasksPriority } from '../../model/const/colorsEditMenuItems'
 import { useTask } from '../../model/hooks/useTask/useTask'
@@ -9,12 +9,12 @@ import { TaskMenu } from '../TaskMenu/TaskMenu'
 
 import { EditableSpan } from 'shared/ui/EditableSpan/EditableSpan'
 
-interface TodoPT {
+interface Props {
   todoId: string
   task: UpdatedTask
 }
 
-export const Task: FC<TodoPT> = memo(({ todoId, task }) => {
+export const Task = memo(({ todoId, task }: Props) => {
   const { id, title, status, priority, entityStatus } = task
 
   const { remove, changeStatus, changeTitle } = useTask(todoId, id)

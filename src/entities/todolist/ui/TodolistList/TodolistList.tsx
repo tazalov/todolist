@@ -1,7 +1,6 @@
 import { Typography } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
-import { useMemo, memo, FC } from 'react'
-
+import { useMemo, memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { UpdatedTodo } from '../../model/types/TodolistsSchema'
@@ -9,13 +8,13 @@ import { Todolist } from '../Todolist/Todolist'
 
 import { TodolistSkeleton } from '../Todolist/TodolistSkeleton'
 
-interface TodolistListPT {
+interface Props {
   demo?: boolean
   todoLists: UpdatedTodo[]
   isLoading: boolean
 }
 
-export const TodolistList: FC<TodolistListPT> = memo(({ demo = false, todoLists, isLoading }) => {
+export const TodolistList = memo(({ demo = false, todoLists, isLoading }: Props) => {
   const { t } = useTranslation()
 
   const skeletonsTodoLists = useMemo(() => new Array(3).fill(0).map((_, i) => <TodolistSkeleton key={i} />), [])

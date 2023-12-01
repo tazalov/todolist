@@ -1,14 +1,14 @@
 import AddBoxIcon from '@mui/icons-material/AddBox'
 import { Stack, TextField, Tooltip, IconButton } from '@mui/material'
-import { FC, memo, useState, ChangeEvent, KeyboardEvent } from 'react'
+import { memo, useState, ChangeEvent, KeyboardEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
-interface AddItemFormPT {
+interface Props {
   addItem: (title: string) => void | Promise<any>
   disabled?: boolean
 }
 
-export const AddItemForm: FC<AddItemFormPT> = memo(({ addItem, disabled = false }) => {
+export const AddItemForm = memo(({ addItem, disabled = false }: Props) => {
   const { t } = useTranslation()
 
   const [title, setTitle] = useState<string>('')

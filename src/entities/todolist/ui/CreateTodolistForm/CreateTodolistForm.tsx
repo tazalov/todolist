@@ -1,7 +1,6 @@
 import { Typography, Stack, Box, Chip } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 import { memo, useCallback } from 'react'
-
 import { useTranslation } from 'react-i18next'
 
 import { todoListThunks } from '../../model/services'

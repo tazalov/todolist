@@ -1,10 +1,9 @@
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 import { SelectProps } from '@mui/material/Select/Select'
-import React, { FC } from 'react'
 
 import { SelectMenuItems } from '../../model/const/editMenuItems'
 
-interface SelectPT extends SelectProps<number> {
+interface Props extends SelectProps<number> {
   options: SelectMenuItems[]
   label: string
   colors: {
@@ -12,7 +11,7 @@ interface SelectPT extends SelectProps<number> {
   }
 }
 
-export const SelectNum: FC<SelectPT> = ({ label, options, colors, ...rest }) => {
+export const SelectNum = ({ label, options, colors, ...rest }: Props) => {
   return (
     <FormControl fullWidth>
       <InputLabel id='edit-menu-status-select'>{label}</InputLabel>

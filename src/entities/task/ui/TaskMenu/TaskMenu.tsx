@@ -2,20 +2,19 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import ReadMoreIcon from '@mui/icons-material/ReadMore'
 import { IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material'
-import { FC, MouseEvent, useState, memo } from 'react'
-
+import { MouseEvent, useState, memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { UpdatedTask } from '../../model/types/TasksSchema'
 import { EditMenu } from '../EditMenu/EditMenu'
 
-interface TodoMenuPT {
+interface Props {
   task: UpdatedTask
   remove: () => void
   disabled?: boolean
 }
 
-export const TaskMenu: FC<TodoMenuPT> = memo(({ task, remove, disabled = false }) => {
+export const TaskMenu = memo(({ task, remove, disabled = false }: Props) => {
   const { t } = useTranslation()
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)

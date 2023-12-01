@@ -6,46 +6,17 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import FormGroup from '@mui/material/FormGroup'
 import TextField from '@mui/material/TextField'
 import Tooltip from '@mui/material/Tooltip'
-import { useFormik } from 'formik'
 import { useTranslation } from 'react-i18next'
-import * as yup from 'yup'
 
-import { loginUser } from '../../model/services/loginUser/loginUser'
-
-import { notificationActions } from 'entities/notification'
-import { BaseResponse } from 'shared/api/types/todolist'
-import { useAppDispatch } from 'shared/lib/hooks'
-
-const validationSchema = yup.object({
-  email: yup.string().email('Enter a valid email').required('Email is required'),
-  password: yup.string().min(4, 'Password should be of minimum 4 characters length').required('Password is required'),
-})
+import { useLogin } from '../../model/hooks/useLogin/useLogin'
 
 export const LoginForm = () => {
   const { t } = useTranslation()
 
-  const dispatch = useAppDispatch()
-
-  const formik = useFormik({
-    initialValues: {
-      email: 'free@samuraijs.com',
-      password: 'free',
-      rememberMe: false,
-      serverError: undefined,
-    },
-    validationSchema,
-    onSubmit: (values, formikHelpers) => {
-      dispatch(loginUser(values))
-        .unwrap()
-        .catch((res: BaseResponse) => {
-          res.fieldsErrors?.forEach((el: any) => formikHelpers.setFieldError(el.field, el.error))
-        })
-        .finally(() => dispatch(notificationActions.setStatus('idle')))
-    },
-  })
+  const { formikLogin } = useLogin()
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form onSubmit={formikLogin.handleSubmit}>
       <FormControl sx={{ p: 1, minWidth: '300px' }}>
         <FormGroup sx={{ alignItems: 'center' }}>
           <Tooltip title='free@samuraijs.com:free'>
@@ -58,9 +29,9 @@ export const LoginForm = () => {
             margin='normal'
             id='email'
             label={t('Email')}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.errors.email}
-            {...formik.getFieldProps('email')}
+            error={formikLogin.touched.email && Boolean(formikLogin.errors.email)}
+            helperText={formikLogin.touched.email && formikLogin.errors.email}
+            {...formikLogin.getFieldProps('email')}
           />
           <TextField
             fullWidth
@@ -68,21 +39,21 @@ export const LoginForm = () => {
             id='password'
             label={t('Password')}
             type='password'
-            error={formik.touched.password && Boolean(formik.errors.password)}
-            helperText={formik.touched.password && formik.errors.password}
-            {...formik.getFieldProps('password')}
+            error={formikLogin.touched.password && Boolean(formikLogin.errors.password)}
+            helperText={formikLogin.touched.password && formikLogin.errors.password}
+            {...formikLogin.getFieldProps('password')}
           />
           <FormControlLabel
             id='rememberMe'
             label={t('Remember me')}
             control={<Checkbox />}
-            {...formik.getFieldProps('rememberMe')}
+            {...formikLogin.getFieldProps('rememberMe')}
           />
           <Button color='primary' variant='contained' type='submit'>
             {t('Login')}
           </Button>
           <Typography color={'error'} sx={{ mt: 1 }}>
-            {formik.errors.serverError}
+            {formikLogin.errors.serverError}
           </Typography>
         </FormGroup>
       </FormControl>

@@ -1,7 +1,6 @@
 import CloseIcon from '@mui/icons-material/Close'
 import { ButtonGroup, IconButton, Stack, Button, Typography } from '@mui/material'
-import { FC, memo } from 'react'
-
+import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useTodolist } from '../../model/hooks/useTodolist/useTodolist'
@@ -18,12 +17,12 @@ const options: Intl.DateTimeFormatOptions = {
   weekday: 'long',
 }
 
-interface TodolistPT {
+interface Props {
   todolist: UpdatedTodo
   demo?: boolean
 }
 
-export const Todolist: FC<TodolistPT> = memo(({ todolist, demo = false }) => {
+export const Todolist = memo(({ todolist, demo = false }: Props) => {
   const { id, title, addedDate, filter, entityStatus } = todolist
 
   const { t, i18n } = useTranslation()

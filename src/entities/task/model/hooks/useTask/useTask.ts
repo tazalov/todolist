@@ -12,7 +12,7 @@ export const useTask = (todoId: string, taskId: string) => {
     deleteTask({ todoId, taskId })
   }
 
-  const handleChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
+  const changeStatus = (e: ChangeEvent<HTMLInputElement>) => {
     const status = e.currentTarget.checked ? TaskStatus.COMPLETED : TaskStatus.NEW
     updateTask({ todoId, taskId, taskModel: { status } })
   }
@@ -26,7 +26,7 @@ export const useTask = (todoId: string, taskId: string) => {
 
   return {
     remove,
-    changeStatus: handleChangeStatus,
+    changeStatus,
     changeTitle,
   }
 }

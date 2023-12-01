@@ -1,5 +1,4 @@
 import Grid from '@mui/material/Grid'
-import React from 'react'
 import { Navigate } from 'react-router-dom'
 
 import { LoginForm, authSelectors } from 'features/auth'

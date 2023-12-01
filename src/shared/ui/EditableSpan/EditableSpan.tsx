@@ -2,7 +2,7 @@ import ErrorIcon from '@mui/icons-material/Error'
 import SaveIcon from '@mui/icons-material/Save'
 import { TextField, Tooltip, Typography, InputAdornment, IconButton } from '@mui/material'
 import { TypographyOwnProps } from '@mui/material/Typography/Typography'
-import { FC, memo, useState, ChangeEvent } from 'react'
+import { memo, useState, ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
 const inheritStyleInput: any = {
@@ -13,13 +13,13 @@ const inheritStyleInput: any = {
   padding: 0,
 }
 
-interface EditableSpanPT extends TypographyOwnProps {
+interface Props extends TypographyOwnProps {
   title: string
   changeTitle: (newTitle: string) => void
   disabled?: boolean
 }
 
-export const EditableSpan: FC<EditableSpanPT> = memo(({ title, changeTitle, disabled = false, ...rest }) => {
+export const EditableSpan = memo(({ title, changeTitle, disabled = false, ...rest }: Props) => {
   const { t } = useTranslation()
 
   const [editMode, setEditMode] = useState<boolean>(false)

@@ -1,5 +1,5 @@
 import { styled, Container } from '@mui/material'
-import { FC, useEffect } from 'react'
+import { useEffect } from 'react'
 
 import { taskReducer } from 'entities/task'
 import {
@@ -25,11 +25,11 @@ const initialReducers = {
   todoList: todoListReducer,
 }
 
-interface TodoListsPagePT {
+interface Props {
   demo?: boolean
 }
 
-const TodoListsPage: FC<TodoListsPagePT> = ({ demo = false }) => {
+const TodoListsPage = ({ demo = false }: Props) => {
   const todoLists = useAppSelector(selectorsTodo.selectAll)
   const isLoading = useAppSelector(getTodolistLoading)
 

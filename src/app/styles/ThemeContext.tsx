@@ -1,16 +1,16 @@
 import CssBaseline from '@mui/material/CssBaseline'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { createContext, FC, ReactNode, useMemo, useState } from 'react'
+import { createContext, ReactNode, useMemo, useState } from 'react'
 
 import { getDesignTokens } from './Theme'
 
 export const ColorModeContext = createContext({ toggleColorMode: () => {} })
 
-type ThemeContextPT = {
+type Props = {
   children: ReactNode
 }
 
-export const ThemeContext: FC<ThemeContextPT> = ({ children }) => {
+export const ThemeContext = ({ children }: Props) => {
   const [mode, setMode] = useState<'light' | 'dark'>('light')
   //! ---------- useMemo return object with key - toggleColorMode and value - callback with setMode
   const colorMode = useMemo(

@@ -1,6 +1,5 @@
 import { Typography, List } from '@mui/material'
-import { FC, useMemo, memo } from 'react'
-
+import { useMemo, memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { taskSelectors } from '../../model/selectors/tasks'
@@ -11,12 +10,12 @@ import { Filter } from 'entities/todolist'
 import { useAppSelector } from 'shared/lib/hooks'
 import { Loader } from 'shared/ui/Loader/Loader'
 
-interface TaskListPT {
+interface Props {
   todoId: string
   filter: Filter
 }
 
-export const TaskList: FC<TaskListPT> = memo(({ todoId, filter }) => {
+export const TaskList = memo(({ todoId, filter }: Props) => {
   const { t } = useTranslation()
 
   const tasks = useAppSelector(taskSelectors.itemsByTodoId(todoId))

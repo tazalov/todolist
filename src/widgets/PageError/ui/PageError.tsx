@@ -1,12 +1,11 @@
 import { Typography, Button } from '@mui/material'
 import Box from '@mui/material/Box'
-import { FC } from 'react'
 
-interface PageErrorPT {
+interface Props {
   error: string
 }
 
-export const PageError: FC<PageErrorPT> = ({ error }) => {
+export const PageError = ({ error }: Props) => {
   // eslint-disable-next-line no-restricted-globals
   const refreshPage = () => location.reload()
 

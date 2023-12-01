@@ -1,16 +1,16 @@
-import { FC, useCallback, memo } from 'react'
+import { useCallback, memo } from 'react'
 
 import { taskThunks } from '../../model/services'
 
 import { useAppDispatch } from 'shared/lib/hooks'
 import { AddItemForm } from 'shared/ui/AddItemForm/AddItemForm'
 
-interface CreateTaskFormPT {
+interface Props {
   todoId: string
   disabled?: boolean
 }
 
-export const CreateTaskForm: FC<CreateTaskFormPT> = memo(({ todoId, disabled = false }) => {
+export const CreateTaskForm = memo(({ todoId, disabled = false }: Props) => {
   const dispatch = useAppDispatch()
 
   const addTask = useCallback(

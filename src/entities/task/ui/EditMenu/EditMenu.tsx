@@ -2,8 +2,7 @@ import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault'
 import EditIcon from '@mui/icons-material/Edit'
 import SaveIcon from '@mui/icons-material/Save'
 import { Button, Dialog, DialogTitle, List, ListItem, TextField, SelectChangeEvent } from '@mui/material'
-import { FC, useState, ChangeEvent, useEffect, useCallback, memo } from 'react'
-
+import { useState, ChangeEvent, useEffect, useCallback, memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { tasksStatus, tasksPriority } from '../../model/const/colorsEditMenuItems'
@@ -14,14 +13,14 @@ import { SelectNum } from '../SelectNum/SelectNum'
 
 import { useAction } from 'shared/lib/hooks'
 
-export interface EditMenuPT {
+interface Props {
   task: UpdatedTask
   open: boolean
   onClose: () => void
 }
 
 // TODO - translation for select items
-export const EditMenu: FC<EditMenuPT> = memo(({ task, onClose, open }) => {
+export const EditMenu = memo(({ task, onClose, open }: Props) => {
   const { t } = useTranslation()
 
   const [editMode, setEditMode] = useState(false)
