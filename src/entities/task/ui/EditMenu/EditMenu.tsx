@@ -9,13 +9,13 @@ import { useTranslation } from 'react-i18next'
 import { tasksStatus, tasksPriority } from '../../model/const/colorsEditMenuItems'
 import { editMenuPriorityItems, editMenuStatusItems } from '../../model/const/editMenuItems'
 import { taskThunks } from '../../model/services'
-import { TaskStatus, TaskPriority, UpdatedTaskT } from '../../model/types/TasksSchema'
+import { TaskStatus, TaskPriority, UpdatedTask } from '../../model/types/TasksSchema'
 import { SelectNum } from '../SelectNum/SelectNum'
 
 import { useAction } from 'shared/lib/hooks'
 
 export interface EditMenuPT {
-  task: UpdatedTaskT
+  task: UpdatedTask
   open: boolean
   onClose: () => void
 }

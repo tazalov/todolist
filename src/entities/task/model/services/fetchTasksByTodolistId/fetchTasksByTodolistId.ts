@@ -1,13 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
-import { TaskT } from '../../types/TasksSchema'
+import { Task } from '../../types/TasksSchema'
 
 import { ThunkConfig } from 'app/providers/store'
 import { handleNetworkError } from 'entities/notification'
 
 interface FetchTasksReturn {
   todoId: string
-  tasks: TaskT[]
+  tasks: Task[]
 }
 
 export const fetchTasksByTodolistId = createAsyncThunk<FetchTasksReturn, string, ThunkConfig>(

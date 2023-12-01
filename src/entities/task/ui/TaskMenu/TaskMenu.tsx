@@ -6,11 +6,11 @@ import { FC, MouseEvent, useState, memo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
-import { UpdatedTaskT } from '../../model/types/TasksSchema'
+import { UpdatedTask } from '../../model/types/TasksSchema'
 import { EditMenu } from '../EditMenu/EditMenu'
 
 interface TodoMenuPT {
-  task: UpdatedTaskT
+  task: UpdatedTask
   remove: () => void
   disabled?: boolean
 }

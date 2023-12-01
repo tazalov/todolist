@@ -13,7 +13,7 @@ import * as yup from 'yup'
 import { loginUser } from '../../model/services/loginUser/loginUser'
 
 import { notificationActions } from 'entities/notification'
-import { BaseResponseT } from 'shared/api/types/todolist'
+import { BaseResponse } from 'shared/api/types/todolist'
 import { useAppDispatch } from 'shared/lib/hooks'
 
 const validationSchema = yup.object({
@@ -37,7 +37,7 @@ export const LoginForm = () => {
     onSubmit: (values, formikHelpers) => {
       dispatch(loginUser(values))
         .unwrap()
-        .catch((res: BaseResponseT) => {
+        .catch((res: BaseResponse) => {
           res.fieldsErrors?.forEach((el: any) => formikHelpers.setFieldError(el.field, el.error))
         })
         .finally(() => dispatch(notificationActions.setStatus('idle')))

@@ -1,4 +1,4 @@
-export interface TaskT {
+export interface Task {
   description: string
   title: string
   status: TaskStatus
@@ -11,16 +11,14 @@ export interface TaskT {
   addedDate: Date
 }
 
-export interface UpdatedTaskT extends TaskT {
+export interface UpdatedTask extends Task {
   entityStatus: CurrentStatus
 }
 
-export interface TasksObj {
-  [todolistId: string]: UpdatedTaskT[]
-}
+export type TasksItems = Record<string, UpdatedTask[]>
 
 export interface TasksSchema {
-  items: TasksObj
+  items: TasksItems
   isLoading: boolean
 }
 
@@ -39,15 +37,6 @@ export enum TaskPriority {
   LATER = 4,
 }
 
-export interface TaskModel {
-  description?: string
-  title?: string
-  status?: TaskStatus
-  priority?: TaskPriority
-  startDate?: Date
-  deadline?: Date
-}
-
 export interface TaskModelAPI {
   description: string
   title: string
@@ -56,3 +45,5 @@ export interface TaskModelAPI {
   startDate: Date
   deadline: Date
 }
+
+export type TaskModel = Partial<TaskModelAPI>

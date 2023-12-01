@@ -3,7 +3,7 @@ import { FC, memo } from 'react'
 
 import { tasksPriority } from '../../model/const/colorsEditMenuItems'
 import { useTask } from '../../model/hooks/useTask/useTask'
-import { TaskStatus, UpdatedTaskT } from '../../model/types/TasksSchema'
+import { TaskStatus, UpdatedTask } from '../../model/types/TasksSchema'
 import { getBgForStatus } from '../../model/utils/getBgForStatus'
 import { TaskMenu } from '../TaskMenu/TaskMenu'
 
@@ -11,7 +11,7 @@ import { EditableSpan } from 'shared/ui/EditableSpan/EditableSpan'
 
 interface TodoPT {
   todoId: string
-  task: UpdatedTaskT
+  task: UpdatedTask
 }
 
 export const Task: FC<TodoPT> = memo(({ todoId, task }) => {

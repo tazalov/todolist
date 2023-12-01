@@ -1,12 +1,12 @@
 import { TaskList } from './TaskList'
 
-import { UpdatedTaskT, TaskStatus, TaskPriority } from '../../model/types/TasksSchema'
+import { UpdatedTask, TaskStatus, TaskPriority } from '../../model/types/TasksSchema'
 
 import { StoreDecorator } from 'shared/config/storybook/decorators/StoreDecorator'
 
 import type { Meta, StoryObj } from '@storybook/react'
 
-const tasks: UpdatedTaskT[] = [
+const tasks: UpdatedTask[] = [
   {
     id: '1',
     title: 'Todo something1',

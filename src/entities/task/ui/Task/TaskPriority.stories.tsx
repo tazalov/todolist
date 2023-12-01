@@ -1,6 +1,6 @@
 import { Task } from './Task'
 
-import { TaskStatus, TaskPriority, UpdatedTaskT } from '../../model/types/TasksSchema'
+import { TaskStatus, TaskPriority, UpdatedTask } from '../../model/types/TasksSchema'
 
 import type { Meta, StoryObj } from '@storybook/react'
 
@@ -15,7 +15,7 @@ const meta: Meta<typeof Task> = {
 export default meta
 type Story = StoryObj<typeof Task>
 
-const createTask = (priority: TaskPriority): UpdatedTaskT => ({
+const createTask = (priority: TaskPriority): UpdatedTask => ({
   id: '1',
   title: 'Todo something',
   status: TaskStatus.NEW,

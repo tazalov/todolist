@@ -14,9 +14,7 @@ export const ThemeContext: FC<ThemeContextPT> = ({ children }) => {
   const [mode, setMode] = useState<'light' | 'dark'>('light')
   //! ---------- useMemo return object with key - toggleColorMode and value - callback with setMode
   const colorMode = useMemo(
-    () => ({
-      toggleColorMode: () => setMode((prev) => (prev === 'light' ? 'dark' : 'light')),
-    }),
+    () => ({ toggleColorMode: () => setMode((prev) => (prev === 'light' ? 'dark' : 'light')) }),
     [],
   )
 

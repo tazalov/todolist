@@ -1,25 +1,25 @@
 import { EntityState } from '@reduxjs/toolkit'
 
-export type FilterT = 'all' | 'active' | 'completed'
+export type Filter = 'all' | 'active' | 'completed'
 
-export interface TodoT {
+export interface Todo {
   id: string
   addedDate: Date
   order: number
   title: string
 }
 
-export interface UpdatedTodoT extends TodoT {
-  filter: FilterT
+export interface UpdatedTodo extends Todo {
+  filter: Filter
   entityStatus: CurrentStatus
 }
 
 export interface UpdateModelTodo {
   title?: string
-  filter?: FilterT
+  filter?: Filter
   entityStatus?: CurrentStatus
 }
 
-export interface TodoListsSchema extends EntityState<UpdatedTodoT> {
+export interface TodoListsSchema extends EntityState<UpdatedTodo> {
   isLoading: boolean
 }

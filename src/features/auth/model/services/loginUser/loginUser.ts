@@ -4,9 +4,9 @@ import { LoginDataForm, UserData } from '../../types/AuthSchema'
 
 import { ThunkConfig } from 'app/providers/store'
 import { handleServerError, handleNetworkError, notificationActions } from 'entities/notification'
-import { ResultCodes, BaseResponseT } from 'shared/api/types/todolist'
+import { ResultCodes, BaseResponse } from 'shared/api/types/todolist'
 
-export const loginUser = createAsyncThunk<UserData, LoginDataForm, ThunkConfig<BaseResponseT | null>>(
+export const loginUser = createAsyncThunk<UserData, LoginDataForm, ThunkConfig<BaseResponse | null>>(
   'features/auth/loginUser',
   async (loginDataForm, thunkAPI) => {
     const { extra, dispatch, rejectWithValue } = thunkAPI

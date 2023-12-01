@@ -1,14 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
 import { CreateTaskParams } from '../../../api/tasks.api'
-import { TaskT } from '../../types/TasksSchema'
+import { Task } from '../../types/TasksSchema'
 
 import { ThunkConfig } from 'app/providers/store'
 import { notificationActions, handleServerError, handleNetworkError } from 'entities/notification'
 import { ResultCodes } from 'shared/api/types/todolist'
 import { getCurrentLang } from 'shared/lib/i18n/getCurrentLang'
 
-export const createTask = createAsyncThunk<TaskT, CreateTaskParams, ThunkConfig<string | null>>(
+export const createTask = createAsyncThunk<Task, CreateTaskParams, ThunkConfig<string | null>>(
   'entities/task/createTask',
   async (args, thunkAPI) => {
     const { extra, dispatch, rejectWithValue } = thunkAPI

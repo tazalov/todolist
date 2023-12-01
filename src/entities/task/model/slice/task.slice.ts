@@ -4,7 +4,7 @@ import { createTask } from '../services/createTask/createTask'
 import { deleteTask } from '../services/deleteTask/deleteTask'
 import { fetchTasksByTodolistId } from '../services/fetchTasksByTodolistId/fetchTasksByTodolistId'
 import { updateTask } from '../services/updateTask/updateTask'
-import { TasksSchema, TasksObj, TaskT } from '../types/TasksSchema'
+import { TasksSchema, TasksItems, Task } from '../types/TasksSchema'
 import { findIdxTaskByTodoId } from '../utils/findIdxTaskByTodoId'
 
 import { clearCurrentState } from 'app/providers/store'
@@ -19,11 +19,11 @@ const taskSlice = createSlice({
   name: 'task',
   initialState,
   reducers: {
-    setTasks: (state, action: PayloadAction<{ todoId: string; tasks: TaskT[] }>) => {
+    setTasks: (state, action: PayloadAction<{ todoId: string; tasks: Task[] }>) => {
       const { todoId, tasks } = action.payload
       state.items[todoId] = tasks.map((el) => ({ ...el, entityStatus: 'idle' }))
     },
-    addTask: (state, action: PayloadAction<TaskT>) => {
+    addTask: (state, action: PayloadAction<Task>) => {
       const task = action.payload
       state.items[task.todoListId].unshift({ ...task, entityStatus: 'idle' })
     },
@@ -34,7 +34,7 @@ const taskSlice = createSlice({
         state.items[todoId].splice(idx, 1)
       }
     },
-    changeTask: (state, action: PayloadAction<TaskT>) => {
+    changeTask: (state, action: PayloadAction<Task>) => {
       const task = action.payload
       const idx = state.items[task.todoListId].findIndex((el) => el.id === task.id)
       if (idx !== -1) {
@@ -106,7 +106,7 @@ const taskSlice = createSlice({
         }
       })
       .addCase(todoListThunks.fetchTodoLists.fulfilled, (state, { payload: todoLists }) => {
-        state.items = todoLists.reduce((acc: TasksObj, el) => {
+        state.items = todoLists.reduce((acc: TasksItems, el) => {
           acc[el.id] = []
           return acc
         }, {})

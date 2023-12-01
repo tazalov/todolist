@@ -4,11 +4,11 @@ import { createTodolist } from '../services/createTodolist/createTodolist'
 import { deleteTodolist } from '../services/deleteTodolist/deleteTodolist'
 import { fetchTodoLists } from '../services/fetchTodoLists/fetchTodoLists'
 import { updateTitleTodolist } from '../services/updateTitleTodolist/updateTitleTodolist'
-import { TodoT, UpdateModelTodo, UpdatedTodoT, FilterT, TodoListsSchema } from '../types/TodolistsSchema'
+import { Todo, UpdateModelTodo, UpdatedTodo, Filter, TodoListsSchema } from '../types/TodolistsSchema'
 
 import { clearCurrentState, StateSchema } from 'app/providers/store'
 
-const adapter = createEntityAdapter<UpdatedTodoT>({
+const adapter = createEntityAdapter<UpdatedTodo>({
   selectId: (todolist) => todolist.id,
   sortComparer: (a, b) => a.order - b.order,
 })
@@ -23,15 +23,15 @@ const slice = createSlice({
     isLoading: false,
   }),
   reducers: {
-    setTodoLists: (state, action: PayloadAction<TodoT[]>) => {
+    setTodoLists: (state, action: PayloadAction<Todo[]>) => {
       const todoLists = action.payload.map((el) => ({
         ...el,
-        filter: 'all' as FilterT,
+        filter: 'all' as Filter,
         entityStatus: 'idle' as CurrentStatus,
       }))
       adapter.setAll(state, todoLists)
     },
-    addTodoList: (state, action: PayloadAction<TodoT>) => {
+    addTodoList: (state, action: PayloadAction<Todo>) => {
       adapter.addOne(state, {
         ...action.payload,
         filter: 'all',
@@ -59,7 +59,7 @@ const slice = createSlice({
       .addCase(fetchTodoLists.fulfilled, (state, { payload }) => {
         const todoLists = payload.map((el) => ({
           ...el,
-          filter: 'all' as FilterT,
+          filter: 'all' as Filter,
           entityStatus: 'idle' as CurrentStatus,
         }))
         adapter.setAll(state, todoLists)

@@ -4,14 +4,14 @@ import { useMemo, memo, FC } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
-import { UpdatedTodoT } from '../../model/types/TodolistsSchema'
+import { UpdatedTodo } from '../../model/types/TodolistsSchema'
 import { Todolist } from '../Todolist/Todolist'
 
 import { TodolistSkeleton } from '../Todolist/TodolistSkeleton'
 
 interface TodolistListPT {
   demo?: boolean
-  todoLists: UpdatedTodoT[]
+  todoLists: UpdatedTodo[]
   isLoading: boolean
 }
 

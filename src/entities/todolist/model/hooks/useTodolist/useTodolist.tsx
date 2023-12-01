@@ -2,7 +2,7 @@ import { useCallback, useEffect } from 'react'
 
 import { todoListThunks } from '../../services'
 import { todoListActions } from '../../slice/todolist.slice'
-import { FilterT } from '../../types/TodolistsSchema'
+import { Filter } from '../../types/TodolistsSchema'
 
 import { taskThunks } from 'entities/task'
 import { useAction } from 'shared/lib/hooks'
@@ -25,7 +25,7 @@ export const useTodolist = (todoId: string, demo: boolean) => {
   )
 
   const changeFilter = useCallback(
-    (filter: FilterT) => () => {
+    (filter: Filter) => () => {
       changeTodoList({ todoId, model: { filter } })
     },
     [todoId, changeTodoList],

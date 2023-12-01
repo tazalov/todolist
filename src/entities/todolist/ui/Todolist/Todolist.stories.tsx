@@ -1,12 +1,12 @@
 import { Todolist } from './Todolist'
 
-import { UpdatedTaskT, TaskStatus, TaskPriority } from 'entities/task'
+import { UpdatedTask, TaskStatus, TaskPriority } from 'entities/task'
 
 import { StoreDecorator } from 'shared/config/storybook/decorators/StoreDecorator'
 
 import type { Meta, StoryObj } from '@storybook/react'
 
-const tasks: UpdatedTaskT[] = [
+const tasks: UpdatedTask[] = [
   {
     id: '10',
     title: 'Todo something1',

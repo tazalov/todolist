@@ -7,13 +7,13 @@ import { taskSelectors } from '../../model/selectors/tasks'
 import { TaskStatus } from '../../model/types/TasksSchema'
 import { Task } from '../Task/Task'
 
-import { FilterT } from 'entities/todolist'
+import { Filter } from 'entities/todolist'
 import { useAppSelector } from 'shared/lib/hooks'
 import { Loader } from 'shared/ui/Loader/Loader'
 
 interface TaskListPT {
   todoId: string
-  filter: FilterT
+  filter: Filter
 }
 
 export const TaskList: FC<TaskListPT> = memo(({ todoId, filter }) => {

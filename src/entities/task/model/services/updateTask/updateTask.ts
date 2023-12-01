@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
 import { taskSelectors } from '../../selectors/tasks'
-import { TaskModel, TaskT } from '../../types/TasksSchema'
+import { TaskModel, Task } from '../../types/TasksSchema'
 
 import { ThunkConfig } from 'app/providers/store'
 
@@ -16,7 +16,7 @@ interface UpdateTaskParams {
 }
 
 export const updateTask = createAsyncThunk<
-  TaskT | undefined,
+  Task | undefined,
   UpdateTaskParams,
   ThunkConfig<{ todoId: string; taskId: string }>
 >('entities/task/updateTask', async ({ todoId, taskId, taskModel }, thunkAPI) => {

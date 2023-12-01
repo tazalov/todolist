@@ -1,6 +1,6 @@
 import { EditMenu } from './EditMenu'
 
-import { TaskStatus, TaskPriority, UpdatedTaskT } from '../../model/types/TasksSchema'
+import { TaskStatus, TaskPriority, UpdatedTask } from '../../model/types/TasksSchema'
 
 import type { Meta, StoryObj } from '@storybook/react'
 
@@ -29,7 +29,7 @@ const meta: Meta<typeof EditMenu> = {
 export default meta
 type Story = StoryObj<typeof EditMenu>
 
-const task: UpdatedTaskT = {
+const task: UpdatedTask = {
   id: '1',
   title: 'Todo something',
   status: TaskStatus.NEW,

@@ -1,11 +1,11 @@
-export type BaseResponseT<T = {}> = {
+export type BaseResponse<T = {}> = {
   resultCode: ResultCodes
   messages: string[]
   fieldsErrors: { field: string; error: string }[]
   data: T
 }
 
-export type ItemsResponseT<T = {}> = {
+export type ItemsResponse<T = {}> = {
   items: T
   totalCount: number
   error: string
