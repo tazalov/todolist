@@ -1,11 +1,11 @@
 import CloseIcon from '@mui/icons-material/Close'
-import { ButtonGroup, IconButton, Stack, Button, Typography } from '@mui/material'
+import { IconButton, Stack, Typography } from '@mui/material'
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useTodolist } from '../../model/hooks/useTodolist/useTodolist'
 import { UpdatedTodo } from '../../model/types/TodolistsSchema'
-import { getStyleFilterButton } from '../../model/utils/getStyleFilterButton'
+import { FilterButtonGroup } from '../FilterButtonGroup/FilterButtonGroup'
 
 import { TaskList, CreateTaskForm } from 'entities/task'
 import { EditableSpan } from 'shared/ui/EditableSpan/EditableSpan'
@@ -25,7 +25,7 @@ interface Props {
 export const Todolist = memo(({ todolist, demo = false }: Props) => {
   const { id, title, addedDate, filter, entityStatus } = todolist
 
-  const { t, i18n } = useTranslation()
+  const { i18n } = useTranslation()
 
   const { remove, changeTitle, changeFilter } = useTodolist(id, demo)
 
@@ -46,17 +46,7 @@ export const Todolist = memo(({ todolist, demo = false }: Props) => {
       <EditableSpan variant='h4' title={title} textAlign={'center'} changeTitle={changeTitle} />
       <CreateTaskForm todoId={id} disabled={entityStatus === 'loading'} />
       <TaskList todoId={id} filter={filter} />
-      <ButtonGroup size='small' variant='contained' disableElevation>
-        <Button sx={getStyleFilterButton(filter, 'all')} onClick={changeFilter('all')}>
-          {t('ALL')}
-        </Button>
-        <Button sx={getStyleFilterButton(filter, 'active')} onClick={changeFilter('active')}>
-          {t('ACTIVE')}
-        </Button>
-        <Button sx={getStyleFilterButton(filter, 'completed')} onClick={changeFilter('completed')}>
-          {t('COMPLETED')}
-        </Button>
-      </ButtonGroup>
+      <FilterButtonGroup filter={filter} changeFilter={changeFilter} />
       <Typography>
         {new Date(addedDate).toLocaleDateString(i18n.language === 'en' ? 'en-US' : 'ru-RU', options)}
       </Typography>
