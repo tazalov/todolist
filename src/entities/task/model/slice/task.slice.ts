@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, isPending, PayloadAction, isRejected } from '@reduxjs/toolkit'
 
 import { createTask } from '../services/createTask/createTask'
 import { deleteTask } from '../services/deleteTask/deleteTask'
@@ -60,29 +60,8 @@ const taskSlice = createSlice({
       .addCase(fetchTasksByTodolistId.rejected, (state) => {
         state.isLoading = false
       })
-      .addCase(deleteTask.pending, (state, { meta }) => {
-        const { arg } = meta
-        const idx = findIdxTaskByTodoId(state, arg.todoId, arg.taskId)
-        if (idx !== -1) {
-          state.items[arg.todoId][idx].entityStatus = 'loading'
-        }
-      })
-      .addCase(deleteTask.fulfilled, (state, { payload }) => {
-        const { todoId, taskId } = payload
-        const idx = findIdxTaskByTodoId(state, todoId, taskId)
-        if (idx !== -1) {
-          state.items[todoId].splice(idx, 1)
-        }
-      })
       .addCase(createTask.fulfilled, (state, { payload: task }) => {
         state.items[task.todoListId].unshift({ ...task, entityStatus: 'idle' })
-      })
-      .addCase(updateTask.pending, (state, { meta }) => {
-        const { arg } = meta
-        const idx = findIdxTaskByTodoId(state, arg.todoId, arg.taskId)
-        if (idx !== -1) {
-          state.items[arg.todoId][idx].entityStatus = 'loading'
-        }
       })
       .addCase(updateTask.fulfilled, (state, { payload: task }) => {
         if (task) {
@@ -96,13 +75,11 @@ const taskSlice = createSlice({
           }
         }
       })
-      .addCase(updateTask.rejected, (state, { payload }) => {
-        if (payload) {
-          const { todoId, taskId } = payload
-          const idx = findIdxTaskByTodoId(state, todoId, taskId)
-          if (idx !== -1) {
-            state.items[todoId][idx].entityStatus = 'failed'
-          }
+      .addCase(deleteTask.fulfilled, (state, { payload }) => {
+        const { todoId, taskId } = payload
+        const idx = findIdxTaskByTodoId(state, todoId, taskId)
+        if (idx !== -1) {
+          state.items[todoId].splice(idx, 1)
         }
       })
       .addCase(todoListThunks.fetchTodoLists.fulfilled, (state, { payload: todoLists }) => {
@@ -116,6 +93,20 @@ const taskSlice = createSlice({
       })
       .addCase(todoListThunks.deleteTodolist.fulfilled, (state, { payload: todoListId }) => {
         delete state.items[todoListId]
+      })
+      .addMatcher(isPending(updateTask, deleteTask), (state, { meta }) => {
+        const { taskId, todoId } = meta.arg
+        const idx = findIdxTaskByTodoId(state, todoId, taskId)
+        if (idx !== -1) {
+          state.items[todoId][idx].entityStatus = 'loading'
+        }
+      })
+      .addMatcher(isRejected(updateTask, deleteTask), (state, { meta }) => {
+        const { taskId, todoId } = meta.arg
+        const idx = findIdxTaskByTodoId(state, todoId, taskId)
+        if (idx !== -1) {
+          state.items[todoId][idx].entityStatus = 'failed'
+        }
       }),
 })
 

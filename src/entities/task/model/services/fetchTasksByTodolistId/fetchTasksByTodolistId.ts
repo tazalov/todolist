@@ -3,31 +3,25 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { Task } from '../../types/TasksSchema'
 
 import { ThunkConfig } from 'app/providers/store'
-import { handleNetworkError } from 'entities/notification'
+import { ItemsResponse } from 'shared/api/types/todolist'
 
 interface FetchTasksReturn {
   todoId: string
   tasks: Task[]
 }
 
-export const fetchTasksByTodolistId = createAsyncThunk<FetchTasksReturn, string, ThunkConfig>(
+export const fetchTasksByTodolistId = createAsyncThunk<FetchTasksReturn, string, ThunkConfig<ItemsResponse>>(
   'entities/task/fetchTasksByTodolistId',
   async (todoId, thunkAPI) => {
-    const { extra, dispatch, rejectWithValue } = thunkAPI
-    try {
-      const response = await extra.tasksAPI.getTasks(todoId)
-      if (!response.data.error) {
-        return {
-          tasks: response.data.items,
-          todoId,
-        }
-      } else {
-        handleNetworkError(response.data.error, dispatch)
-        return rejectWithValue(null)
+    const { extra, rejectWithValue } = thunkAPI
+    const response = await extra.tasksAPI.getTasks(todoId)
+    if (!response.data.error) {
+      return {
+        tasks: response.data.items,
+        todoId,
       }
-    } catch (e) {
-      handleNetworkError(e, dispatch)
-      return rejectWithValue(null)
+    } else {
+      return rejectWithValue(response.data)
     }
   },
 )

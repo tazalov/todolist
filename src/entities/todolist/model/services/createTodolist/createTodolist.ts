@@ -3,34 +3,18 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { Todo } from '../../types/TodolistsSchema'
 
 import { ThunkConfig } from 'app/providers/store'
-import { notificationActions, handleServerError, handleNetworkError } from 'entities/notification'
-import { ResultCodes } from 'shared/api/types/todolist'
-import { getCurrentLang } from 'shared/lib/i18n/getCurrentLang'
+import { ResultCodes, BaseResponse } from 'shared/api/types/todolist'
 
-export const createTodolist = createAsyncThunk<Todo, string, ThunkConfig<string | null>>(
+export const createTodolist = createAsyncThunk<Todo, string, ThunkConfig<BaseResponse>>(
   'entities/todolist/createTodolist',
   async (title, thunkAPI) => {
-    const { extra, dispatch, rejectWithValue } = thunkAPI
+    const { extra, rejectWithValue } = thunkAPI
 
-    const currentLang = getCurrentLang()
-
-    dispatch(notificationActions.setNotificationData({ status: 'loading' }))
-
-    try {
-      const response = await extra.todolistAPI.createTodolist(title)
-      if (response.data.resultCode === ResultCodes.Success) {
-        const successMsg = currentLang === 'en' ? `Todolist "${title}" created!` : `Список дел "${title}" создан!`
-
-        dispatch(notificationActions.setNotificationData({ status: 'succeed', success: successMsg }))
-
-        return response.data.data.item
-      } else {
-        handleServerError(response.data, dispatch)
-        return rejectWithValue(response.data.messages[0])
-      }
-    } catch (e) {
-      handleNetworkError(e, dispatch)
-      return rejectWithValue(null)
+    const response = await extra.todolistAPI.createTodolist(title)
+    if (response.data.resultCode === ResultCodes.Success) {
+      return response.data.data.item
+    } else {
+      return rejectWithValue(response.data)
     }
   },
 )

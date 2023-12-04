@@ -3,9 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { UpdateModelTodo } from '../../types/TodolistsSchema'
 
 import { ThunkConfig } from 'app/providers/store'
-import { notificationActions, handleServerError, handleNetworkError } from 'entities/notification'
-import { ResultCodes } from 'shared/api/types/todolist'
-import { getCurrentLang } from 'shared/lib/i18n/getCurrentLang'
+import { ResultCodes, BaseResponse } from 'shared/api/types/todolist'
 
 interface UpdateTitleParams {
   todoId: string
@@ -15,28 +13,14 @@ interface UpdateTitleParams {
 export const updateTitleTodolist = createAsyncThunk<
   UpdateTitleParams,
   { todoId: string; title: string },
-  ThunkConfig<string>
+  ThunkConfig<BaseResponse>
 >('entities/todolist/updateTitleTodolist', async ({ todoId, title }, thunkAPI) => {
-  const { extra, dispatch, rejectWithValue } = thunkAPI
+  const { extra, rejectWithValue } = thunkAPI
 
-  const currentLang = getCurrentLang()
-
-  dispatch(notificationActions.setNotificationData({ status: 'loading' }))
-
-  try {
-    const response = await extra.todolistAPI.updateTodolist({ todoId, title })
-    if (response.data.resultCode === ResultCodes.Success) {
-      const successMsg = currentLang === 'en' ? 'Title updated!' : `Имя списка обновлено!`
-
-      dispatch(notificationActions.setNotificationData({ status: 'succeed', success: successMsg }))
-
-      return { todoId, model: { title, entityStatus: 'succeed' } }
-    } else {
-      handleServerError(response.data, dispatch)
-      return rejectWithValue(todoId)
-    }
-  } catch (e) {
-    handleNetworkError(e, dispatch)
-    return rejectWithValue(todoId)
+  const res = await extra.todolistAPI.updateTodolist({ todoId, title })
+  if (res.data.resultCode === ResultCodes.Success) {
+    return { todoId, model: { title, entityStatus: 'succeed' } }
+  } else {
+    return rejectWithValue(res.data)
   }
 })

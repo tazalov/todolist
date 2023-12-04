@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, createEntityAdapter } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction, createEntityAdapter, isRejected, isPending } from '@reduxjs/toolkit'
 
 import { createTodolist } from '../services/createTodolist/createTodolist'
 import { deleteTodolist } from '../services/deleteTodolist/deleteTodolist'
@@ -78,18 +78,17 @@ const slice = createSlice({
           entityStatus: 'idle',
         })
       })
-      .addCase(updateTitleTodolist.pending, (state, { meta }) => {
-        const { arg } = meta
-        adapter.updateOne(state, { id: arg.todoId, changes: { entityStatus: 'loading' } })
-      })
       .addCase(updateTitleTodolist.fulfilled, (state, { payload }) => {
         const { todoId, model } = payload
         adapter.updateOne(state, { id: todoId, changes: model })
       })
-      .addCase(updateTitleTodolist.rejected, (state, { payload: todoId }) => {
-        if (todoId) {
-          adapter.updateOne(state, { id: todoId, changes: { entityStatus: 'failed' } })
-        }
+      .addMatcher(isPending(deleteTodolist, updateTitleTodolist), (state, { meta }) => {
+        const todoId = typeof meta.arg === 'string' ? meta.arg : meta.arg.todoId
+        adapter.updateOne(state, { id: todoId, changes: { entityStatus: 'loading' } })
+      })
+      .addMatcher(isRejected(deleteTodolist, updateTitleTodolist), (state, { meta }) => {
+        const todoId = typeof meta.arg === 'string' ? meta.arg : meta.arg.todoId
+        adapter.updateOne(state, { id: todoId, changes: { entityStatus: 'failed' } })
       }),
 })
 

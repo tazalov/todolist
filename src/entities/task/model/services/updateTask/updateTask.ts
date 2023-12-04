@@ -4,10 +4,7 @@ import { taskSelectors } from '../../selectors/tasks'
 import { TaskModel, Task } from '../../types/TasksSchema'
 
 import { ThunkConfig } from 'app/providers/store'
-
-import { notificationActions, handleServerError, handleNetworkError } from 'entities/notification'
-import { ResultCodes } from 'shared/api/types/todolist'
-import { getCurrentLang } from 'shared/lib/i18n/getCurrentLang'
+import { ResultCodes, BaseResponse } from 'shared/api/types/todolist'
 
 interface UpdateTaskParams {
   todoId: string
@@ -15,38 +12,24 @@ interface UpdateTaskParams {
   taskModel: TaskModel
 }
 
-export const updateTask = createAsyncThunk<
-  Task | undefined,
-  UpdateTaskParams,
-  ThunkConfig<{ todoId: string; taskId: string }>
->('entities/task/updateTask', async ({ todoId, taskId, taskModel }, thunkAPI) => {
-  const { extra, dispatch, getState, rejectWithValue } = thunkAPI
+export const updateTask = createAsyncThunk<Task | undefined, UpdateTaskParams, ThunkConfig<BaseResponse>>(
+  'entities/task/updateTask',
+  async ({ todoId, taskId, taskModel }, thunkAPI) => {
+    const { extra, getState, rejectWithValue } = thunkAPI
 
-  const currentLang = getCurrentLang()
+    const taskModelFromState = taskSelectors.itemModelById(todoId, taskId)(getState())
+    if (taskModelFromState) {
+      const model = {
+        ...taskModelFromState,
+        ...taskModel,
+      }
 
-  dispatch(notificationActions.setNotificationData({ status: 'loading' }))
-
-  const taskModelFromState = taskSelectors.itemModelById(todoId, taskId)(getState())
-  if (taskModelFromState) {
-    const model = {
-      ...taskModelFromState,
-      ...taskModel,
-    }
-    try {
       const response = await extra.tasksAPI.updateTask({ todoId, taskId, model })
       if (response.data.resultCode === ResultCodes.Success) {
-        const successMsg = currentLang === 'en' ? 'Task updated!' : `Задача обновлена!`
-
-        dispatch(notificationActions.setNotificationData({ status: 'succeed', success: successMsg }))
-
         return response.data.data.item
       } else {
-        handleServerError(response.data, dispatch)
-        return rejectWithValue({ todoId, taskId })
+        return rejectWithValue(response.data)
       }
-    } catch (e) {
-      handleNetworkError(e, dispatch)
-      return rejectWithValue({ todoId, taskId })
     }
-  }
-})
+  },
+)
