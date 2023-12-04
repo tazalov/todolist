@@ -14,10 +14,7 @@ export const CreateTodolistForm = memo(() => {
   const dispatch = useAppDispatch()
 
   const createTodolist = useCallback(
-    async (title: string) => {
-      const action = await dispatch(todoListThunks.createTodolist(title))
-      return todoListThunks.createTodolist.rejected.match(action) ? action.payload : undefined
-    },
+    (title: string) => dispatch(todoListThunks.createTodolist(title)).unwrap(),
     [dispatch],
   )
 
@@ -35,7 +32,7 @@ export const CreateTodolistForm = memo(() => {
       <Box sx={{ bgcolor: 'background.blocks', boxShadow: 5, width: '100%' }}>
         <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent='center' alignItems='center' spacing={2}>
           <Typography variant='h6'>{t('CREATE TODOLIST')}</Typography>
-          <AddItemForm addItem={createTodolist} />
+          <AddItemForm addItemAsync={createTodolist} />
         </Stack>
         <Stack gap={1} direction={{ xs: 'column', sm: 'row' }} justifyContent={'center'} sx={{ p: 1 }}>
           {createHints(i18n.language).map((el) => (

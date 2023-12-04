@@ -4,11 +4,12 @@ import { memo, useState, ChangeEvent, KeyboardEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
 interface Props {
-  addItem: (title: string) => void | Promise<any>
+  addItem?: (title: string) => void
+  addItemAsync?: (title: string) => Promise<any>
   disabled?: boolean
 }
 
-export const AddItemForm = memo(({ addItem, disabled = false }: Props) => {
+export const AddItemForm = memo(({ addItem, addItemAsync, disabled = false }: Props) => {
   const { t } = useTranslation()
 
   const [title, setTitle] = useState<string>('')
@@ -28,12 +29,11 @@ export const AddItemForm = memo(({ addItem, disabled = false }: Props) => {
     if (!newTitle.length) {
       setError("Value can't be empty")
     } else {
-      const serverError = await addItem(newTitle)
-      if (serverError) {
-        setError('Check error')
-      } else {
-        setTitle('')
-      }
+      addItemAsync?.(newTitle)
+        .then(() => setTitle(''))
+        .catch(() => setError('Check error'))
+
+      addItem?.(newTitle)
     }
   }
 

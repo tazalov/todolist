@@ -14,12 +14,9 @@ export const CreateTaskForm = memo(({ todoId, disabled = false }: Props) => {
   const dispatch = useAppDispatch()
 
   const addTask = useCallback(
-    async (title: string) => {
-      const action = await dispatch(taskThunks.createTask({ todoId, title }))
-      return taskThunks.createTask.rejected.match(action) ? action.payload : undefined
-    },
+    (title: string) => dispatch(taskThunks.createTask({ todoId, title })).unwrap(),
     [todoId, dispatch],
   )
 
-  return <AddItemForm addItem={addTask} disabled={disabled} />
+  return <AddItemForm addItemAsync={addTask} disabled={disabled} />
 })
