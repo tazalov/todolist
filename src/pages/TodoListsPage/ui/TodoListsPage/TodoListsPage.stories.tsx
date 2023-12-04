@@ -1,7 +1,7 @@
 import TodoListsPage from './TodoListsPage'
 
-import { TaskStatus, TaskPriority } from '../../../../entities/task'
-import { StoreDecorator } from '../../../../shared/config/storybook/decorators/StoreDecorator'
+import { TaskStatus, TaskPriority } from 'entities/task'
+import { StoreDecorator } from 'shared/config/storybook/decorators/StoreDecorator'
 
 import type { Meta, StoryObj } from '@storybook/react'
 
